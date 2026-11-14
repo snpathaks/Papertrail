@@ -10,8 +10,8 @@ def expand_queries(state):
     prompt = (f"Research topic: {state['query']}\n"
               "Write 3 short, different academic search queries (synonyms, related terms)." + extra)
     try:
-        structured = llm.with_structured_output(Queries)
-        qs = structured.invoke(prompt).queries[:3]
+        res = ask_structured(Queries, prompt)
+        qs = res.queries[:3] if res else []
     except Exception:
         qs = []
     queries = list(dict.fromkeys(prev + [state["query"]] + qs))
