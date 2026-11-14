@@ -1,4 +1,26 @@
+import requests
+import arxiv
 import config
+
+def search_arxiv(query: str, max_results: int = 8) -> list[dict]:
+    try:
+        client = arxiv.Client()
+        search = arxiv.Search(query=query, max_results=max_results, sort_by=arxiv.SortCriterion.Relevance)
+        out = []
+        for r in client.results(search):
+            out.append({
+                "id": r.entry_id,
+                "title": r.title,
+                "authors": [a.name for a in r.authors],
+                "year": r.published.year if r.published else None,
+                "abstract": r.summary.replace("\n", " "),
+                "pdf_url": r.pdf_url,
+                "citations": 0,
+                "source": "arxiv",
+            })
+        return out
+    except Exception:
+        return []
 
 def search_openalex(query: str, max_results: int = 8) -> list[dict]:
     try:

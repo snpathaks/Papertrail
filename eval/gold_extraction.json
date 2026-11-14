@@ -1,0 +1,15 @@
+[
+  {
+    "paper": {
+      "id": "https://arxiv.org/abs/2012.07436",
+      "title": "Informer: Beyond Efficient Transformer for Long Sequence Time-Series Forecasting",
+      "authors": ["Haoyi Zhou", "Shanghang Zhang", "Jieqi Peng", "Shuai Zhang", "Jianxin Li", "Hui Xiong", "Wancai Zhang"],
+      "year": 2021,
+      "abstract": "Many real-world applications require the prediction of long sequence time-series, such as electricity consumption planning. Long sequence time-series forecasting demands a high prediction capacity. In this paper, we propose Informer to address these issues with ProbSparse self-attention mechanism. Extensive experiments on four large-scale datasets demonstrate that Informer significantly outperforms existing methods.",
+      "pdf_url": null,
+      "citations": 1500,
+      "source": "arxiv"
+    },
+    "datasets": ["ETT", "ECL", "Weather"]
+  }
+]

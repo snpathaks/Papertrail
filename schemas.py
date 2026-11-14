@@ -26,3 +26,10 @@ class ClusterLabel(BaseModel):
 class GapExplanation(BaseModel):
     explanation: str
     research_question: str
+
+class Queries(BaseModel):
+    queries: list[str] = Field(description="List of academic search query strings")
+
+class RelevanceDecision(BaseModel):
+    relevant: bool = Field(description="True if the paper is relevant to the topic, False otherwise")
+    reason: str = Field(description="One sentence explaining relevance or lack thereof")
