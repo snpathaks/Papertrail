@@ -8,7 +8,7 @@ def download_pdf(url, uid):
     if path.exists():
         return path
     try:
-        r = requests.get(url, timeout=60, headers={"User-Agent": "PaperTrail/1.0"})
+        r = requests.get(url, timeout=15, headers={"User-Agent": "PaperTrail/1.0"})
         r.raise_for_status()
         if not r.content.startswith(b"%PDF"):
             return None

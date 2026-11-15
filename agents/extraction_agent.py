@@ -36,7 +36,7 @@ def extract_one(paper):
     chunks = get_chunks(paper, uid)
     vs.add_chunks(uid, chunks)
 
-    record = {"uid": uid, "title": paper["title"], "authors": paper["authors"],
+    record = {"id": paper.get("id", uid), "uid": uid, "title": paper["title"], "authors": paper["authors"],
               "year": paper["year"], "abstract": paper["abstract"],
               "problem": "", "method": "", "datasets": [], "metrics": [],
               "limitations": [], "future_work": [], "evidence": []}

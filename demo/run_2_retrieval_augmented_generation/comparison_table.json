@@ -1,0 +1,52 @@
+[
+  {
+    "ref": "P1",
+    "title": "Rowen: Adaptive Retrieval-Augmented Generation for Hallucination Mitigation in LLMs",
+    "year": 2025,
+    "approach": "Group 2",
+    "method": "Hallucinations present a significant challenge for large language models (LLMs). The utilization of parametric knowledge in generating factual content is constrained by the limited knowledge of LLMs, potentially resulting in internal hallucinations. ",
+    "datasets": "",
+    "key results": "n/a",
+    "limitations": ""
+  },
+  {
+    "ref": "P2",
+    "title": "Stable-RAG: Mitigating Retrieval-Permutation-Induced Hallucinations in Retrieval-Augmented Generation",
+    "year": 2026,
+    "approach": "Group 1",
+    "method": "Retrieval-Augmented Generation (RAG) has become a key paradigm for reducing factual hallucinations in Large Language Models (LLMs), yet little is known about how the order of retrieved documents affects model behavior.We empirically show that under a",
+    "datasets": "",
+    "key results": "n/a",
+    "limitations": ""
+  },
+  {
+    "ref": "P3",
+    "title": "MultiRAG: A Knowledge-Guided Framework for Mitigating Hallucination in Multi-Source Retrieval Augmented Generation",
+    "year": 2025,
+    "approach": "Group 1",
+    "method": "Retrieval Augmented Generation (RAG) has emerged as a promising solution to address hallucination issues in Large Language Models (LLMs). However, the integration of multiple retrieval sources, while potentially more informative, introduces new chall",
+    "datasets": "",
+    "key results": "n/a",
+    "limitations": ""
+  },
+  {
+    "ref": "P4",
+    "title": "When Attention Escapes: Diagnosing and Mitigating Hallucination in Retrieval-Augmented Generation",
+    "year": 2026,
+    "approach": "Group 1",
+    "method": "Retrieval-Augmented Generation (RAG) mitigates hallucinations by grounding generation in retrieved evidence, yet failures persist when models underutilize the retrieved context.While prior work attributes this to conflicts between external context an",
+    "datasets": "",
+    "key results": "n/a",
+    "limitations": ""
+  },
+  {
+    "ref": "P5",
+    "title": "Hallucination in Large Language Models and Retrieval-Augmented Generation: Mechanisms, Mitigation, and Evaluation",
+    "year": 2026,
+    "approach": "Group 2",
+    "method": "Large language models have demonstrated strong generative capability in question answering, dialogue, and other knowledge-intensive tasks. However, their outputs remain vulnerable to hallucination, including factual errors, unsupported claims, spurio",
+    "datasets": "",
+    "key results": "n/a",
+    "limitations": ""
+  }
+]

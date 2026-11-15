@@ -41,6 +41,8 @@ def compare_papers(state):
         "Using ONLY this table, write 3 short bullet-point insights comparing the approaches. "
         "Cite papers like [P2]. Point out when results are on different datasets and cannot be "
         "compared directly.\n\n" + table_txt)
+    if not insights:
+        insights = "\n".join(f"- [{r['ref']}] utilizes {r['approach']} evaluated on {r['datasets'] or 'various benchmarks'}." for r in rows)
 
     return {"extracted": papers,
             "comparison": {"table": rows, "approach_names": names,

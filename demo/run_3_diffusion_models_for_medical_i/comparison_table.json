@@ -1,0 +1,52 @@
+[
+  {
+    "ref": "P1",
+    "title": "SSDiffusion: State-Space Diffusion Model for Medical Image Synthesis",
+    "year": 2025,
+    "approach": "Group 1",
+    "method": "Medical image synthesis enables imputation of missing slices from acquired modalities, thereby reducing the need for repetitive and prolonged procedures in diagnostics. However, this is a non-trivial task due to the ill-posed and nonlinear characteri",
+    "datasets": "",
+    "key results": "n/a",
+    "limitations": ""
+  },
+  {
+    "ref": "P2",
+    "title": "2D medical image synthesis using transformer-based denoising diffusion probabilistic model",
+    "year": 2023,
+    "approach": "Group 1",
+    "method": "Abstract Objective . Artificial intelligence (AI) methods have gained popularity in medical imaging research. The size and scope of the training image datasets needed for successful AI model deployment does not always have the desired scale. In this ",
+    "datasets": "",
+    "key results": "n/a",
+    "limitations": ""
+  },
+  {
+    "ref": "P3",
+    "title": "A multimodal comparison of latent denoising diffusion probabilistic models and generative adversarial networks for medical image synthesis",
+    "year": 2023,
+    "approach": "Group 1",
+    "method": "Although generative adversarial networks (GANs) can produce large datasets, their limited diversity and fidelity have been recently addressed by denoising diffusion probabilistic models, which have demonstrated superiority in natural image synthesis.",
+    "datasets": "",
+    "key results": "n/a",
+    "limitations": ""
+  },
+  {
+    "ref": "P4",
+    "title": "Measurement Guidance in Diffusion Models: Insight from Medical Image Synthesis",
+    "year": 2024,
+    "approach": "Group 2",
+    "method": "In the field of healthcare, the acquisition of sample is usually restricted by multiple considerations, including cost, labor- intensive annotation, privacy concerns, and radiation hazards, therefore, synthesizing images-of-interest is an important t",
+    "datasets": "",
+    "key results": "n/a",
+    "limitations": ""
+  },
+  {
+    "ref": "P5",
+    "title": "Latent Drifting in Diffusion Models for Counterfactual Medical Image Synthesis",
+    "year": 2025,
+    "approach": "Group 1",
+    "method": "Scaling by training on large datasets has been shown to enhance the quality and fidelity of image generation and manipulation with diffusion models; however, such large datasets are not always accessible in medical imaging due to cost and privacy iss",
+    "datasets": "",
+    "key results": "n/a",
+    "limitations": ""
+  }
+]

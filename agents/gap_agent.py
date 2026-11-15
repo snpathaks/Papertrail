@@ -79,8 +79,10 @@ def analyze_gaps(state):
         conf = "high" if ratio >= 0.5 else "medium" if ratio >= 0.3 else "low"
         if c["type"] in ("evaluation", "coverage") and conf == "high":
             conf = "medium"   # absence of evidence is weaker evidence
+        exp = out.explanation if (out and out.explanation) else f"The identified pattern indicates an underexplored dimension regarding {c['finding']}."
+        rq = out.research_question if (out and out.research_question) else f"How can future models effectively address {c['finding']}?"
         gaps.append({"type": c["type"], "finding": c["finding"],
-                     "explanation": out.explanation if out else "",
-                     "research_question": out.research_question if out else "",
+                     "explanation": exp,
+                     "research_question": rq,
                      "evidence_papers": c["papers"], "confidence": conf})
     return {"gaps": gaps}

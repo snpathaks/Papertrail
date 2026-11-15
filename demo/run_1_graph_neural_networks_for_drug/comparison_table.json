@@ -1,0 +1,52 @@
+[
+  {
+    "ref": "P1",
+    "title": "Knowledge mapping of graph neural networks for drug discovery: a bibliometric and visualized analysis",
+    "year": 2024,
+    "approach": "Group 1",
+    "method": "Introduction: In recent years, graph neural network has been extensively applied to drug discovery research. Although researchers have made significant progress in this field, there is less research on bibliometrics. The purpose of this study is to c",
+    "datasets": "",
+    "key results": "n/a",
+    "limitations": ""
+  },
+  {
+    "ref": "P2",
+    "title": "Reliable Graph Neural Networks for Drug Discovery Under Distributional Shift",
+    "year": 2021,
+    "approach": "Group 1",
+    "method": "The concern of overconfident mis-predictions under distributional shift demands extensive reliability research on Graph Neural Networks used in critical tasks in drug discovery. Here we first introduce CardioTox, a real-world benchmark on drug cardio",
+    "datasets": "",
+    "key results": "n/a",
+    "limitations": ""
+  },
+  {
+    "ref": "P3",
+    "title": "What is a Graph Neural Network in Drug Discovery? The AI Revolution in Pharmaceutical Research",
+    "year": 2023,
+    "approach": "Group 1",
+    "method": "What is a Graph Neural Network in Drug Discovery? The AI Revolution in Pharmaceutical Research Introduction: The Challenge of Drug Discovery Drug discov...",
+    "datasets": "",
+    "key results": "n/a",
+    "limitations": ""
+  },
+  {
+    "ref": "P4",
+    "title": "3D Equivariant Graph Neural Networks for Drug Discovery",
+    "year": 2020,
+    "approach": "Group 2",
+    "method": "In this talk I will first review a very useful machine learning tool for pharmaceutical applications: the Graph neural Network (GNN). A GNN analyses a signal on graph structured data, such as molecules or knowledge graphs. We then define the concept ",
+    "datasets": "",
+    "key results": "n/a",
+    "limitations": ""
+  },
+  {
+    "ref": "P5",
+    "title": "A Survey of Graph Neural Networks for Drug Discovery: Recent Developments and Challenges",
+    "year": 2025,
+    "approach": "Group 2",
+    "method": "Graph Neural Networks (GNNs) have gained traction in the complex domain of drug discovery because of their ability to process graph-structured data such as drug molecule models. This approach has resulted in a myriad of methods and models in publishe",
+    "datasets": "",
+    "key results": "n/a",
+    "limitations": ""
+  }
+]

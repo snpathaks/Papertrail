@@ -39,7 +39,7 @@ def search_openalex(query: str, max_results: int = 8) -> list[dict]:
             (pos, word) for word, poss in inv.items() for pos in poss))
         out.append({
             "id": w["id"], "title": w["title"],
-            "authors": [a["author"]["display_name"] for a in w.get("authorships", [])],
+            "authors": [a["author"]["display_name"] for a in w.get("authorships", []) if a.get("author") and a["author"].get("display_name")],
             "year": w.get("publication_year"), "abstract": abstract,
             "pdf_url": (w.get("best_oa_location") or {}).get("pdf_url"),
             "citations": w.get("cited_by_count"), "source": "openalex"})
