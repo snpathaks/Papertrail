@@ -4,7 +4,38 @@ PaperTrail is an autonomous, agentic research discovery and literature review sy
 
 ---
 
-## 🚀 Completed Work & Features
+## 📸 Demo & Sample Outputs (`demo/`)
+
+Sample outputs from verified end-to-end runs are stored directly in the [`demo/`](demo/) directory for reference:
+
+| File | Description | Link |
+| :--- | :--- | :--- |
+| **`demo_review.md`** | Complete generated academic literature review with inline citations (`[P1]`, `[P2]`) and formatted references. | [View Review](demo/demo_review.md) |
+| **`demo_comparison_table.json`** | Cross-paper methodology comparison matrix, mapped datasets, and approach family clusters. | [View Table](demo/demo_comparison_table.json) |
+| **`demo_gaps.json`** | Identified research gaps, statistical evidence, confidence scores, and proposed research questions. | [View Gaps](demo/demo_gaps.json) |
+
+All 3 complete smoke test runs are preserved under [`demo/run_1_...`](demo/run_1_graph_neural_networks_for_drug/), [`demo/run_2_...`](demo/run_2_retrieval_augmented_generation/), and [`demo/run_3_...`](demo/run_3_diffusion_models_for_medical_i/).
+
+---
+
+## 🧪 Smoke Test & Frozen Release (`v1-local`)
+
+The system was smoke-tested end-to-end across **3 diverse academic topics** with **5 papers each** and frozen under git tag `v1-local`:
+
+| Run | Research Topic | Discovered / Selected | Gaps Identified | Review Length | Citation Verification |
+| :---: | :--- | :---: | :---: | :---: | :---: |
+| **1** | `graph neural networks for drug discovery` | 10 / 5 papers | 5 gaps | 2,817 chars | **1.0 (10/10 verified)** |
+| **2** | `retrieval augmented generation hallucination mitigation` | 10 / 5 papers | 2 gaps | 2,362 chars | **1.0 (10/10 verified)** |
+| **3** | `diffusion models for medical image synthesis` | 10 / 5 papers | 3 gaps | 2,507 chars | **1.0 (10/10 verified)** |
+
+To check out the frozen working tag:
+```bash
+git checkout v1-local
+```
+
+---
+
+## 🚀 Completed Architecture & Features
 
 ### 1. Core Architecture & State Management
 - **Centralized Configuration (`config.py`)**: Configurable LLM models (`qwen2.5:3b`), embedding models (`nomic-embed-text`), Ollama endpoints, context window settings (`NUM_CTX = 4096`), and paper search thresholds.
@@ -35,7 +66,7 @@ PaperTrail is an autonomous, agentic research discovery and literature review sy
   - **OpenAlex API**: Full metadata, abstract reconstruction from inverted index, open-access PDF links, and citation counts.
   - **arXiv API**: Direct preprint retrieval via the official `arxiv` client.
 - **PDF Extraction (`tools/pdf_parser.py`)**:
-  - Automatic PDF downloader with User-Agent headers and PDF magic-byte validation.
+  - Automatic PDF downloader with User-Agent headers, 15-second timeouts, and PDF magic-byte validation.
   - Section-aware markdown conversion via `pymupdf4llm` preserving page numbers and section headings (`Front matter`, `Methodology`, `Results`, etc.).
   - Automatic fallback to abstracts if open-access PDFs are unavailable.
 - **Vector Store & Caching (`storage/`)**:
@@ -69,9 +100,46 @@ PaperTrail is an autonomous, agentic research discovery and literature review sy
   - **Literature Review**: Citation-verified formatted review with download buttons for Markdown (`.md`) and BibTeX (`.bib`).
   - **Evidence**: Interactive evidence inspector showing extracted quotes, source page numbers, and verification status.
 
-### 6. Testing, Evaluation & Git Hygiene
-- **Evaluation Suite (`eval/`)**: `eval_extraction.py` benchmarking dataset extraction F1 and quote verification rates against `gold_extraction.json`.
-- **Repository Cleanliness (`.gitignore`)**: Configured and committed `.gitignore` ignoring Python bytecode caches, virtual environments, SQLite databases, ChromaDB stores, and downloaded PDFs.
+---
+
+## 📂 Project Structure
+
+```
+Papertrail/
+├── app.py                      # Streamlit interactive frontend
+├── config.py                   # Central settings, models, paths & thresholds
+├── export.py                   # Markdown review & BibTeX export formatters
+├── graph.py                    # LangGraph Discovery & Analysis StateGraphs
+├── llm.py                      # Ollama client initialization & resilient fallbacks
+├── schemas.py                  # Pydantic data validation schemas
+├── state.py                    # TypedDict graph state definition
+├── verify.py                   # Citation support & hallucination verification
+├── requirements.txt            # Project dependencies
+├── .gitignore                  # Git ignore rules for caches, DBs, and runtime data
+├── agents/                     # Autonomous pipeline agents
+│   ├── search_agent.py         # Query expansion, search, & relevance filtering
+│   ├── extraction_agent.py     # Structured paper extraction & quote verification
+│   ├── comparison_agent.py     # Methodology clustering & comparison tables
+│   ├── gap_agent.py            # Algorithmic research gap detection
+│   └── writer_agent.py         # 5-section academic review drafting
+├── tools/                      # Core search, parsing, & ML tools
+│   ├── search_tools.py         # OpenAlex & arXiv search integrations
+│   ├── pdf_parser.py           # Downloader & pymupdf4llm section chunker
+│   └── cluster.py              # KMeans & TF-IDF clustering
+├── storage/                    # Persistence layers
+│   ├── db.py                   # SQLite key-value hash cache
+│   └── vectorstore.py          # ChromaDB chunk indexing & retrieval
+├── eval/                       # Benchmark & evaluation suite
+│   ├── eval_extraction.py      # Extraction F1 & quote verification benchmark
+│   └── gold_extraction.json    # Gold evaluation dataset
+└── demo/                       # Frozen smoke-test outputs & demo artifacts
+    ├── demo_review.md          # Sample generated literature review
+    ├── demo_comparison_table.json
+    ├── demo_gaps.json
+    ├── run_1_graph_neural_networks_for_drug/
+    ├── run_2_retrieval_augmented_generation/
+    └── run_3_diffusion_models_for_medical_i/
+```
 
 ---
 
@@ -108,7 +176,7 @@ Run the Streamlit application:
 streamlit run app.py
 ```
 
-### 4. Run Evaluation
+### 4. Run Evaluation Benchmark
 Run the extraction evaluation benchmark:
 ```bash
 python eval/eval_extraction.py

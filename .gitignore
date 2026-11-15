@@ -2,8 +2,6 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
-# C extensions
 *.so
 
 # Distribution / packaging
@@ -40,18 +38,24 @@ data/*
 !data/.gitkeep
 *.sqlite3
 *.db
-data/pdfs/*.pdf
-data/chroma/
+data/pdfs/*
+data/chroma/*
+
+# Local scratch / working temporary files
+scratch/
+*.log
 
 # Streamlit
-.streamlit/
+.streamlit/secrets.toml
 
 # Testing & coverage
 .pytest_cache/
 .coverage
 htmlcov/
+.cache/
 
-# Editor & OS files
+# Jupyter & Editor files
+.ipynb_checkpoints/
 .vscode/
 .idea/
 *.swp
@@ -59,3 +63,4 @@ htmlcov/
 *~
 .DS_Store
 Thumbs.db
+desktop.ini
