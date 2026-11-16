@@ -8,7 +8,11 @@ st.set_page_config(page_title="PaperTrail", layout="wide")
 st.title("PaperTrail: Research Discovery Agent")
 
 with st.sidebar:
-    st.caption(f"LLM: {config.LLM_MODEL}")
+    st.subheader("Configuration")
+    st.caption(f"Provider: **{config.LLM_PROVIDER.upper()}**")
+    active_model = config.GROQ_MODEL if config.LLM_PROVIDER == "groq" else config.GEMINI_MODEL if config.LLM_PROVIDER == "gemini" else config.LLM_MODEL
+    st.caption(f"Model: `{active_model}`")
+    st.caption(f"Vector Store: `{config.VECTOR_BACKEND}`")
     year_from = st.number_input("Only papers from year", 2000, 2026, 2018)
 
 query = st.text_input("Research topic", "transformer models for time-series forecasting")

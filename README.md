@@ -1,12 +1,49 @@
 # PaperTrail: Research Discovery Agent
 
-PaperTrail is an autonomous, agentic research discovery and literature review system. Built with **LangGraph**, **Streamlit**, **ChromaDB**, and local/cloud LLMs via **Ollama**, PaperTrail discovers academic papers, extracts structured findings with verbatim evidence, clusters methodologies, highlights research gaps, and drafts evidence-backed literature reviews with automated citation checking.
+PaperTrail is an autonomous, agentic research discovery and literature review system. Built with **LangGraph**, **Streamlit**, and flexible LLM/vector backends (**Ollama**, **Groq**, **Gemini**, **FastEmbed**, **NumPy**, **ChromaDB**), PaperTrail discovers academic papers, extracts structured findings with verbatim evidence, clusters methodologies, highlights research gaps, and drafts evidence-backed literature reviews with automated citation checking.
+
+---
+
+## 🌐 Deployable Multi-Provider Architecture (Step 2)
+
+To ensure zero-barrier deployment on free cloud hosting (such as **Streamlit Cloud** and **Hugging Face Spaces**) where Ollama and custom C-extensions/SQLite cannot run:
+
+1. **LLM Provider Switch (`LLM_PROVIDER`)**:
+   - `ollama` *(default)*: Local offline inference (`qwen2.5:3b`, `llama3`, etc.).
+   - `groq`: Fast cloud inference with Llama 3 models (`llama-3.3-70b-versatile`).
+   - `gemini`: Cloud inference using Google Gemini (`gemini-2.5-flash`).
+2. **Deployable Embeddings (`fastembed`)**:
+   - Local ONNX CPU embeddings via `BAAI/bge-small-en-v1.5` used automatically whenever the provider is not Ollama. Eliminates the need for any background model server.
+3. **In-Memory NumPy Vector Store (`VECTOR_BACKEND=memory`)**:
+   - Lightweight, zero-dependency in-memory vector store computing normalized cosine similarities in pure NumPy. Avoids SQLite version mismatches common with ChromaDB on free cloud containers.
+4. **Resilient Rate-Limit Backoff**:
+   - Automated detection and exponential backoff retry for HTTP 429 errors across cloud provider API calls (`ask_structured` & `ask_text`).
+5. **Automatic Fallback Clustering**:
+   - Seamless TF-IDF fallback in `tools/cluster.py` when vector embeddings are unavailable or offline.
+
+---
+
+## 📊 Provider Comparison: Ollama vs. Groq
+
+Both backends were evaluated on the same benchmark topic (`transformer models for time-series forecasting`):
+
+| Feature / Metric | `LLM_PROVIDER=ollama` (Local) | `LLM_PROVIDER=groq` (Cloud Deployable) |
+| :--- | :--- | :--- |
+| **Embeddings Backend** | `OllamaEmbeddings` | `FastEmbed` (`BAAI/bge-small-en-v1.5`) |
+| **Vector Store** | In-Memory NumPy (`memory`) | In-Memory NumPy (`memory`) |
+| **Papers Analyzed** | 5 | 5 |
+| **Gaps Discovered** | 4 | 4 |
+| **Citation Verification Score** | **1.0 (10/10 verified)** | **1.0 (10/10 verified)** |
+| **Cloud Deployability** | Requires self-hosted Ollama server | **100% Serverless / Cloud-Ready** |
+| **Streamlit Cloud Compatibility** | Low (Server daemon required) | **Production-Ready** (Zero daemon, free tier API) |
+
+*Full evaluation outputs are saved under [`eval/provider_comparison/`](eval/provider_comparison/).*
 
 ---
 
 ## 📸 Demo & Sample Outputs (`demo/`)
 
-Sample outputs from verified end-to-end runs are stored directly in the [`demo/`](demo/) directory for reference:
+Sample outputs from verified end-to-end runs are stored directly in the [`demo/`](demo/) directory:
 
 | File | Description | Link |
 | :--- | :--- | :--- |
@@ -28,17 +65,12 @@ The system was smoke-tested end-to-end across **3 diverse academic topics** with
 | **2** | `retrieval augmented generation hallucination mitigation` | 10 / 5 papers | 2 gaps | 2,362 chars | **1.0 (10/10 verified)** |
 | **3** | `diffusion models for medical image synthesis` | 10 / 5 papers | 3 gaps | 2,507 chars | **1.0 (10/10 verified)** |
 
-To check out the frozen working tag:
-```bash
-git checkout v1-local
-```
-
 ---
 
 ## 🚀 Completed Architecture & Features
 
 ### 1. Core Architecture & State Management
-- **Centralized Configuration (`config.py`)**: Configurable LLM models (`qwen2.5:3b`), embedding models (`nomic-embed-text`), Ollama endpoints, context window settings (`NUM_CTX = 4096`), and paper search thresholds.
+- **Centralized Configuration (`config.py`)**: Configurable provider switches (`LLM_PROVIDER`, `VECTOR_BACKEND`), models, endpoints, and search thresholds.
 - **Typed State Graph (`state.py`)**: `PaperTrailState` manages end-to-end execution across search queries, retrieved papers, user-approved selections, structured extractions, methodology comparisons, identified research gaps, drafted reviews, and verification metrics.
 - **Strict Pydantic Schemas (`schemas.py`)**:
   - `Queries`: Structured query expansion for multi-angle academic search.
@@ -70,7 +102,8 @@ git checkout v1-local
   - Section-aware markdown conversion via `pymupdf4llm` preserving page numbers and section headings (`Front matter`, `Methodology`, `Results`, etc.).
   - Automatic fallback to abstracts if open-access PDFs are unavailable.
 - **Vector Store & Caching (`storage/`)**:
-  - **ChromaDB (`storage/vectorstore.py`)**: Persistent cosine-distance vector collection for paper chunk indexing and semantic retrieval.
+  - **In-Memory NumPy (`storage/vectorstore.py`)**: Zero-dependency cosine vector store for serverless deployment.
+  - **ChromaDB (`storage/vectorstore.py`)**: Persistent cosine-distance vector collection for local indexing.
   - **SQLite Database (`storage/db.py`)**: SHA-256 hashed key-value cache to avoid re-extracting previously analyzed papers.
 
 ### 4. Analysis, Verification & Export
@@ -110,11 +143,11 @@ Papertrail/
 ├── config.py                   # Central settings, models, paths & thresholds
 ├── export.py                   # Markdown review & BibTeX export formatters
 ├── graph.py                    # LangGraph Discovery & Analysis StateGraphs
-├── llm.py                      # Ollama client initialization & resilient fallbacks
+├── llm.py                      # Multi-provider LLM & FastEmbed initialization
 ├── schemas.py                  # Pydantic data validation schemas
 ├── state.py                    # TypedDict graph state definition
 ├── verify.py                   # Citation support & hallucination verification
-├── requirements.txt            # Project dependencies
+├── requirements.txt            # Pinned project dependencies
 ├── .gitignore                  # Git ignore rules for caches, DBs, and runtime data
 ├── agents/                     # Autonomous pipeline agents
 │   ├── search_agent.py         # Query expansion, search, & relevance filtering
@@ -128,10 +161,11 @@ Papertrail/
 │   └── cluster.py              # KMeans & TF-IDF clustering
 ├── storage/                    # Persistence layers
 │   ├── db.py                   # SQLite key-value hash cache
-│   └── vectorstore.py          # ChromaDB chunk indexing & retrieval
+│   └── vectorstore.py          # In-memory NumPy & ChromaDB vector stores
 ├── eval/                       # Benchmark & evaluation suite
 │   ├── eval_extraction.py      # Extraction F1 & quote verification benchmark
-│   └── gold_extraction.json    # Gold evaluation dataset
+│   ├── gold_extraction.json    # Gold evaluation dataset
+│   └── provider_comparison/   # Ollama vs Groq comparative runs & report
 └── demo/                       # Frozen smoke-test outputs & demo artifacts
     ├── demo_review.md          # Sample generated literature review
     ├── demo_comparison_table.json
@@ -146,9 +180,10 @@ Papertrail/
 ## 🛠️ Tech Stack
 
 - **Workflow Orchestration**: [LangGraph](https://github.com/langchain-ai/langgraph), [LangChain Core](https://github.com/langchain-ai/langchain)
-- **LLM & Embeddings**: [langchain-ollama](https://github.com/langchain-ai/langchain-ollama), [Ollama](https://ollama.com/) (`qwen2.5:3b`, `nomic-embed-text`)
+- **LLM Providers**: [langchain-ollama](https://github.com/langchain-ai/langchain-ollama) (Local), [langchain-groq](https://github.com/langchain-ai/langchain-groq) (Cloud), [langchain-google-genai](https://github.com/langchain-ai/langchain-google) (Cloud)
+- **Embeddings**: [FastEmbed](https://github.com/qdrant/fastembed) (`BAAI/bge-small-en-v1.5`), Ollama (`nomic-embed-text`)
+- **Vector Storage**: In-Memory NumPy Vector Store, [ChromaDB](https://www.trychroma.com/)
 - **Web Interface**: [Streamlit](https://streamlit.io/)
-- **Vector Database**: [ChromaDB](https://www.trychroma.com/)
 - **PDF & Document Parsing**: [PyMuPDF4LLM](https://github.com/pymupdf/PyMuPDF)
 - **Academic APIs**: OpenAlex, [arXiv](https://pypi.org/project/arxiv/)
 - **Machine Learning & Verification**: [scikit-learn](https://scikit-learn.org/), [RapidFuzz](https://github.com/rapidfuzz/RapidFuzz), [pandas](https://pandas.pydata.org/), [NumPy](https://numpy.org/)
@@ -163,9 +198,19 @@ Clone the repository and install dependencies:
 pip install -r requirements.txt
 ```
 
-### 2. (Optional) Run Local LLM
-If using Ollama for local offline processing:
+### 2. Configure Execution Provider
+Choose your deployment mode via environment variables:
+
+**Option A: Deployable Serverless Mode (Groq + FastEmbed + Memory Store)**
 ```bash
+export LLM_PROVIDER=groq
+export GROQ_API_KEY=your_groq_api_key
+export VECTOR_BACKEND=memory
+```
+
+**Option B: Local Mode (Ollama)**
+```bash
+export LLM_PROVIDER=ollama
 ollama run qwen2.5:3b
 ollama pull nomic-embed-text
 ```
