@@ -1,5 +1,6 @@
+import re
+from collections import Counter, defaultdict
 import pandas as pd
-from collections import Counter
 from llm import ask_structured
 from schemas import GapExplanation
 from tools.cluster import cluster_texts
@@ -11,7 +12,40 @@ ASPECTS = {
     "interpretability": ["interpretab", "explainab"],
     "generalization": ["generaliz", "out-of-distribution", "cross-domain"],
 }
-PRIORITY = {"dataset": 0, "stated_limitation": 1, "evaluation": 2, "coverage": 3}
+PRIORITY = {"contradiction": 0, "dataset": 1, "stated_limitation": 2, "evaluation": 3, "coverage": 4}
+
+PERCENT_METRICS = ("accuracy", "f1", "precision", "recall", "auc")
+
+def _num(name, value):
+    m = re.search(r"\d+(?:\.\d+)?", str(value).replace(",", ""))
+    if not m:
+        return None
+    x = float(m.group())
+    if any(k in name.lower() for k in PERCENT_METRICS) and x <= 1:
+        x *= 100          # 0.942 -> 94.2
+    return x
+
+def find_contradictions(papers, min_diff=10):
+    groups = defaultdict(list)   # (dataset, metric) -> [(ref, value)]
+    for p in papers:
+        for m in p.get("metrics", []):
+            m_name = m["name"] if isinstance(m, dict) else getattr(m, "name", "")
+            m_val = m["value"] if isinstance(m, dict) else getattr(m, "value", "")
+            m_ds = m["dataset"] if isinstance(m, dict) else getattr(m, "dataset", "")
+            v = _num(m_name, m_val)
+            if v is not None and m_ds:
+                groups[(m_ds.lower(), m_name.lower())].append((p.get("ref", "P?"), v))
+    out = []
+    for (ds, metric), vals in groups.items():
+        if len({r for r, _ in vals}) >= 2:
+            lo, hi = min(vals, key=lambda x: x[1]), max(vals, key=lambda x: x[1])
+            if hi[1] - lo[1] >= min_diff:
+                out.append({"type": "contradiction",
+                    "finding": f"On '{ds}', {metric} ranges from {lo[1]:.1f} ({lo[0]}) to "
+                               f"{hi[1]:.1f} ({hi[0]}); differences may come from different "
+                               f"settings or baselines.",
+                    "papers": [lo[0], hi[0]]})
+    return out
 
 def _text(p):
     return " ".join([p["abstract"], p["method"], " ".join(p["limitations"]),
@@ -19,6 +53,7 @@ def _text(p):
 
 def find_candidates(papers, names):
     n, cands = len(papers), []
+    cands += find_contradictions(papers)
     ds = Counter(d.lower() for p in papers for d in set(p["datasets"]))
 
     # 1. dataset concentration
@@ -79,6 +114,8 @@ def analyze_gaps(state):
         conf = "high" if ratio >= 0.5 else "medium" if ratio >= 0.3 else "low"
         if c["type"] in ("evaluation", "coverage") and conf == "high":
             conf = "medium"   # absence of evidence is weaker evidence
+        if c["type"] == "contradiction":
+            conf = "high"
         exp = out.explanation if (out and out.explanation) else f"The identified pattern indicates an underexplored dimension regarding {c['finding']}."
         rq = out.research_question if (out and out.research_question) else f"How can future models effectively address {c['finding']}?"
         gaps.append({"type": c["type"], "finding": c["finding"],

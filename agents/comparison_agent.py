@@ -44,6 +44,13 @@ def compare_papers(state):
     if not insights:
         insights = "\n".join(f"- [{r['ref']}] utilizes {r['approach']} evaluated on {r['datasets'] or 'various benchmarks'}." for r in rows)
 
+    issues = state.get("issues", [])
+    for p in papers:
+        for iss in issues:
+            if iss.get("title") == p.get("title"):
+                iss["ref"] = p.get("ref", "")
+
     return {"extracted": papers,
             "comparison": {"table": rows, "approach_names": names,
-                           "shared_datasets": shared, "insights": insights}}
+                           "shared_datasets": shared, "insights": insights},
+            "issues": issues}

@@ -31,13 +31,17 @@ def extract_one(paper):
     key = make_key("extract", uid, config.LLM_MODEL)
     hit = cache_get(key)
     if hit:
+        hit.setdefault("pdf_fallback", False)
+        hit.setdefault("fallback_reason", None)
         return hit
 
-    chunks = get_chunks(paper, uid)
+    chunks, issue = get_chunks(paper, uid)
     vs.add_chunks(uid, chunks)
 
     record = {"id": paper.get("id", uid), "uid": uid, "title": paper["title"], "authors": paper["authors"],
               "year": paper["year"], "abstract": paper["abstract"],
+              "pdf_fallback": bool(issue),
+              "fallback_reason": issue["reason"] if issue else None,
               "problem": "", "method": "", "datasets": [], "metrics": [],
               "limitations": [], "future_work": [], "evidence": []}
 
@@ -61,4 +65,22 @@ def extract_one(paper):
     return record
 
 def extract_papers(state):
-    return {"extracted": [extract_one(p) for p in state["selected"]]}
+    selected = state.get("selected", [])
+    total = len(selected)
+    cb = state.get("progress_callback")
+    extracted = []
+    issues = []
+
+    for idx, p in enumerate(selected, 1):
+        if cb:
+            cb(f"Extracting {idx}/{total}")
+        rec = extract_one(p)
+        extracted.append(rec)
+        if rec.get("pdf_fallback"):
+            issues.append({
+                "ref": rec.get("ref", f"P{idx}"),
+                "title": rec.get("title", ""),
+                "reason": rec.get("fallback_reason", "Abstract-only fallback")
+            })
+
+    return {"extracted": extracted, "issues": issues}

@@ -98,9 +98,9 @@ The system was smoke-tested end-to-end across **3 diverse academic topics** with
   - **OpenAlex API**: Full metadata, abstract reconstruction from inverted index, open-access PDF links, and citation counts.
   - **arXiv API**: Direct preprint retrieval via the official `arxiv` client.
 - **PDF Extraction (`tools/pdf_parser.py`)**:
-  - Automatic PDF downloader with User-Agent headers, 15-second timeouts, and PDF magic-byte validation.
+  - Automatic PDF downloader with User-Agent headers, 30-second timeouts, and a 15 MB streaming size cap.
   - Section-aware markdown conversion via `pymupdf4llm` preserving page numbers and section headings (`Front matter`, `Methodology`, `Results`, etc.).
-  - Automatic fallback to abstracts if open-access PDFs are unavailable.
+  - Automatic fallback to abstracts if open-access PDFs are unavailable, oversized, or unparseable.
 - **Vector Store & Caching (`storage/`)**:
   - **In-Memory NumPy (`storage/vectorstore.py`)**: Zero-dependency cosine vector store for serverless deployment.
   - **ChromaDB (`storage/vectorstore.py`)**: Persistent cosine-distance vector collection for local indexing.
@@ -109,11 +109,12 @@ The system was smoke-tested end-to-end across **3 diverse academic topics** with
 ### 4. Analysis, Verification & Export
 - **Evidence Verification (`agents/extraction_agent.py`)**: Employs `rapidfuzz` partial-ratio fuzzy matching to verify that extracted quotes exist in the source document chunks (>= 85% match).
 - **Thematic Clustering (`tools/cluster.py`)**: KMeans clustering on paper methodology embeddings with an automatic TF-IDF fallback when offline.
-- **Algorithmic Gap Detection (`agents/gap_agent.py`)**:
-  - Dataset concentration analysis (over-reliance on benchmark datasets).
-  - Cross-tabulation coverage matrix (identifying unstudied methodology × dataset pairs).
-  - Aspect coverage analysis (robustness, efficiency, fairness, interpretability, generalization).
-  - Recurring limitation clustering.
+- **Algorithmic Gap & Contradiction Detection (`agents/gap_agent.py`)**:
+  - **Contradiction Detection**: Flags empirical performance divergences (>= 10 points on normalized metrics like accuracy, F1, precision, recall, AUC) on identical datasets between papers (e.g. `P1` vs `P2`), epistemically framed to account for differing experimental settings or baselines.
+  - **Dataset Concentration**: Identifies over-reliance on a single benchmark dataset.
+  - **Coverage Matrix**: Cross-tabulation identifying unstudied methodology × dataset pairs.
+  - **Aspect Coverage**: Evaluates coverage of robustness, efficiency, fairness, interpretability, and generalization.
+  - **Recurring Limitations**: Clusters stated limitations and proposed future work across papers.
 - **Citation Hallucination Checker (`verify.py`)**:
   - Verifies cited papers exist in the candidate pool.
   - Checks that numerical claims, percentages, and decimals match source evidence.
@@ -125,13 +126,18 @@ The system was smoke-tested end-to-end across **3 diverse academic topics** with
 ### 5. Interactive Streamlit App (`app.py`)
 - Two-phase interactive workflow:
   1. **Discovery & Human-in-the-Loop Curation**: Search papers by topic, filter by publication year, and review relevance reasons with an interactive editable table.
-  2. **Automated Deep Analysis**: Visual status tracker detailing agent execution across extraction, clustering, gap analysis, drafting, and verification.
-- Five dedicated result tabs:
-  - **Papers**: Summarized paper metadata, problem statements, and abstracts.
+  2. **Automated Deep Analysis**:
+     - **Per-Paper Live Progress**: Dynamic UI indicators (`Extracting 3/8: Title...`) during extraction.
+     - **Auto-Save Runs**: Saves completed analysis states to `runs/<timestamp>.json`.
+     - **Load Previous Runs**: Sidebar selector to reload and inspect previous runs instantly without re-running models.
+     - **Issues Panel**: Dedicated expander and tab reporting papers that fell back to abstract-only due to PDF download/parsing constraints.
+- Dedicated result tabs:
+  - **Papers**: Summarized paper metadata, problem statements, abstracts, and full-text/fallback badges.
   - **Comparison**: Interactive methodology matrix, approach clusters, and shared benchmark datasets.
-  - **Gaps**: Confidence-tagged research gaps with proposed research questions and supporting paper references.
+  - **Gaps**: Priority-ordered research gaps and empirical contradictions with proposed research questions.
   - **Literature Review**: Citation-verified formatted review with download buttons for Markdown (`.md`) and BibTeX (`.bib`).
   - **Evidence**: Interactive evidence inspector showing extracted quotes, source page numbers, and verification status.
+  - **Issues**: Complete audit table of all papers with extraction warnings or PDF fallbacks.
 
 ---
 
@@ -162,6 +168,11 @@ Papertrail/
 ├── storage/                    # Persistence layers
 │   ├── db.py                   # SQLite key-value hash cache
 │   └── vectorstore.py          # In-memory NumPy & ChromaDB vector stores
+├── runs/                       # Persisted JSON analysis run snapshots
+├── eval/                       # Evaluation & verification benchmarks
+│   ├── eval_extraction.py      # Dataset extraction & quote verification benchmark
+│   ├── test_step3.py           # Unit tests for contradictions, timeouts & fallbacks
+│   └── provider_comparison/    # Ollama vs. Groq benchmark artifacts
 ├── eval/                       # Benchmark & evaluation suite
 │   ├── eval_extraction.py      # Extraction F1 & quote verification benchmark
 │   ├── gold_extraction.json    # Gold evaluation dataset
