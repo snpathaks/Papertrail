@@ -5,11 +5,250 @@
       "title": "Informer: Beyond Efficient Transformer for Long Sequence Time-Series Forecasting",
       "authors": ["Haoyi Zhou", "Shanghang Zhang", "Jieqi Peng", "Shuai Zhang", "Jianxin Li", "Hui Xiong", "Wancai Zhang"],
       "year": 2021,
-      "abstract": "Many real-world applications require the prediction of long sequence time-series, such as electricity consumption planning. Long sequence time-series forecasting demands a high prediction capacity. In this paper, we propose Informer to address these issues with ProbSparse self-attention mechanism. Extensive experiments on four large-scale datasets demonstrate that Informer significantly outperforms existing methods.",
+      "abstract": "Many real-world applications require the prediction of long sequence time-series, such as electricity consumption planning. Long sequence time-series forecasting demands a high prediction capacity of the model, which is the ability to capture precise long-range dependency coupling between output and input efficiently. Recent studies have shown the potential of Transformer to increase the prediction capacity. However, there are several severe issues with Transformer that prevent it from being directly applicable to LSTF, including quadratic time complexity, high memory usage, and inherent limitation of the encoder-decoder architecture. To address these issues, we design an efficient transformer-based model for LSTF, named Informer, with three distinctive characteristics: (i) a ProbSparse self-attention mechanism, which achieves O(L log L) in time complexity and memory usage, (ii) the self-attention distilling highlights dominating attention by halving cascading layer input, and (iii) the generative style decoder, while conceptually simple, predicts the long time-series sequences at one forward operation rather than a step-by-step way, which drastically improves the inference speed of long-sequence predictions. Extensive experiments on four large-scale datasets demonstrate that Informer significantly outperforms existing methods and provides a new solution to the LSTF problem.",
       "pdf_url": null,
       "citations": 1500,
       "source": "arxiv"
     },
-    "datasets": ["ETT", "ECL", "Weather"]
+    "datasets": ["ETTh1", "ETTh2", "ETTm1", "ECL", "Weather"],
+    "main_metric": "MSE"
+  },
+  {
+    "paper": {
+      "id": "https://arxiv.org/abs/2106.13008",
+      "title": "Autoformer: Decomposition Transformers with Auto-Correlation for Long-Term Series Forecasting",
+      "authors": ["Haixu Wu", "Jiehui Xu", "Jianmin Wang", "Mingsheng Long"],
+      "year": 2021,
+      "abstract": "Forecasting long-term future series is a grand challenge in time-series analysis. Existing Transformer-based models adopt various self-attention mechanisms to discover the long-range dependencies. However, intricate temporal patterns of the long-term future prohibit the model from finding reliable dependencies. Also, Transformers have to handle the growing length of input series by adopting a sparse version of point-wise self-attention, which causes information utilization bottleneck. Going beyond Transformers, we design Autoformer as a novel decomposition architecture with an Auto-Correlation mechanism. We break with the pre-processing convention of series decomposition and renovate it as a basic inner block of deep models. This design empowers Autoformer with progressive decomposition capacity for complex time series. Further, inspired by the stochastic process theory, we design the Auto-Correlation mechanism based on the series periodicity, which conducts the dependencies discovery and representation aggregation at the sub-series level. Auto-Correlation inherently has the O(LlogL) complexity and can be seamlessly integrated with the decomposition architecture.",
+      "pdf_url": null,
+      "citations": 1100,
+      "source": "arxiv"
+    },
+    "datasets": ["ETTh1", "ETTh2", "ETTm1", "ETTm2", "ECL", "Weather", "Exchange"],
+    "main_metric": "MSE"
+  },
+  {
+    "paper": {
+      "id": "https://arxiv.org/abs/2202.07125",
+      "title": "FEDformer: Frequency Enhanced Decomposed Transformer for Long-term Series Forecasting",
+      "authors": ["Tian Zhou", "Ziqing Ma", "Qingsong Wen", "Xue Wang", "Liang Sun", "Rong Jin"],
+      "year": 2022,
+      "abstract": "Transformer-based models have shown great power in long-term time series forecasting. However, most Transformer-based models lack decomposition capability, which leads to sub-optimal results. Moreover, the self-attention mechanism in Transformers has quadratic complexity. To address these issues, we propose FEDformer, which integrates seasonal-trend decomposition into the overall Transformer architecture, and employs a novel frequency enhanced attention mechanism. Specifically, FEDformer uses a set of learnable frequencies for attention computation in the frequency domain, achieving O(L) complexity. Extensive experiments on six benchmarks demonstrate that FEDformer outperforms the state-of-the-art methods.",
+      "pdf_url": null,
+      "citations": 800,
+      "source": "arxiv"
+    },
+    "datasets": ["ETTh1", "ETTh2", "ETTm1", "ETTm2", "ECL", "Weather"],
+    "main_metric": "MSE"
+  },
+  {
+    "paper": {
+      "id": "https://arxiv.org/abs/2205.13504",
+      "title": "Are Transformers Effective for Time Series Forecasting?",
+      "authors": ["Ailing Zeng", "Muxi Chen", "Lei Zhang", "Qiang Xu"],
+      "year": 2023,
+      "abstract": "Recently, there has been a surge of Transformer-based solutions for the long-term time series forecasting (LTSF) task. Despite the growing popularity of these solutions, there is a lack of a comprehensive study on how well Transformers really perform for LTSF. In this paper, we present a surprising finding that a simple one-layer linear model outperforms all existing Transformer-based LTSF solutions. We propose DLinear, a simple yet effective decomposition linear model, which achieves significant improvement over the state-of-the-art. Experiments on nine benchmarks consistently demonstrate the effectiveness of DLinear.",
+      "pdf_url": null,
+      "citations": 900,
+      "source": "arxiv"
+    },
+    "datasets": ["ETTh1", "ETTh2", "ETTm1", "ETTm2", "ECL", "Weather", "Exchange", "Traffic", "ILI"],
+    "main_metric": "MSE"
+  },
+  {
+    "paper": {
+      "id": "https://arxiv.org/abs/2211.14730",
+      "title": "PatchTST: A Time Series is Worth 64 Words: Long-term Forecasting with Transformers",
+      "authors": ["Yuqi Nie", "Nam H. Nguyen", "Phanwadee Sinthong", "Jayant Kalagnanam"],
+      "year": 2023,
+      "abstract": "We propose an efficient design of Transformer-based models for multivariate time series forecasting and self-supervised representation learning. It is based on two key components: (i) segmentation of time series into subseries-level patches which are served as input tokens to Transformer; (ii) channel-independence where each channel contains a single univariate time series that shares the same embedding and Transformer weights across all the series. Patching design naturally has three-fold benefit: local semantic information is retained in the embedding; computation and memory usage of the attention maps are quadratically reduced given the same look-back window; and the model can attend longer history.",
+      "pdf_url": null,
+      "citations": 700,
+      "source": "arxiv"
+    },
+    "datasets": ["ETTh1", "ETTh2", "ETTm1", "ETTm2", "ECL", "Weather", "Traffic", "ILI"],
+    "main_metric": "MSE"
+  },
+  {
+    "paper": {
+      "id": "https://arxiv.org/abs/2310.06625",
+      "title": "iTransformer: Inverted Transformers Are Effective for Time Series Forecasting",
+      "authors": ["Yong Liu", "Tengge Hu", "Haoran Zhang", "Haixu Wu", "Shiyu Wang", "Lintao Ma", "Mingsheng Long"],
+      "year": 2024,
+      "abstract": "The recent boom of linear forecasting models questions the ongoing faith in architectural modifications of Transformer-based forecasters. These forecasters leverage Transformers to model the temporal token dependencies of multiple variates for time series. However, Transformers are challenged in capturing multivariate correlations and mainly encode the temporal dependencies of individual variates. To tackle this, we propose iTransformer that simply applies the attention and feed-forward network on the inverted dimensions. Specifically, the time points of individual series are embedded into variate tokens which are utilized by the attention mechanism to capture multivariate correlations.",
+      "pdf_url": null,
+      "citations": 400,
+      "source": "arxiv"
+    },
+    "datasets": ["ETTh1", "ETTh2", "ETTm1", "ETTm2", "ECL", "Weather", "Traffic"],
+    "main_metric": "MSE"
+  },
+  {
+    "paper": {
+      "id": "https://arxiv.org/abs/2001.08317",
+      "title": "Temporal Fusion Transformers for Interpretable Multi-horizon Time Series Forecasting",
+      "authors": ["Bryan Lim", "Sercan O. Arik", "Nicolas Loeff", "Tomas Pfister"],
+      "year": 2021,
+      "abstract": "Multi-horizon forecasting problems often contain a complex mix of inputs, including static (i.e. time-invariant) covariates, known future inputs, and other exogenous time series that are only observed historically. Several deep learning methods have been proposed, but they are typically architected for a single task and do not explicitly address the full range of multi-horizon forecasting complexity. We introduce the Temporal Fusion Transformer (TFT), a novel attention-based architecture which combines high-performance multi-horizon forecasting with interpretable insights into temporal dynamics.",
+      "pdf_url": null,
+      "citations": 2000,
+      "source": "arxiv"
+    },
+    "datasets": ["Electricity", "Traffic", "Retail", "Volatility"],
+    "main_metric": "P50 QL"
+  },
+  {
+    "paper": {
+      "id": "https://arxiv.org/abs/2310.01728",
+      "title": "TimeGPT-1",
+      "authors": ["Azul Garza", "Max Mergenthaler-Canseco"],
+      "year": 2024,
+      "abstract": "In this paper, we introduce TimeGPT, the first foundation model for time series, capable of generating accurate predictions for diverse datasets not seen during training. We evaluate our pre-trained model against established statistical, machine learning, and deep learning methods, demonstrating that TimeGPT zero-shot inference excels in performance, efficiency, and simplicity. Our study also sheds light on the emergence of zero-shot capabilities and validates the potential of LLMs for time series applications.",
+      "pdf_url": null,
+      "citations": 300,
+      "source": "arxiv"
+    },
+    "datasets": ["M1", "M3", "M4", "Tourism", "Electricity", "Traffic", "Weather"],
+    "main_metric": "MASE"
+  },
+  {
+    "paper": {
+      "id": "https://arxiv.org/abs/2302.11939",
+      "title": "Crossformer: Transformer Utilizing Cross-Dimension Dependency for Multivariate Time Series Forecasting",
+      "authors": ["Yunhao Zhang", "Junchi Yan"],
+      "year": 2023,
+      "abstract": "Multivariate time series forecasting is an important problem in many domains. It is essential to capture both the cross-time and cross-dimension dependency. However, most existing Transformer-based methods only focus on the temporal dependency. We propose Crossformer, a Transformer-based model that explicitly captures the cross-dimension dependency. Crossformer employs a Dimension-Segment-Wise embedding, Two-Stage-Attention layer, and Hierarchical Encoder-Decoder to effectively capture these dependencies.",
+      "pdf_url": null,
+      "citations": 250,
+      "source": "arxiv"
+    },
+    "datasets": ["ETTh1", "ETTh2", "ETTm1", "ETTm2", "ECL", "Weather", "Traffic"],
+    "main_metric": "MSE"
+  },
+  {
+    "paper": {
+      "id": "https://arxiv.org/abs/2310.06153",
+      "title": "TimesNet: Temporal 2D-Variation Modeling for General Time Series Analysis",
+      "authors": ["Haixu Wu", "Tengge Hu", "Yong Liu", "Hang Zhou", "Jianmin Wang", "Mingsheng Long"],
+      "year": 2023,
+      "abstract": "Time series analysis is of immense importance in extensive applications, such as weather forecasting, anomaly detection, and action recognition. This paper focuses on temporal variation modeling, which is the common key problem of extensive analysis tasks. Previous methods attempt to accomplish this directly from the 1D time series, which is extremely challenging due to the entanglement of temporal patterns. Based on the observation that temporal variations can be decomposed into multi-periodicity, we propose TimesNet to transform 1D time series into 2D tensors based on multiple periods, and then capture intraperiod and interperiod variations by a parameter-efficient inception block.",
+      "pdf_url": null,
+      "citations": 500,
+      "source": "arxiv"
+    },
+    "datasets": ["ETTh1", "ETTh2", "ETTm1", "ETTm2", "ECL", "Weather"],
+    "main_metric": "MSE"
+  },
+  {
+    "paper": {
+      "id": "https://arxiv.org/abs/2205.14415",
+      "title": "Non-stationary Transformers: Exploring the Stationarity in Time Series Forecasting",
+      "authors": ["Yong Liu", "Haixu Wu", "Jianmin Wang", "Mingsheng Long"],
+      "year": 2022,
+      "abstract": "Transformers have shown great power in time series forecasting due to their global-range modeling ability. However, their performance can degrade dramatically on non-stationary real-world data in which the joint distribution changes over time. Previous studies primarily adopt stationarization to attenuate the non-stationarity of original series for better predictability. But the stationarized series deprived of inherent non-stationarity can be less informative. To address the dilemma between series predictability and information utilization, we propose Non-stationary Transformers with two interdependent modules: Series Stationarization and De-stationary Attention.",
+      "pdf_url": null,
+      "citations": 350,
+      "source": "arxiv"
+    },
+    "datasets": ["ETTh1", "ETTh2", "ETTm1", "ETTm2", "ECL", "Weather", "Exchange"],
+    "main_metric": "MSE"
+  },
+  {
+    "paper": {
+      "id": "https://arxiv.org/abs/2308.11200",
+      "title": "SimMTM: A Simple Pre-Training Framework for Masked Time-Series Modeling",
+      "authors": ["Jiaxiang Dong", "Haixu Wu", "Haoran Zhang", "Li Zhang", "Jianmin Wang", "Mingsheng Long"],
+      "year": 2024,
+      "abstract": "Time series analysis is widely used in many fields. Recently, contrastive learning and masked modeling based pre-training approaches have been proposed to learn transferable representations. While masked modeling has demonstrated its outstanding capability in pre-training of natural language and images, it has not achieved comparable success on time series. We propose SimMTM, a Simple pre-training framework for Masked Time-series Modeling. By relating masked modeling to manifold learning, SimMTM proposes to reconstruct the masked time points by the weighted aggregation of neighbors outside the manifold, which eases the reconstruction task.",
+      "pdf_url": null,
+      "citations": 100,
+      "source": "arxiv"
+    },
+    "datasets": ["ETTh1", "ETTh2", "ETTm1", "ETTm2", "ECL", "Weather"],
+    "main_metric": "MSE"
+  },
+  {
+    "paper": {
+      "id": "https://arxiv.org/abs/2305.13091",
+      "title": "One Fits All: Power General Time Series Analysis by Pretrained LM",
+      "authors": ["Tian Zhou", "Peisong Niu", "Xue Wang", "Liang Sun", "Rong Jin"],
+      "year": 2023,
+      "abstract": "Although pre-trained models have achieved great success in NLP and CV, there is a lack of a general-purpose pre-trained model for time series analysis. In this paper, we present GPT2-based model for time series analysis, which is pre-trained on natural language and then adapted to time series tasks. We show that a frozen pre-trained Transformer with simple adaptations can achieve competitive or even superior performance in major time series analysis tasks including forecasting, classification, imputation and anomaly detection.",
+      "pdf_url": null,
+      "citations": 250,
+      "source": "arxiv"
+    },
+    "datasets": ["ETTh1", "ETTh2", "ETTm1", "ETTm2", "ECL", "Weather"],
+    "main_metric": "MSE"
+  },
+  {
+    "paper": {
+      "id": "https://arxiv.org/abs/2402.02368",
+      "title": "Time-LLM: Time Series Forecasting by Reprogramming Large Language Models",
+      "authors": ["Ming Jin", "Shiyu Wang", "Lintao Ma", "Zhixuan Chu", "James Y. Zhang", "Xiaoming Shi", "Pin-Yu Chen", "Yuxuan Liang", "Yuan-Fang Li", "Shirui Pan", "Qingsong Wen"],
+      "year": 2024,
+      "abstract": "Time series forecasting holds significant importance in many real-world dynamic systems. Large language models (LLMs) have recently shown surprising ability to handle time series data, which demonstrates great potential for time series forecasting. However, it remains unclear how to effectively leverage the pre-trained knowledge of LLMs for time series forecasting. We propose Time-LLM, a reprogramming framework to reprogram an existing, frozen LLM for general time series forecasting. Time-LLM consists of a reprogramming layer that transforms time series patches into text prototype representations.",
+      "pdf_url": null,
+      "citations": 200,
+      "source": "arxiv"
+    },
+    "datasets": ["ETTh1", "ETTh2", "ETTm1", "ETTm2", "ECL", "Weather"],
+    "main_metric": "MSE"
+  },
+  {
+    "paper": {
+      "id": "https://arxiv.org/abs/2206.14685",
+      "title": "Scaleformer: Iterative Multi-scale Refining Transformers for Time Series Forecasting",
+      "authors": ["Mohammad Amin Shabani", "Amir H. Abdi", "Lili Meng", "Tristan Sylvain"],
+      "year": 2023,
+      "abstract": "The performance of state-of-the-art Transformers for time series forecasting depends on the length of the input look-back window. In this paper, we present Scaleformer, a general-purpose framework for iterative multi-scale refining for time series forecasting. Specifically, Scaleformer adaptively processes time series at multiple scales using an iterative refinement approach. It takes as input the time series at the finest scale and iteratively generates forecasts from the coarsest to the finest scale. Each scale benefits from the forecasts at the immediately coarser scale.",
+      "pdf_url": null,
+      "citations": 120,
+      "source": "arxiv"
+    },
+    "datasets": ["ETTh1", "ETTh2", "ETTm1", "ETTm2", "ECL", "Weather", "Traffic", "ILI"],
+    "main_metric": "MSE"
+  },
+  {
+    "paper": {
+      "id": "https://arxiv.org/abs/2310.07820",
+      "title": "TEMPO: Prompt-based Generative Pre-trained Transformer for Time Series Forecasting",
+      "authors": ["Defu Cao", "Furong Jia", "Sercan O. Arik", "Tomas Pfister", "Yixiang Zheng", "Wen Ye", "Yan Liu"],
+      "year": 2024,
+      "abstract": "The past decade has witnessed significant advances in time series modeling with deep learning. While achieving state-of-the-art results, the best-performing architectures vary largely across applications and domains. Meanwhile, large pre-trained language foundation models have shown remarkable performance in natural language processing (NLP) tasks. It is therefore natural to ask: Can we develop a pre-trained large time series model (TEMPO) by leveraging the knowledge of pre-trained language models? In this work, we present TEMPO, a GPT-based foundation model for time series. TEMPO focuses on generative pre-training with prompts for time series forecasting.",
+      "pdf_url": null,
+      "citations": 150,
+      "source": "arxiv"
+    },
+    "datasets": ["ETTh1", "ETTh2", "ETTm1", "ETTm2", "ECL", "Weather"],
+    "main_metric": "MSE"
+  },
+  {
+    "paper": {
+      "id": "https://arxiv.org/abs/2305.10854",
+      "title": "Client: Cross-variable Linear Integrated Enhanced Transformer for Multivariate Long-Term Time Series Forecasting",
+      "authors": ["Gao Huang", "Shuai Yang", "Hongxia Xu"],
+      "year": 2023,
+      "abstract": "Multivariate long-term time series forecasting is a critical task in numerous real-world applications such as energy planning, weather prediction, and traffic management. However, existing methods either focus on temporal dependencies and ignore cross-variable correlations, or model all variable interactions indiscriminately. We propose Client, a Cross-variable Linear Integrated Enhanced Transformer that selectively captures cross-variable dependencies while maintaining computational efficiency. Experiments on standard benchmarks show that Client achieves state-of-the-art performance with lower computational overhead.",
+      "pdf_url": null,
+      "citations": 60,
+      "source": "arxiv"
+    },
+    "datasets": ["ETTh1", "ETTh2", "ETTm1", "ETTm2", "ECL", "Weather", "Exchange", "Traffic"],
+    "main_metric": "MSE"
+  },
+  {
+    "paper": {
+      "id": "https://arxiv.org/abs/2310.10688",
+      "title": "Lag-Llama: Towards Foundation Models for Probabilistic Time Series Forecasting",
+      "authors": ["Kashif Rasul", "Arjun Ashok", "Andrew Robert Williams", "Arian Khorasani", "George Adamopoulos", "Rishika Bhatt", "Ali Caner Turkmen", "Huibin Jia", "Leonardo Egidi", "Iryna Gurevych", "Marin Bilos", "Hena Ghonia", "Nadhir Hassen", "Anderson Schneider", "Sahil Garg", "Alexandre Drouin", "Nicolas Chapados", "Yuriy Nevmyvaka", "Irina Rish"],
+      "year": 2024,
+      "abstract": "We propose Lag-Llama, a foundation model for univariate probabilistic time series forecasting based on a decoder-only transformer architecture that uses lags as covariates. Lag-Llama is pretrained on a large corpus of time series data from diverse domains, and can be used for zero-shot forecasting and fine-tuning for specific tasks. We demonstrate the effectiveness of Lag-Llama on multiple benchmarks, where it shows strong performance compared to task-specific models.",
+      "pdf_url": null,
+      "citations": 180,
+      "source": "arxiv"
+    },
+    "datasets": ["M3", "M4", "Tourism", "Electricity", "Traffic", "Hospital"],
+    "main_metric": "CRPS"
   }
 ]

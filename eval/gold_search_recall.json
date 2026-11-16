@@ -1,0 +1,39 @@
+{
+  "transformer models for time-series forecasting": [
+    "Informer: Beyond Efficient Transformer for Long Sequence Time-Series Forecasting",
+    "Autoformer: Decomposition Transformers with Auto-Correlation for Long-Term Series Forecasting",
+    "FEDformer: Frequency Enhanced Decomposed Transformer for Long-term Series Forecasting",
+    "Are Transformers Effective for Time Series Forecasting?",
+    "PatchTST: A Time Series is Worth 64 Words: Long-term Forecasting with Transformers",
+    "iTransformer: Inverted Transformers Are Effective for Time Series Forecasting",
+    "Temporal Fusion Transformers for Interpretable Multi-horizon Time Series Forecasting",
+    "TimesNet: Temporal 2D-Variation Modeling for General Time Series Analysis",
+    "Non-stationary Transformers: Exploring the Stationarity in Time Series Forecasting",
+    "Crossformer: Transformer Utilizing Cross-Dimension Dependency for Multivariate Time Series Forecasting"
+  ],
+  "graph neural networks for drug discovery": [
+    "MoleculeNet: A Benchmark for Molecular Machine Learning",
+    "Neural Message Passing for Quantum Chemistry",
+    "Convolutional Networks on Graphs for Learning Molecular Fingerprints",
+    "Analyzing Learned Molecular Representations for Property Prediction",
+    "How Powerful are Graph Neural Networks?",
+    "SchNet: A Continuous-filter Convolutional Neural Network for Modeling Quantum Interactions",
+    "DimeNet: Directional Message Passing for Molecular Graphs",
+    "Strategies for Pre-training Graph Neural Networks",
+    "Communicating with Graph Neural Networks for Molecular Property Prediction",
+    "Geometry-enhanced molecular representation learning for property prediction",
+    "SphereNet: Learning a 3D Molecular Representation from Spherical Coordinates"
+  ],
+  "retrieval augmented generation hallucination mitigation": [
+    "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+    "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection",
+    "Chain-of-Note: Enhancing Robustness in Retrieval-Augmented Language Models",
+    "CRAG: Corrective Retrieval Augmented Generation",
+    "When Not to Trust Language Models: Investigating Effectiveness of Parametric and Non-Parametric Memories",
+    "FreshLLMs: Refreshing Large Language Models with Search Engine Augmentation",
+    "Active Retrieval Augmented Generation",
+    "REPLUG: Retrieval-Augmented Black-Box Language Models",
+    "Demonstrate-Search-Predict: Composing retrieval and language models for knowledge-intensive NLP",
+    "Lost in the Middle: How Language Models Use Long Contexts"
+  ]
+}

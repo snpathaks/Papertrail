@@ -1,0 +1,231 @@
+{
+  "automated_results": [
+    {
+      "provider": "ollama",
+      "automated_score": 1.0,
+      "fresh_score": 1.0,
+      "checked": 10,
+      "supported": 10,
+      "issues_count": 0,
+      "issues": [],
+      "total_cited_sentences": 10
+    },
+    {
+      "provider": "groq",
+      "automated_score": 1.0,
+      "fresh_score": 1.0,
+      "checked": 10,
+      "supported": 10,
+      "issues_count": 0,
+      "issues": [],
+      "total_cited_sentences": 10
+    }
+  ],
+  "manual_audit": {
+    "instructions": "For each sentence below, manually verify whether the citation supports the claim. Mark manual_verdict as 'correct' if the automated checker got it right, 'wrong' if the checker missed an error or flagged a correct sentence. Add notes.",
+    "sentences": [
+      {
+        "provider": "ollama",
+        "sentence": "## Thematic Analysis\n### Group 1\nThis approach group focuses on group 1 techniques: [P2] proposes This paper investigates the use of transformer models for time-series forecasting in the energy market, particularly foc.",
+        "citations": [
+          "P2"
+        ],
+        "automated_verdict": "supported",
+        "manual_verdict": "TODO",
+        "manual_notes": ""
+      },
+      {
+        "provider": "ollama",
+        "sentence": "[P3] proposes Long-term time series forecasting is important in energy scheduling, traffic management, meteorological monitoring, and .",
+        "citations": [
+          "P3"
+        ],
+        "automated_verdict": "supported",
+        "manual_verdict": "TODO",
+        "manual_notes": ""
+      },
+      {
+        "provider": "ollama",
+        "sentence": "### Group 2\nThis approach group focuses on group 2 techniques: [P1] proposes In this paper, we present a new approach to time series forecasting.",
+        "citations": [
+          "P1"
+        ],
+        "automated_verdict": "supported",
+        "manual_verdict": "TODO",
+        "manual_notes": ""
+      },
+      {
+        "provider": "ollama",
+        "sentence": "[P4] proposes Abstract Transformer-based models are very popular in time series forecasting because of their ability to capture contex.",
+        "citations": [
+          "P4"
+        ],
+        "automated_verdict": "supported",
+        "manual_verdict": "TODO",
+        "manual_notes": ""
+      },
+      {
+        "provider": "ollama",
+        "sentence": "[P5] proposes Time series forecasting, as an important research topic in time series analysis, plays a crucial role in many fields.",
+        "citations": [
+          "P5"
+        ],
+        "automated_verdict": "supported",
+        "manual_verdict": "TODO",
+        "manual_notes": ""
+      },
+      {
+        "provider": "ollama",
+        "sentence": "[P1] explores In this paper, we present a new approach to time series forecasting.",
+        "citations": [
+          "P1"
+        ],
+        "automated_verdict": "supported",
+        "manual_verdict": "TODO",
+        "manual_notes": ""
+      },
+      {
+        "provider": "ollama",
+        "sentence": "[P2] explores This paper investigates the use of transformer models for time-series forecasting in the energy mark.",
+        "citations": [
+          "P2"
+        ],
+        "automated_verdict": "supported",
+        "manual_verdict": "TODO",
+        "manual_notes": ""
+      },
+      {
+        "provider": "ollama",
+        "sentence": "[P3] explores Long-term time series forecasting is important in energy scheduling, traffic management, meteorologi.",
+        "citations": [
+          "P3"
+        ],
+        "automated_verdict": "supported",
+        "manual_verdict": "TODO",
+        "manual_notes": ""
+      },
+      {
+        "provider": "ollama",
+        "sentence": "[P4] explores Abstract Transformer-based models are very popular in time series forecasting because of their abili.",
+        "citations": [
+          "P4"
+        ],
+        "automated_verdict": "supported",
+        "manual_verdict": "TODO",
+        "manual_notes": ""
+      },
+      {
+        "provider": "ollama",
+        "sentence": "[P5] explores Time series forecasting, as an important research topic in time series analysis, plays a crucial rol.",
+        "citations": [
+          "P5"
+        ],
+        "automated_verdict": "supported",
+        "manual_verdict": "TODO",
+        "manual_notes": ""
+      },
+      {
+        "provider": "groq",
+        "sentence": "## Thematic Analysis\n### Group 1\nThis approach group focuses on group 1 techniques: [P1] proposes In this paper, we present a new approach to time series forecasting.",
+        "citations": [
+          "P1"
+        ],
+        "automated_verdict": "supported",
+        "manual_verdict": "TODO",
+        "manual_notes": ""
+      },
+      {
+        "provider": "groq",
+        "sentence": "[P3] proposes Long-term time series forecasting is important in energy scheduling, traffic management, meteorological monitoring, and .",
+        "citations": [
+          "P3"
+        ],
+        "automated_verdict": "supported",
+        "manual_verdict": "TODO",
+        "manual_notes": ""
+      },
+      {
+        "provider": "groq",
+        "sentence": "### Group 2\nThis approach group focuses on group 2 techniques: [P2] proposes This paper investigates the use of transformer models for time-series forecasting in the energy market, particularly foc.",
+        "citations": [
+          "P2"
+        ],
+        "automated_verdict": "supported",
+        "manual_verdict": "TODO",
+        "manual_notes": ""
+      },
+      {
+        "provider": "groq",
+        "sentence": "[P4] proposes Abstract Transformer-based models are very popular in time series forecasting because of their ability to capture contex.",
+        "citations": [
+          "P4"
+        ],
+        "automated_verdict": "supported",
+        "manual_verdict": "TODO",
+        "manual_notes": ""
+      },
+      {
+        "provider": "groq",
+        "sentence": "[P5] proposes Time series forecasting, as an important research topic in time series analysis, plays a crucial role in many fields.",
+        "citations": [
+          "P5"
+        ],
+        "automated_verdict": "supported",
+        "manual_verdict": "TODO",
+        "manual_notes": ""
+      },
+      {
+        "provider": "groq",
+        "sentence": "[P1] explores In this paper, we present a new approach to time series forecasting.",
+        "citations": [
+          "P1"
+        ],
+        "automated_verdict": "supported",
+        "manual_verdict": "TODO",
+        "manual_notes": ""
+      },
+      {
+        "provider": "groq",
+        "sentence": "[P2] explores This paper investigates the use of transformer models for time-series forecasting in the energy mark.",
+        "citations": [
+          "P2"
+        ],
+        "automated_verdict": "supported",
+        "manual_verdict": "TODO",
+        "manual_notes": ""
+      },
+      {
+        "provider": "groq",
+        "sentence": "[P3] explores Long-term time series forecasting is important in energy scheduling, traffic management, meteorologi.",
+        "citations": [
+          "P3"
+        ],
+        "automated_verdict": "supported",
+        "manual_verdict": "TODO",
+        "manual_notes": ""
+      },
+      {
+        "provider": "groq",
+        "sentence": "[P4] explores Abstract Transformer-based models are very popular in time series forecasting because of their abili.",
+        "citations": [
+          "P4"
+        ],
+        "automated_verdict": "supported",
+        "manual_verdict": "TODO",
+        "manual_notes": ""
+      },
+      {
+        "provider": "groq",
+        "sentence": "[P5] explores Time series forecasting, as an important research topic in time series analysis, plays a crucial rol.",
+        "citations": [
+          "P5"
+        ],
+        "automated_verdict": "supported",
+        "manual_verdict": "TODO",
+        "manual_notes": ""
+      }
+    ]
+  },
+  "checker_accuracy": null,
+  "note": "checker_accuracy is computed from manual_audit sentences where manual_verdict != TODO"
+}

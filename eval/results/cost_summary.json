@@ -1,0 +1,14 @@
+[
+  {
+    "provider": "groq",
+    "papers_analyzed": 5,
+    "verification_score": 1.0,
+    "gaps_found": 4
+  },
+  {
+    "provider": "ollama",
+    "papers_analyzed": 5,
+    "verification_score": 1.0,
+    "gaps_found": 4
+  }
+]
