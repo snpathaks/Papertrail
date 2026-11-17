@@ -13,3 +13,4 @@ rapidfuzz==3.14.6
 langchain-groq==1.2.0
 fastembed==0.9.1
 langchain-google-genai==4.5.0
+python-dotenv==1.0.1

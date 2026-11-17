@@ -1,6 +1,12 @@
 import os
 from pathlib import Path
 
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
 # LLM Provider switch: "ollama" (default) | "groq" | "gemini"
 LLM_PROVIDER = os.getenv("LLM_PROVIDER", "ollama").lower()
 
