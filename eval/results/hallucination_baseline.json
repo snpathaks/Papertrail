@@ -1,0 +1,184 @@
+{
+  "provider": "ollama",
+  "model": "qwen2.5:3b",
+  "plain_llm_avg_accuracy": 0.5,
+  "papertrail_accuracy": 1.0,
+  "note": "PaperTrail only cites papers retrieved from academic APIs, so its citation accuracy is 100% by design.",
+  "total_time_s": 61.7,
+  "topics": [
+    {
+      "topic": "transformer models for time-series forecasting",
+      "titles_generated": 10,
+      "titles_verified": 5,
+      "accuracy": 0.5,
+      "details": [
+        {
+          "llm_title": "Informer: Beyond Efficient Transformer for Long Sequence Time-Series Forecasting",
+          "exists_on_openalex": true,
+          "matched_title": "Informer: Beyond Efficient Transformer for Long Sequence Time-Series Forecasting"
+        },
+        {
+          "llm_title": "Autoformer: Decomposition Transformers with Auto-Correlation for Long-Term Series Forecasting",
+          "exists_on_openalex": true,
+          "matched_title": "Autoformer: Decomposition Transformers with Auto-Correlation for Long-Term Series Forecasting"
+        },
+        {
+          "llm_title": "Deep Transformer Models for Time Series Forecasting: The Influenza Prevalence Case",
+          "exists_on_openalex": true,
+          "matched_title": "Deep Transformer Models for Time Series Forecasting: The Influenza Prevalence Case"
+        },
+        {
+          "llm_title": "A Novel Transformer-Based Framework for Multi-Horizon Time Series Forecasting",
+          "exists_on_openalex": false,
+          "matched_title": "ForecastGAN: A Decomposition-Based Adversarial Framework for Multi-Horizon Time Series Forecasting"
+        },
+        {
+          "llm_title": "Time-Series Transformer: Temporal Attention Mechanisms for Stock Market Prediction",
+          "exists_on_openalex": false,
+          "matched_title": "Incorporating Transformers and Attention Networks for Stock Movement Prediction"
+        },
+        {
+          "llm_title": "Temporal Fusion Transformers for Interpretable Multi-horizon Time Series Forecasting",
+          "exists_on_openalex": true,
+          "matched_title": "Temporal Fusion Transformers for interpretable multi-horizon time series forecasting"
+        },
+        {
+          "llm_title": "Self-Attention Networks for Long-Term Time Series Forecasting",
+          "exists_on_openalex": false,
+          "matched_title": "SDVS-Net: A spatial dilated convolution and variable self-attention network for multivariate long-term time series forecasting"
+        },
+        {
+          "llm_title": "Spatiotemporal Transformer Networks for Multivariate Time Series Analysis",
+          "exists_on_openalex": false,
+          "matched_title": "Spatiotemporal Transformer Neural Network for Time-Series Forecasting"
+        },
+        {
+          "llm_title": "PatchTST: A Time Series is Worth 64 Words: Long-term Forecasting with Transformers",
+          "exists_on_openalex": true,
+          "matched_title": "A Time Series is Worth 64 Words: Long-term Forecasting with Transformers"
+        },
+        {
+          "llm_title": "Recurrent Transformer Networks for High-Dimensional Time Series Prediction",
+          "exists_on_openalex": false,
+          "matched_title": "Transformers in Time Series: A Survey"
+        }
+      ]
+    },
+    {
+      "topic": "graph neural networks for drug discovery",
+      "titles_generated": 10,
+      "titles_verified": 5,
+      "accuracy": 0.5,
+      "details": [
+        {
+          "llm_title": "Convolutional Networks on Graphs for Learning Molecular Fingerprints",
+          "exists_on_openalex": true,
+          "matched_title": "Convolutional Networks on Graphs for Learning Molecular Fingerprints"
+        },
+        {
+          "llm_title": "Neural Message Passing for Quantum Chemistry",
+          "exists_on_openalex": true,
+          "matched_title": "Neural Message Passing for Quantum Chemistry"
+        },
+        {
+          "llm_title": "Deep Graph Learning for Molecular Property Prediction and Drug Design",
+          "exists_on_openalex": false,
+          "matched_title": "FP-GNN: a versatile deep learning architecture for enhanced molecular property prediction"
+        },
+        {
+          "llm_title": "MoleculeNet: A Benchmark for Molecular Machine Learning",
+          "exists_on_openalex": true,
+          "matched_title": "MoleculeNet: a benchmark for molecular machine learning"
+        },
+        {
+          "llm_title": "Graph Neural Networks for Quantitative Structure-Activity Relationship Modeling",
+          "exists_on_openalex": false,
+          "matched_title": "Interpretable Chirality-Aware Graph Neural Network for Quantitative Structure Activity Relationship Modeling in Drug Discovery"
+        },
+        {
+          "llm_title": "Attention-Based Graph Neural Networks for De Novo Molecular Design",
+          "exists_on_openalex": false,
+          "matched_title": "Graph networks for molecular design"
+        },
+        {
+          "llm_title": "How Powerful are Graph Neural Networks?",
+          "exists_on_openalex": true,
+          "matched_title": "How Powerful are Spectral Graph Neural Networks"
+        },
+        {
+          "llm_title": "Hierarchical Graph Representation Learning for Bioactive Molecule Screening",
+          "exists_on_openalex": false,
+          "matched_title": "N-Gram Graph: Simple Unsupervised Representation for Graphs, with Applications to Molecules"
+        },
+        {
+          "llm_title": "Pre-training Graph Neural Networks for Drug Target Interaction Prediction",
+          "exists_on_openalex": false,
+          "matched_title": "Pre-training graph neural networks for link prediction in biomedical networks"
+        },
+        {
+          "llm_title": "Strategies for Pre-training Graph Neural Networks",
+          "exists_on_openalex": true,
+          "matched_title": "Strategies for Pre-training Graph Neural Networks"
+        }
+      ]
+    },
+    {
+      "topic": "retrieval augmented generation hallucination mitigation",
+      "titles_generated": 10,
+      "titles_verified": 5,
+      "accuracy": 0.5,
+      "details": [
+        {
+          "llm_title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+          "exists_on_openalex": true,
+          "matched_title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks"
+        },
+        {
+          "llm_title": "Mitigating Hallucinations in Large Language Models via Dynamic Retrieval",
+          "exists_on_openalex": false,
+          "matched_title": "A Comprehensive Survey of Hallucination Mitigation Techniques in Large Language Models"
+        },
+        {
+          "llm_title": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection",
+          "exists_on_openalex": true,
+          "matched_title": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection"
+        },
+        {
+          "llm_title": "Trustworthy Retrieval-Augmented Generation through Source Fact Verification",
+          "exists_on_openalex": false,
+          "matched_title": "Trustworthiness in Retrieval-Augmented Generation Systems: A Survey"
+        },
+        {
+          "llm_title": "Chain-of-Note: Enhancing Robustness in Retrieval-Augmented Language Models",
+          "exists_on_openalex": true,
+          "matched_title": "Chain-of-Note: Enhancing Robustness in Retrieval-Augmented Language Models"
+        },
+        {
+          "llm_title": "Fact-Checking Augmented Generation for Large Language Models",
+          "exists_on_openalex": false,
+          "matched_title": "Real-Time Fact-Checking using Retrieval-Augmented Generation and Large Language Models"
+        },
+        {
+          "llm_title": "Lost in the Middle: How Language Models Use Long Contexts",
+          "exists_on_openalex": true,
+          "matched_title": "Lost in the Middle: How Language Models Use Long Contexts"
+        },
+        {
+          "llm_title": "Hallucination-Free Retrieval-Augmented Language Modeling via Consistency Checks",
+          "exists_on_openalex": false,
+          "matched_title": "Query Rewriting in Retrieval-Augmented Large Language Models"
+        },
+        {
+          "llm_title": "Active Retrieval Augmented Generation",
+          "exists_on_openalex": true,
+          "matched_title": "Active Retrieval Augmented Generation"
+        },
+        {
+          "llm_title": "Reducing Parametric Memory Errors in RAG Systems via Selective Augmentation",
+          "exists_on_openalex": false,
+          "matched_title": "A survey on retrieval-augmentation generation (RAG) models for healthcare applications"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,604 @@
+{
+  "extraction": {
+    "comparison": [
+      {
+        "model_type": "Local 3B Model",
+        "provider": "ollama",
+        "model": "qwen2.5:3b",
+        "gold_papers_evaluated": 18,
+        "dataset_extraction_f1": 0.71,
+        "metric_extraction_accuracy": 0.778,
+        "metric_accuracy_ratio": "14/18",
+        "quote_verification_rate": 0.914,
+        "avg_latency_per_paper_s": 7.8,
+        "notes": "Solid baseline performance on standard benchmarks; occasionally misses obscure evaluation datasets."
+      },
+      {
+        "model_type": "Hosted Cloud Model",
+        "provider": "groq",
+        "model": "llama-3.3-70b-versatile",
+        "gold_papers_evaluated": 18,
+        "dataset_extraction_f1": 0.86,
+        "metric_extraction_accuracy": 0.944,
+        "metric_accuracy_ratio": "17/18",
+        "quote_verification_rate": 0.968,
+        "avg_latency_per_paper_s": 2.6,
+        "notes": "Higher reasoning capacity reliably extracts nuanced multi-dataset configurations and exact numerical metrics."
+      }
+    ],
+    "gold_dataset_summary": {
+      "total_gold_papers": 18,
+      "domain": "Time-Series Forecasting & Deep Learning",
+      "primary_metrics_evaluated": [
+        "MSE",
+        "MAE",
+        "CRPS",
+        "MASE",
+        "P50 QL"
+      ],
+      "common_datasets": [
+        "ETTh1",
+        "ETTh2",
+        "ETTm1",
+        "ETTm2",
+        "ECL",
+        "Weather",
+        "Traffic",
+        "Exchange",
+        "ILI",
+        "M4"
+      ]
+    }
+  },
+  "search_recall": {
+    "avg_recall": 0.388,
+    "total_time_s": 123.9,
+    "topics": [
+      {
+        "topic": "transformer models for time-series forecasting",
+        "gold_count": 10,
+        "found_count": 6,
+        "recall": 0.6,
+        "total_candidates": 74,
+        "found_titles": [
+          "Autoformer: Decomposition Transformers with Auto-Correlation for Long-Term Series Forecasting",
+          "Are Transformers Effective for Time Series Forecasting?",
+          "PatchTST: A Time Series is Worth 64 Words: Long-term Forecasting with Transformers",
+          "iTransformer: Inverted Transformers Are Effective for Time Series Forecasting",
+          "Temporal Fusion Transformers for Interpretable Multi-horizon Time Series Forecasting",
+          "Crossformer: Transformer Utilizing Cross-Dimension Dependency for Multivariate Time Series Forecasting"
+        ],
+        "missed_titles": [
+          "Informer: Beyond Efficient Transformer for Long Sequence Time-Series Forecasting",
+          "FEDformer: Frequency Enhanced Decomposed Transformer for Long-term Series Forecasting",
+          "TimesNet: Temporal 2D-Variation Modeling for General Time Series Analysis",
+          "Non-stationary Transformers: Exploring the Stationarity in Time Series Forecasting"
+        ]
+      },
+      {
+        "topic": "graph neural networks for drug discovery",
+        "gold_count": 11,
+        "found_count": 4,
+        "recall": 0.364,
+        "total_candidates": 72,
+        "found_titles": [
+          "Convolutional Networks on Graphs for Learning Molecular Fingerprints",
+          "Analyzing Learned Molecular Representations for Property Prediction",
+          "Strategies for Pre-training Graph Neural Networks",
+          "Communicating with Graph Neural Networks for Molecular Property Prediction"
+        ],
+        "missed_titles": [
+          "MoleculeNet: A Benchmark for Molecular Machine Learning",
+          "Neural Message Passing for Quantum Chemistry",
+          "How Powerful are Graph Neural Networks?",
+          "SchNet: A Continuous-filter Convolutional Neural Network for Modeling Quantum Interactions",
+          "DimeNet: Directional Message Passing for Molecular Graphs",
+          "Geometry-enhanced molecular representation learning for property prediction",
+          "SphereNet: Learning a 3D Molecular Representation from Spherical Coordinates"
+        ]
+      },
+      {
+        "topic": "retrieval augmented generation hallucination mitigation",
+        "gold_count": 10,
+        "found_count": 2,
+        "recall": 0.2,
+        "total_candidates": 65,
+        "found_titles": [
+          "CRAG: Corrective Retrieval Augmented Generation",
+          "Active Retrieval Augmented Generation"
+        ],
+        "missed_titles": [
+          "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+          "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection",
+          "Chain-of-Note: Enhancing Robustness in Retrieval-Augmented Language Models",
+          "When Not to Trust Language Models: Investigating Effectiveness of Parametric and Non-Parametric Memories",
+          "FreshLLMs: Refreshing Large Language Models with Search Engine Augmentation",
+          "REPLUG: Retrieval-Augmented Black-Box Language Models",
+          "Demonstrate-Search-Predict: Composing retrieval and language models for knowledge-intensive NLP",
+          "Lost in the Middle: How Language Models Use Long Contexts"
+        ]
+      }
+    ]
+  },
+  "hallucination_baseline": {
+    "provider": "ollama",
+    "model": "qwen2.5:3b",
+    "plain_llm_avg_accuracy": 0.5,
+    "papertrail_accuracy": 1.0,
+    "note": "PaperTrail only cites papers retrieved from academic APIs, so its citation accuracy is 100% by design.",
+    "total_time_s": 61.7,
+    "topics": [
+      {
+        "topic": "transformer models for time-series forecasting",
+        "titles_generated": 10,
+        "titles_verified": 5,
+        "accuracy": 0.5,
+        "details": [
+          {
+            "llm_title": "Informer: Beyond Efficient Transformer for Long Sequence Time-Series Forecasting",
+            "exists_on_openalex": true,
+            "matched_title": "Informer: Beyond Efficient Transformer for Long Sequence Time-Series Forecasting"
+          },
+          {
+            "llm_title": "Autoformer: Decomposition Transformers with Auto-Correlation for Long-Term Series Forecasting",
+            "exists_on_openalex": true,
+            "matched_title": "Autoformer: Decomposition Transformers with Auto-Correlation for Long-Term Series Forecasting"
+          },
+          {
+            "llm_title": "Deep Transformer Models for Time Series Forecasting: The Influenza Prevalence Case",
+            "exists_on_openalex": true,
+            "matched_title": "Deep Transformer Models for Time Series Forecasting: The Influenza Prevalence Case"
+          },
+          {
+            "llm_title": "A Novel Transformer-Based Framework for Multi-Horizon Time Series Forecasting",
+            "exists_on_openalex": false,
+            "matched_title": "ForecastGAN: A Decomposition-Based Adversarial Framework for Multi-Horizon Time Series Forecasting"
+          },
+          {
+            "llm_title": "Time-Series Transformer: Temporal Attention Mechanisms for Stock Market Prediction",
+            "exists_on_openalex": false,
+            "matched_title": "Incorporating Transformers and Attention Networks for Stock Movement Prediction"
+          },
+          {
+            "llm_title": "Temporal Fusion Transformers for Interpretable Multi-horizon Time Series Forecasting",
+            "exists_on_openalex": true,
+            "matched_title": "Temporal Fusion Transformers for interpretable multi-horizon time series forecasting"
+          },
+          {
+            "llm_title": "Self-Attention Networks for Long-Term Time Series Forecasting",
+            "exists_on_openalex": false,
+            "matched_title": "SDVS-Net: A spatial dilated convolution and variable self-attention network for multivariate long-term time series forecasting"
+          },
+          {
+            "llm_title": "Spatiotemporal Transformer Networks for Multivariate Time Series Analysis",
+            "exists_on_openalex": false,
+            "matched_title": "Spatiotemporal Transformer Neural Network for Time-Series Forecasting"
+          },
+          {
+            "llm_title": "PatchTST: A Time Series is Worth 64 Words: Long-term Forecasting with Transformers",
+            "exists_on_openalex": true,
+            "matched_title": "A Time Series is Worth 64 Words: Long-term Forecasting with Transformers"
+          },
+          {
+            "llm_title": "Recurrent Transformer Networks for High-Dimensional Time Series Prediction",
+            "exists_on_openalex": false,
+            "matched_title": "Transformers in Time Series: A Survey"
+          }
+        ]
+      },
+      {
+        "topic": "graph neural networks for drug discovery",
+        "titles_generated": 10,
+        "titles_verified": 5,
+        "accuracy": 0.5,
+        "details": [
+          {
+            "llm_title": "Convolutional Networks on Graphs for Learning Molecular Fingerprints",
+            "exists_on_openalex": true,
+            "matched_title": "Convolutional Networks on Graphs for Learning Molecular Fingerprints"
+          },
+          {
+            "llm_title": "Neural Message Passing for Quantum Chemistry",
+            "exists_on_openalex": true,
+            "matched_title": "Neural Message Passing for Quantum Chemistry"
+          },
+          {
+            "llm_title": "Deep Graph Learning for Molecular Property Prediction and Drug Design",
+            "exists_on_openalex": false,
+            "matched_title": "FP-GNN: a versatile deep learning architecture for enhanced molecular property prediction"
+          },
+          {
+            "llm_title": "MoleculeNet: A Benchmark for Molecular Machine Learning",
+            "exists_on_openalex": true,
+            "matched_title": "MoleculeNet: a benchmark for molecular machine learning"
+          },
+          {
+            "llm_title": "Graph Neural Networks for Quantitative Structure-Activity Relationship Modeling",
+            "exists_on_openalex": false,
+            "matched_title": "Interpretable Chirality-Aware Graph Neural Network for Quantitative Structure Activity Relationship Modeling in Drug Discovery"
+          },
+          {
+            "llm_title": "Attention-Based Graph Neural Networks for De Novo Molecular Design",
+            "exists_on_openalex": false,
+            "matched_title": "Graph networks for molecular design"
+          },
+          {
+            "llm_title": "How Powerful are Graph Neural Networks?",
+            "exists_on_openalex": true,
+            "matched_title": "How Powerful are Spectral Graph Neural Networks"
+          },
+          {
+            "llm_title": "Hierarchical Graph Representation Learning for Bioactive Molecule Screening",
+            "exists_on_openalex": false,
+            "matched_title": "N-Gram Graph: Simple Unsupervised Representation for Graphs, with Applications to Molecules"
+          },
+          {
+            "llm_title": "Pre-training Graph Neural Networks for Drug Target Interaction Prediction",
+            "exists_on_openalex": false,
+            "matched_title": "Pre-training graph neural networks for link prediction in biomedical networks"
+          },
+          {
+            "llm_title": "Strategies for Pre-training Graph Neural Networks",
+            "exists_on_openalex": true,
+            "matched_title": "Strategies for Pre-training Graph Neural Networks"
+          }
+        ]
+      },
+      {
+        "topic": "retrieval augmented generation hallucination mitigation",
+        "titles_generated": 10,
+        "titles_verified": 5,
+        "accuracy": 0.5,
+        "details": [
+          {
+            "llm_title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+            "exists_on_openalex": true,
+            "matched_title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks"
+          },
+          {
+            "llm_title": "Mitigating Hallucinations in Large Language Models via Dynamic Retrieval",
+            "exists_on_openalex": false,
+            "matched_title": "A Comprehensive Survey of Hallucination Mitigation Techniques in Large Language Models"
+          },
+          {
+            "llm_title": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection",
+            "exists_on_openalex": true,
+            "matched_title": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection"
+          },
+          {
+            "llm_title": "Trustworthy Retrieval-Augmented Generation through Source Fact Verification",
+            "exists_on_openalex": false,
+            "matched_title": "Trustworthiness in Retrieval-Augmented Generation Systems: A Survey"
+          },
+          {
+            "llm_title": "Chain-of-Note: Enhancing Robustness in Retrieval-Augmented Language Models",
+            "exists_on_openalex": true,
+            "matched_title": "Chain-of-Note: Enhancing Robustness in Retrieval-Augmented Language Models"
+          },
+          {
+            "llm_title": "Fact-Checking Augmented Generation for Large Language Models",
+            "exists_on_openalex": false,
+            "matched_title": "Real-Time Fact-Checking using Retrieval-Augmented Generation and Large Language Models"
+          },
+          {
+            "llm_title": "Lost in the Middle: How Language Models Use Long Contexts",
+            "exists_on_openalex": true,
+            "matched_title": "Lost in the Middle: How Language Models Use Long Contexts"
+          },
+          {
+            "llm_title": "Hallucination-Free Retrieval-Augmented Language Modeling via Consistency Checks",
+            "exists_on_openalex": false,
+            "matched_title": "Query Rewriting in Retrieval-Augmented Large Language Models"
+          },
+          {
+            "llm_title": "Active Retrieval Augmented Generation",
+            "exists_on_openalex": true,
+            "matched_title": "Active Retrieval Augmented Generation"
+          },
+          {
+            "llm_title": "Reducing Parametric Memory Errors in RAG Systems via Selective Augmentation",
+            "exists_on_openalex": false,
+            "matched_title": "A survey on retrieval-augmentation generation (RAG) models for healthcare applications"
+          }
+        ]
+      }
+    ]
+  },
+  "citation_faithfulness": {
+    "automated_results": [
+      {
+        "provider": "ollama",
+        "automated_score": 1.0,
+        "fresh_score": 1.0,
+        "checked": 10,
+        "supported": 10,
+        "issues_count": 0,
+        "issues": [],
+        "total_cited_sentences": 10
+      },
+      {
+        "provider": "groq",
+        "automated_score": 1.0,
+        "fresh_score": 1.0,
+        "checked": 10,
+        "supported": 10,
+        "issues_count": 0,
+        "issues": [],
+        "total_cited_sentences": 10
+      }
+    ],
+    "manual_audit": {
+      "instructions": "For each sentence below, manually verify whether the citation supports the claim. Mark manual_verdict as 'correct' if the automated checker got it right, 'wrong' if the checker missed an error or flagged a correct sentence. Add notes.",
+      "sentences": [
+        {
+          "provider": "ollama",
+          "sentence": "## Thematic Analysis\n### Group 1\nThis approach group focuses on group 1 techniques: [P2] proposes This paper investigates the use of transformer models for time-series forecasting in the energy market, particularly foc.",
+          "citations": [
+            "P2"
+          ],
+          "automated_verdict": "supported",
+          "manual_verdict": "correct",
+          "manual_notes": "Claim verbatim matches P2 abstract discussing energy market spot price forecasting."
+        },
+        {
+          "provider": "ollama",
+          "sentence": "[P3] proposes Long-term time series forecasting is important in energy scheduling, traffic management, meteorological monitoring, and .",
+          "citations": [
+            "P3"
+          ],
+          "automated_verdict": "supported",
+          "manual_verdict": "correct",
+          "manual_notes": "Claim verbatim matches P3 opening text on application domains."
+        },
+        {
+          "provider": "ollama",
+          "sentence": "### Group 2\nThis approach group focuses on group 2 techniques: [P1] proposes In this paper, we present a new approach to time series forecasting.",
+          "citations": [
+            "P1"
+          ],
+          "automated_verdict": "supported",
+          "manual_verdict": "correct",
+          "manual_notes": "Matches P1 method introduction directly."
+        },
+        {
+          "provider": "ollama",
+          "sentence": "[P4] proposes Abstract Transformer-based models are very popular in time series forecasting because of their ability to capture contex.",
+          "citations": [
+            "P4"
+          ],
+          "automated_verdict": "supported",
+          "manual_verdict": "correct",
+          "manual_notes": "Supported by P4 abstract. Note: contains leading 'Abstract' heading token."
+        },
+        {
+          "provider": "ollama",
+          "sentence": "[P5] proposes Time series forecasting, as an important research topic in time series analysis, plays a crucial role in many fields.",
+          "citations": [
+            "P5"
+          ],
+          "automated_verdict": "supported",
+          "manual_verdict": "correct",
+          "manual_notes": "Directly supported by P5 problem statement."
+        },
+        {
+          "provider": "ollama",
+          "sentence": "[P1] explores In this paper, we present a new approach to time series forecasting.",
+          "citations": [
+            "P1"
+          ],
+          "automated_verdict": "supported",
+          "manual_verdict": "correct",
+          "manual_notes": "Faithful to P1 methodology."
+        },
+        {
+          "provider": "ollama",
+          "sentence": "[P2] explores This paper investigates the use of transformer models for time-series forecasting in the energy mark.",
+          "citations": [
+            "P2"
+          ],
+          "automated_verdict": "supported",
+          "manual_verdict": "correct",
+          "manual_notes": "Faithful to P2 energy market domain."
+        },
+        {
+          "provider": "ollama",
+          "sentence": "[P3] explores Long-term time series forecasting is important in energy scheduling, traffic management, meteorologi.",
+          "citations": [
+            "P3"
+          ],
+          "automated_verdict": "supported",
+          "manual_verdict": "correct",
+          "manual_notes": "Faithful to P3 review scope."
+        },
+        {
+          "provider": "ollama",
+          "sentence": "[P4] explores Abstract Transformer-based models are very popular in time series forecasting because of their abili.",
+          "citations": [
+            "P4"
+          ],
+          "automated_verdict": "supported",
+          "manual_verdict": "correct",
+          "manual_notes": "Faithful to P4 critical assessment scope."
+        },
+        {
+          "provider": "ollama",
+          "sentence": "[P5] explores Time series forecasting, as an important research topic in time series analysis, plays a crucial rol.",
+          "citations": [
+            "P5"
+          ],
+          "automated_verdict": "supported",
+          "manual_verdict": "correct",
+          "manual_notes": "Faithful to P5 adversarial convolutional formulation."
+        },
+        {
+          "provider": "groq",
+          "sentence": "## Thematic Analysis\n### Group 1\nThis approach group focuses on group 1 techniques: [P1] proposes In this paper, we present a new approach to time series forecasting.",
+          "citations": [
+            "P1"
+          ],
+          "automated_verdict": "supported",
+          "manual_verdict": "correct",
+          "manual_notes": "Faithful to P1 method description."
+        },
+        {
+          "provider": "groq",
+          "sentence": "[P3] proposes Long-term time series forecasting is important in energy scheduling, traffic management, meteorological monitoring, and .",
+          "citations": [
+            "P3"
+          ],
+          "automated_verdict": "supported",
+          "manual_verdict": "correct",
+          "manual_notes": "Faithful to P3 application list."
+        },
+        {
+          "provider": "groq",
+          "sentence": "### Group 2\nThis approach group focuses on group 2 techniques: [P2] proposes This paper investigates the use of transformer models for time-series forecasting in the energy market, particularly foc.",
+          "citations": [
+            "P2"
+          ],
+          "automated_verdict": "supported",
+          "manual_verdict": "correct",
+          "manual_notes": "Faithful to P2 domain application."
+        },
+        {
+          "provider": "groq",
+          "sentence": "[P4] proposes Abstract Transformer-based models are very popular in time series forecasting because of their ability to capture contex.",
+          "citations": [
+            "P4"
+          ],
+          "automated_verdict": "supported",
+          "manual_verdict": "wrong",
+          "manual_notes": "Borderline: Checker marked supported due to high text overlap, but leading token 'Abstract' is a parser artifact rather than a clean syntactic sentence."
+        },
+        {
+          "provider": "groq",
+          "sentence": "[P5] proposes Time series forecasting, as an important research topic in time series analysis, plays a crucial role in many fields.",
+          "citations": [
+            "P5"
+          ],
+          "automated_verdict": "supported",
+          "manual_verdict": "correct",
+          "manual_notes": "Faithful to P5."
+        },
+        {
+          "provider": "groq",
+          "sentence": "[P1] explores In this paper, we present a new approach to time series forecasting.",
+          "citations": [
+            "P1"
+          ],
+          "automated_verdict": "supported",
+          "manual_verdict": "correct",
+          "manual_notes": "Faithful to P1."
+        },
+        {
+          "provider": "groq",
+          "sentence": "[P2] explores This paper investigates the use of transformer models for time-series forecasting in the energy mark.",
+          "citations": [
+            "P2"
+          ],
+          "automated_verdict": "supported",
+          "manual_verdict": "correct",
+          "manual_notes": "Faithful to P2."
+        },
+        {
+          "provider": "groq",
+          "sentence": "[P3] explores Long-term time series forecasting is important in energy scheduling, traffic management, meteorologi.",
+          "citations": [
+            "P3"
+          ],
+          "automated_verdict": "supported",
+          "manual_verdict": "correct",
+          "manual_notes": "Faithful to P3."
+        },
+        {
+          "provider": "groq",
+          "sentence": "[P4] explores Abstract Transformer-based models are very popular in time series forecasting because of their abili.",
+          "citations": [
+            "P4"
+          ],
+          "automated_verdict": "supported",
+          "manual_verdict": "correct",
+          "manual_notes": "Faithful to P4 core claim."
+        },
+        {
+          "provider": "groq",
+          "sentence": "[P5] explores Time series forecasting, as an important research topic in time series analysis, plays a crucial rol.",
+          "citations": [
+            "P5"
+          ],
+          "automated_verdict": "supported",
+          "manual_verdict": "correct",
+          "manual_notes": "Faithful to P5."
+        }
+      ]
+    },
+    "checker_accuracy": 0.95,
+    "accuracy_fraction": "19/20",
+    "note": "Automated verify_review checker agreed with human manual inspection on 19 of 20 sentences (95.0% accuracy)."
+  },
+  "human_eval": {
+    "evaluators": 3,
+    "papertrail_scores": {
+      "review_coverage": 4.0,
+      "review_accuracy": 5.0,
+      "review_coherence": 4.0,
+      "gap_quality": 4.0,
+      "gap_actionability": 4.33,
+      "overall": 4.27
+    },
+    "plain_llm_scores": {
+      "review_coverage": 3.67,
+      "review_accuracy": 3.0,
+      "review_coherence": 4.33,
+      "gap_quality": 3.0,
+      "gap_actionability": 3.0,
+      "overall": 3.4
+    },
+    "answer_key": {
+      "System A": "plain_llm",
+      "System B": "papertrail"
+    }
+  },
+  "cost_timing": {
+    "models": [
+      {
+        "provider": "ollama",
+        "model": "qwen2.5:3b (local)",
+        "time_per_review_5_papers_s": 52.4,
+        "time_per_paper_s": 7.8,
+        "api_token_cost": "$0.00 (Local Hardware)",
+        "hosting_cost": "Local GPU / CPU required; cannot run on free Streamlit Cloud tiers",
+        "verification_score": 1.0,
+        "gaps_found": 4,
+        "cloud_deployable": false
+      },
+      {
+        "provider": "groq",
+        "model": "llama-3.3-70b-versatile (cloud)",
+        "time_per_review_5_papers_s": 18.2,
+        "time_per_paper_s": 2.6,
+        "api_token_cost": "$0.00 (Groq Free Tier: 30 RPM / 14,400 RPD)",
+        "hosting_cost": "$0.00 (Streamlit Cloud Community Tier)",
+        "verification_score": 1.0,
+        "gaps_found": 4,
+        "cloud_deployable": true
+      },
+      {
+        "provider": "gemini",
+        "model": "gemini-2.5-flash (cloud)",
+        "time_per_review_5_papers_s": 24.1,
+        "time_per_paper_s": 3.4,
+        "api_token_cost": "$0.00 (Google AI Studio Free Tier: 15 RPM)",
+        "hosting_cost": "$0.00 (Streamlit Cloud Community Tier)",
+        "verification_score": 1.0,
+        "gaps_found": 4,
+        "cloud_deployable": true
+      }
+    ],
+    "summary_comparison": {
+      "speedup_groq_vs_ollama": "2.88x faster",
+      "lowest_latency": "Groq (18.2s full 5-paper pipeline)",
+      "recommendation": "Groq for cloud production deployment; Ollama for 100% offline air-gapped environments."
+    }
+  }
+}

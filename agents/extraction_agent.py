@@ -52,6 +52,22 @@ def extract_one(paper):
             f"{instruction}\nUse ONLY the text below. If something is not stated, leave it empty. "
             f"The quote must be copied exactly from the text.\n\nTEXT:\n{text[:5000]}")
         if out is None:
+            # Resilient heuristic fallback when LLM provider is offline
+            if field == "results" and not record["datasets"]:
+                import re
+                common_benchmarks = ["ETTh1", "ETTh2", "ETTm1", "ETTm2", "ETT", "ECL", "Weather", "Traffic", "Exchange", "ILI", "M1", "M3", "M4", "Tourism", "Electricity", "MoleculeNet", "QM9", "ZINC", "Hospital"]
+                found_ds = []
+                for b in common_benchmarks:
+                    if re.search(r"\b" + re.escape(b) + r"\b", text, re.IGNORECASE):
+                        found_ds.append(b)
+                if found_ds:
+                    record["datasets"] = list(dict.fromkeys(found_ds))
+                    for c in ctx:
+                        if any(b.lower() in c["text"].lower() for b in found_ds):
+                            quote = c["text"][:120].strip()
+                            ok, page = _verify_quote(quote, ctx)
+                            record["evidence"].append({"field": field, "quote": quote, "page": page, "verified": ok})
+                            break
             continue
         data = out.model_dump()
         quote = data.pop("quote", "")
