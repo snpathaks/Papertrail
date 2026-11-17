@@ -1,138 +1,384 @@
 {
   "extraction": {
-    "comparison": [
+    "provider": "groq",
+    "model": "qwen/qwen3.8-27b",
+    "papers_evaluated": 18,
+    "avg_dataset_f1": 0.038,
+    "quote_verification_rate": 1.0,
+    "total_time_s": 0.0,
+    "per_paper_s": 0.0,
+    "details": [
       {
-        "model_type": "Local 3B Model",
-        "provider": "ollama",
-        "model": "qwen2.5:3b",
-        "gold_papers_evaluated": 18,
-        "dataset_extraction_f1": 0.71,
-        "metric_extraction_accuracy": 0.778,
-        "metric_accuracy_ratio": "14/18",
-        "quote_verification_rate": 0.914,
-        "avg_latency_per_paper_s": 7.8,
-        "notes": "Solid baseline performance on standard benchmarks; occasionally misses obscure evaluation datasets."
+        "title": "Informer: Beyond Efficient Transformer for Long Sequence Time-Series Forecasting",
+        "gold_datasets": [
+          "ETTh1",
+          "ETTh2",
+          "ETTm1",
+          "ECL",
+          "Weather"
+        ],
+        "pred_datasets": [],
+        "dataset_f1": 0.0,
+        "evidence_verified": 0,
+        "evidence_total": 0
       },
       {
-        "model_type": "Hosted Cloud Model",
-        "provider": "groq",
-        "model": "llama-3.3-70b-versatile",
-        "gold_papers_evaluated": 18,
-        "dataset_extraction_f1": 0.86,
-        "metric_extraction_accuracy": 0.944,
-        "metric_accuracy_ratio": "17/18",
-        "quote_verification_rate": 0.968,
-        "avg_latency_per_paper_s": 2.6,
-        "notes": "Higher reasoning capacity reliably extracts nuanced multi-dataset configurations and exact numerical metrics."
+        "title": "Autoformer: Decomposition Transformers with Auto-Correlation for Long-Term Serie",
+        "gold_datasets": [
+          "ETTh1",
+          "ETTh2",
+          "ETTm1",
+          "ETTm2",
+          "ECL",
+          "Weather",
+          "Exchange"
+        ],
+        "pred_datasets": [],
+        "dataset_f1": 0.0,
+        "evidence_verified": 0,
+        "evidence_total": 0
+      },
+      {
+        "title": "FEDformer: Frequency Enhanced Decomposed Transformer for Long-term Series Foreca",
+        "gold_datasets": [
+          "ETTh1",
+          "ETTh2",
+          "ETTm1",
+          "ETTm2",
+          "ECL",
+          "Weather"
+        ],
+        "pred_datasets": [],
+        "dataset_f1": 0.0,
+        "evidence_verified": 0,
+        "evidence_total": 0
+      },
+      {
+        "title": "Are Transformers Effective for Time Series Forecasting?",
+        "gold_datasets": [
+          "ETTh1",
+          "ETTh2",
+          "ETTm1",
+          "ETTm2",
+          "ECL",
+          "Weather",
+          "Exchange",
+          "Traffic",
+          "ILI"
+        ],
+        "pred_datasets": [],
+        "dataset_f1": 0.0,
+        "evidence_verified": 0,
+        "evidence_total": 0
+      },
+      {
+        "title": "PatchTST: A Time Series is Worth 64 Words: Long-term Forecasting with Transforme",
+        "gold_datasets": [
+          "ETTh1",
+          "ETTh2",
+          "ETTm1",
+          "ETTm2",
+          "ECL",
+          "Weather",
+          "Traffic",
+          "ILI"
+        ],
+        "pred_datasets": [],
+        "dataset_f1": 0.0,
+        "evidence_verified": 0,
+        "evidence_total": 0
+      },
+      {
+        "title": "iTransformer: Inverted Transformers Are Effective for Time Series Forecasting",
+        "gold_datasets": [
+          "ETTh1",
+          "ETTh2",
+          "ETTm1",
+          "ETTm2",
+          "ECL",
+          "Weather",
+          "Traffic"
+        ],
+        "pred_datasets": [],
+        "dataset_f1": 0.0,
+        "evidence_verified": 0,
+        "evidence_total": 0
+      },
+      {
+        "title": "Temporal Fusion Transformers for Interpretable Multi-horizon Time Series Forecas",
+        "gold_datasets": [
+          "Electricity",
+          "Traffic",
+          "Retail",
+          "Volatility"
+        ],
+        "pred_datasets": [],
+        "dataset_f1": 0.0,
+        "evidence_verified": 0,
+        "evidence_total": 0
+      },
+      {
+        "title": "TimeGPT-1",
+        "gold_datasets": [
+          "M1",
+          "M3",
+          "M4",
+          "Tourism",
+          "Electricity",
+          "Traffic",
+          "Weather"
+        ],
+        "pred_datasets": [],
+        "dataset_f1": 0.0,
+        "evidence_verified": 0,
+        "evidence_total": 0
+      },
+      {
+        "title": "Crossformer: Transformer Utilizing Cross-Dimension Dependency for Multivariate T",
+        "gold_datasets": [
+          "ETTh1",
+          "ETTh2",
+          "ETTm1",
+          "ETTm2",
+          "ECL",
+          "Weather",
+          "Traffic"
+        ],
+        "pred_datasets": [],
+        "dataset_f1": 0.0,
+        "evidence_verified": 0,
+        "evidence_total": 0
+      },
+      {
+        "title": "TimesNet: Temporal 2D-Variation Modeling for General Time Series Analysis",
+        "gold_datasets": [
+          "ETTh1",
+          "ETTh2",
+          "ETTm1",
+          "ETTm2",
+          "ECL",
+          "Weather"
+        ],
+        "pred_datasets": [
+          "Weather"
+        ],
+        "dataset_f1": 0.286,
+        "evidence_verified": 1,
+        "evidence_total": 1
+      },
+      {
+        "title": "Non-stationary Transformers: Exploring the Stationarity in Time Series Forecasti",
+        "gold_datasets": [
+          "ETTh1",
+          "ETTh2",
+          "ETTm1",
+          "ETTm2",
+          "ECL",
+          "Weather",
+          "Exchange"
+        ],
+        "pred_datasets": [],
+        "dataset_f1": 0.0,
+        "evidence_verified": 0,
+        "evidence_total": 0
+      },
+      {
+        "title": "SimMTM: A Simple Pre-Training Framework for Masked Time-Series Modeling",
+        "gold_datasets": [
+          "ETTh1",
+          "ETTh2",
+          "ETTm1",
+          "ETTm2",
+          "ECL",
+          "Weather"
+        ],
+        "pred_datasets": [],
+        "dataset_f1": 0.0,
+        "evidence_verified": 0,
+        "evidence_total": 0
+      },
+      {
+        "title": "One Fits All: Power General Time Series Analysis by Pretrained LM",
+        "gold_datasets": [
+          "ETTh1",
+          "ETTh2",
+          "ETTm1",
+          "ETTm2",
+          "ECL",
+          "Weather"
+        ],
+        "pred_datasets": [],
+        "dataset_f1": 0.0,
+        "evidence_verified": 0,
+        "evidence_total": 0
+      },
+      {
+        "title": "Time-LLM: Time Series Forecasting by Reprogramming Large Language Models",
+        "gold_datasets": [
+          "ETTh1",
+          "ETTh2",
+          "ETTm1",
+          "ETTm2",
+          "ECL",
+          "Weather"
+        ],
+        "pred_datasets": [],
+        "dataset_f1": 0.0,
+        "evidence_verified": 0,
+        "evidence_total": 0
+      },
+      {
+        "title": "Scaleformer: Iterative Multi-scale Refining Transformers for Time Series Forecas",
+        "gold_datasets": [
+          "ETTh1",
+          "ETTh2",
+          "ETTm1",
+          "ETTm2",
+          "ECL",
+          "Weather",
+          "Traffic",
+          "ILI"
+        ],
+        "pred_datasets": [],
+        "dataset_f1": 0.0,
+        "evidence_verified": 0,
+        "evidence_total": 0
+      },
+      {
+        "title": "TEMPO: Prompt-based Generative Pre-trained Transformer for Time Series Forecasti",
+        "gold_datasets": [
+          "ETTh1",
+          "ETTh2",
+          "ETTm1",
+          "ETTm2",
+          "ECL",
+          "Weather"
+        ],
+        "pred_datasets": [],
+        "dataset_f1": 0.0,
+        "evidence_verified": 0,
+        "evidence_total": 0
+      },
+      {
+        "title": "Client: Cross-variable Linear Integrated Enhanced Transformer for Multivariate L",
+        "gold_datasets": [
+          "ETTh1",
+          "ETTh2",
+          "ETTm1",
+          "ETTm2",
+          "ECL",
+          "Weather",
+          "Exchange",
+          "Traffic"
+        ],
+        "pred_datasets": [
+          "Weather",
+          "Traffic"
+        ],
+        "dataset_f1": 0.4,
+        "evidence_verified": 1,
+        "evidence_total": 1
+      },
+      {
+        "title": "Lag-Llama: Towards Foundation Models for Probabilistic Time Series Forecasting",
+        "gold_datasets": [
+          "M3",
+          "M4",
+          "Tourism",
+          "Electricity",
+          "Traffic",
+          "Hospital"
+        ],
+        "pred_datasets": [],
+        "dataset_f1": 0.0,
+        "evidence_verified": 0,
+        "evidence_total": 0
       }
-    ],
-    "gold_dataset_summary": {
-      "total_gold_papers": 18,
-      "domain": "Time-Series Forecasting & Deep Learning",
-      "primary_metrics_evaluated": [
-        "MSE",
-        "MAE",
-        "CRPS",
-        "MASE",
-        "P50 QL"
-      ],
-      "common_datasets": [
-        "ETTh1",
-        "ETTh2",
-        "ETTm1",
-        "ETTm2",
-        "ECL",
-        "Weather",
-        "Traffic",
-        "Exchange",
-        "ILI",
-        "M4"
-      ]
-    }
+    ]
   },
   "search_recall": {
-    "avg_recall": 0.388,
-    "total_time_s": 123.9,
+    "avg_recall": 0.676,
+    "total_time_s": 279.8,
     "topics": [
       {
         "topic": "transformer models for time-series forecasting",
         "gold_count": 10,
-        "found_count": 6,
-        "recall": 0.6,
-        "total_candidates": 74,
+        "found_count": 7,
+        "recall": 0.7,
+        "total_candidates": 269,
         "found_titles": [
+          "Informer: Beyond Efficient Transformer for Long Sequence Time-Series Forecasting",
           "Autoformer: Decomposition Transformers with Auto-Correlation for Long-Term Series Forecasting",
           "Are Transformers Effective for Time Series Forecasting?",
           "PatchTST: A Time Series is Worth 64 Words: Long-term Forecasting with Transformers",
           "iTransformer: Inverted Transformers Are Effective for Time Series Forecasting",
-          "Temporal Fusion Transformers for Interpretable Multi-horizon Time Series Forecasting",
+          "TimesNet: Temporal 2D-Variation Modeling for General Time Series Analysis",
           "Crossformer: Transformer Utilizing Cross-Dimension Dependency for Multivariate Time Series Forecasting"
         ],
         "missed_titles": [
-          "Informer: Beyond Efficient Transformer for Long Sequence Time-Series Forecasting",
           "FEDformer: Frequency Enhanced Decomposed Transformer for Long-term Series Forecasting",
-          "TimesNet: Temporal 2D-Variation Modeling for General Time Series Analysis",
+          "Temporal Fusion Transformers for Interpretable Multi-horizon Time Series Forecasting",
           "Non-stationary Transformers: Exploring the Stationarity in Time Series Forecasting"
         ]
       },
       {
         "topic": "graph neural networks for drug discovery",
         "gold_count": 11,
-        "found_count": 4,
-        "recall": 0.364,
-        "total_candidates": 72,
+        "found_count": 8,
+        "recall": 0.727,
+        "total_candidates": 272,
         "found_titles": [
-          "Convolutional Networks on Graphs for Learning Molecular Fingerprints",
-          "Analyzing Learned Molecular Representations for Property Prediction",
-          "Strategies for Pre-training Graph Neural Networks",
-          "Communicating with Graph Neural Networks for Molecular Property Prediction"
-        ],
-        "missed_titles": [
           "MoleculeNet: A Benchmark for Molecular Machine Learning",
           "Neural Message Passing for Quantum Chemistry",
-          "How Powerful are Graph Neural Networks?",
+          "Analyzing Learned Molecular Representations for Property Prediction",
           "SchNet: A Continuous-filter Convolutional Neural Network for Modeling Quantum Interactions",
           "DimeNet: Directional Message Passing for Molecular Graphs",
-          "Geometry-enhanced molecular representation learning for property prediction",
+          "Strategies for Pre-training Graph Neural Networks",
+          "Communicating with Graph Neural Networks for Molecular Property Prediction",
+          "Geometry-enhanced molecular representation learning for property prediction"
+        ],
+        "missed_titles": [
+          "Convolutional Networks on Graphs for Learning Molecular Fingerprints",
+          "How Powerful are Graph Neural Networks?",
           "SphereNet: Learning a 3D Molecular Representation from Spherical Coordinates"
         ]
       },
       {
         "topic": "retrieval augmented generation hallucination mitigation",
         "gold_count": 10,
-        "found_count": 2,
-        "recall": 0.2,
-        "total_candidates": 65,
+        "found_count": 6,
+        "recall": 0.6,
+        "total_candidates": 272,
         "found_titles": [
-          "CRAG: Corrective Retrieval Augmented Generation",
-          "Active Retrieval Augmented Generation"
-        ],
-        "missed_titles": [
           "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
           "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection",
           "Chain-of-Note: Enhancing Robustness in Retrieval-Augmented Language Models",
+          "CRAG: Corrective Retrieval Augmented Generation",
+          "Active Retrieval Augmented Generation",
+          "REPLUG: Retrieval-Augmented Black-Box Language Models"
+        ],
+        "missed_titles": [
           "When Not to Trust Language Models: Investigating Effectiveness of Parametric and Non-Parametric Memories",
           "FreshLLMs: Refreshing Large Language Models with Search Engine Augmentation",
-          "REPLUG: Retrieval-Augmented Black-Box Language Models",
           "Demonstrate-Search-Predict: Composing retrieval and language models for knowledge-intensive NLP",
           "Lost in the Middle: How Language Models Use Long Contexts"
         ]
       }
     ]
   },
-  "hallucination_baseline": {
-    "provider": "ollama",
-    "model": "qwen2.5:3b",
+  "hallucination": {
+    "provider": "groq",
+    "model": "qwen/qwen3.8-27b",
     "plain_llm_avg_accuracy": 0.5,
     "papertrail_accuracy": 1.0,
     "note": "PaperTrail only cites papers retrieved from academic APIs, so its citation accuracy is 100% by design.",
-    "total_time_s": 61.7,
+    "total_time_s": 118.5,
     "topics": [
       {
         "topic": "transformer models for time-series forecasting",
         "titles_generated": 10,
-        "titles_verified": 5,
-        "accuracy": 0.5,
+        "titles_verified": 8,
+        "accuracy": 0.8,
         "details": [
           {
             "llm_title": "Informer: Beyond Efficient Transformer for Long Sequence Time-Series Forecasting",
@@ -145,120 +391,130 @@
             "matched_title": "Autoformer: Decomposition Transformers with Auto-Correlation for Long-Term Series Forecasting"
           },
           {
-            "llm_title": "Deep Transformer Models for Time Series Forecasting: The Influenza Prevalence Case",
+            "llm_title": "Non-stationary Transformers: Exploring the Stationarity in Time Series Forecasting",
             "exists_on_openalex": true,
-            "matched_title": "Deep Transformer Models for Time Series Forecasting: The Influenza Prevalence Case"
+            "matched_title": "Non-Stationary Transformers: Exploring the Stationarity in Time Series Forecasting"
           },
           {
-            "llm_title": "A Novel Transformer-Based Framework for Multi-Horizon Time Series Forecasting",
+            "llm_title": "FEDformer: Frequency Enhanced Decomposed Transformer for Long-term Series Forecasting",
+            "exists_on_openalex": true,
+            "matched_title": "FEDformer: Frequency Enhanced Decomposed Transformer for Long-term Series Forecasting"
+          },
+          {
+            "llm_title": "iTransformer: Inverted Transformers Are Effective for Time Series Forecasting",
+            "exists_on_openalex": true,
+            "matched_title": "iTransformer: Inverted Transformers Are Effective for Time Series Forecasting"
+          },
+          {
+            "llm_title": "PatchTST: Patch Trends for Transformer-based Time Series Forecasting",
             "exists_on_openalex": false,
-            "matched_title": "ForecastGAN: A Decomposition-Based Adversarial Framework for Multi-Horizon Time Series Forecasting"
+            "matched_title": null
           },
           {
-            "llm_title": "Time-Series Transformer: Temporal Attention Mechanisms for Stock Market Prediction",
+            "llm_title": "TimesNet: Temporal 2D-Variation Modeling for General Time Series Analysis",
+            "exists_on_openalex": true,
+            "matched_title": "TimesNet: Temporal 2D-Variation Modeling for General Time Series Analysis"
+          },
+          {
+            "llm_title": "Crossformer: Transformer Utilizing Cross-Dimension Dependency for Multivariate Time Series Forecasting",
             "exists_on_openalex": false,
-            "matched_title": "Incorporating Transformers and Attention Networks for Stock Movement Prediction"
+            "matched_title": null
           },
           {
-            "llm_title": "Temporal Fusion Transformers for Interpretable Multi-horizon Time Series Forecasting",
+            "llm_title": "ETSformer: Exponential Smoothing Transformer for Probabilistic Time Series Forecasting",
+            "exists_on_openalex": true,
+            "matched_title": "ETSformer: Exponential Smoothing Transformers for Time-series Forecasting"
+          },
+          {
+            "llm_title": "Temporal Fusion Transformer for Interpretable Multi-horizon Time Series Forecasting",
             "exists_on_openalex": true,
             "matched_title": "Temporal Fusion Transformers for interpretable multi-horizon time series forecasting"
-          },
-          {
-            "llm_title": "Self-Attention Networks for Long-Term Time Series Forecasting",
-            "exists_on_openalex": false,
-            "matched_title": "SDVS-Net: A spatial dilated convolution and variable self-attention network for multivariate long-term time series forecasting"
-          },
-          {
-            "llm_title": "Spatiotemporal Transformer Networks for Multivariate Time Series Analysis",
-            "exists_on_openalex": false,
-            "matched_title": "Spatiotemporal Transformer Neural Network for Time-Series Forecasting"
-          },
-          {
-            "llm_title": "PatchTST: A Time Series is Worth 64 Words: Long-term Forecasting with Transformers",
-            "exists_on_openalex": true,
-            "matched_title": "A Time Series is Worth 64 Words: Long-term Forecasting with Transformers"
-          },
-          {
-            "llm_title": "Recurrent Transformer Networks for High-Dimensional Time Series Prediction",
-            "exists_on_openalex": false,
-            "matched_title": "Transformers in Time Series: A Survey"
           }
         ]
       },
       {
         "topic": "graph neural networks for drug discovery",
         "titles_generated": 10,
-        "titles_verified": 5,
-        "accuracy": 0.5,
+        "titles_verified": 1,
+        "accuracy": 0.1,
         "details": [
           {
-            "llm_title": "Convolutional Networks on Graphs for Learning Molecular Fingerprints",
-            "exists_on_openalex": true,
-            "matched_title": "Convolutional Networks on Graphs for Learning Molecular Fingerprints"
-          },
-          {
-            "llm_title": "Neural Message Passing for Quantum Chemistry",
-            "exists_on_openalex": true,
-            "matched_title": "Neural Message Passing for Quantum Chemistry"
-          },
-          {
-            "llm_title": "Deep Graph Learning for Molecular Property Prediction and Drug Design",
+            "llm_title": "Graph Neural Networks for Molecular Design",
             "exists_on_openalex": false,
-            "matched_title": "FP-GNN: a versatile deep learning architecture for enhanced molecular property prediction"
+            "matched_title": null
           },
           {
-            "llm_title": "MoleculeNet: A Benchmark for Molecular Machine Learning",
+            "llm_title": "Deep Learning for Molecular Discovery: A Review",
+            "exists_on_openalex": false,
+            "matched_title": null
+          },
+          {
+            "llm_title": "Molecular Property Prediction with Graph Neural Networks",
+            "exists_on_openalex": false,
+            "matched_title": null
+          },
+          {
+            "llm_title": "Graph Neural Networks for Drug Discovery: A Review",
+            "exists_on_openalex": false,
+            "matched_title": null
+          },
+          {
+            "llm_title": "Deep Generative Models for Molecular Design",
+            "exists_on_openalex": false,
+            "matched_title": null
+          },
+          {
+            "llm_title": "Graph Neural Networks for Molecular Property Prediction",
             "exists_on_openalex": true,
-            "matched_title": "MoleculeNet: a benchmark for molecular machine learning"
+            "matched_title": "Kolmogorov\u2013Arnold graph neural networks for molecular property prediction"
           },
           {
-            "llm_title": "Graph Neural Networks for Quantitative Structure-Activity Relationship Modeling",
+            "llm_title": "Deep Learning for Drug Discovery: A Review",
             "exists_on_openalex": false,
-            "matched_title": "Interpretable Chirality-Aware Graph Neural Network for Quantitative Structure Activity Relationship Modeling in Drug Discovery"
+            "matched_title": null
           },
           {
-            "llm_title": "Attention-Based Graph Neural Networks for De Novo Molecular Design",
+            "llm_title": "Graph Neural Networks for Molecular Property Prediction: A Review",
             "exists_on_openalex": false,
-            "matched_title": "Graph networks for molecular design"
+            "matched_title": null
           },
           {
-            "llm_title": "How Powerful are Graph Neural Networks?",
-            "exists_on_openalex": true,
-            "matched_title": "How Powerful are Spectral Graph Neural Networks"
-          },
-          {
-            "llm_title": "Hierarchical Graph Representation Learning for Bioactive Molecule Screening",
+            "llm_title": "Deep Learning for Molecular Property Prediction",
             "exists_on_openalex": false,
-            "matched_title": "N-Gram Graph: Simple Unsupervised Representation for Graphs, with Applications to Molecules"
+            "matched_title": null
           },
           {
-            "llm_title": "Pre-training Graph Neural Networks for Drug Target Interaction Prediction",
+            "llm_title": "Graph Neural Networks for Molecular Property Prediction: A Comprehensive Review",
             "exists_on_openalex": false,
-            "matched_title": "Pre-training graph neural networks for link prediction in biomedical networks"
-          },
-          {
-            "llm_title": "Strategies for Pre-training Graph Neural Networks",
-            "exists_on_openalex": true,
-            "matched_title": "Strategies for Pre-training Graph Neural Networks"
+            "matched_title": null
           }
         ]
       },
       {
         "topic": "retrieval augmented generation hallucination mitigation",
         "titles_generated": 10,
-        "titles_verified": 5,
-        "accuracy": 0.5,
+        "titles_verified": 6,
+        "accuracy": 0.6,
         "details": [
           {
-            "llm_title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+            "llm_title": "Retrieval-Augmented Generation for Large Language Models: A Survey",
             "exists_on_openalex": true,
-            "matched_title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks"
+            "matched_title": "Retrieval-Augmented Generation for Large Language Models: A Survey"
           },
           {
-            "llm_title": "Mitigating Hallucinations in Large Language Models via Dynamic Retrieval",
+            "llm_title": "Hallucination Mitigation in Retrieval-Augmented Generation via Self-Consistency",
             "exists_on_openalex": false,
-            "matched_title": "A Comprehensive Survey of Hallucination Mitigation Techniques in Large Language Models"
+            "matched_title": null
+          },
+          {
+            "llm_title": "RAGAS: Automated Evaluation of Retrieval Augmented Generation",
+            "exists_on_openalex": true,
+            "matched_title": "RAGAs: Automated Evaluation of Retrieval Augmented Generation"
+          },
+          {
+            "llm_title": "Mitigating Hallucinations in Large Language Models via Retrieval-Augmented Generation",
+            "exists_on_openalex": true,
+            "matched_title": "Mitigating Hallucinations in Large Language Models via Retrieval-Augmented Generation (RAG)"
           },
           {
             "llm_title": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection",
@@ -266,45 +522,35 @@
             "matched_title": "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection"
           },
           {
-            "llm_title": "Trustworthy Retrieval-Augmented Generation through Source Fact Verification",
-            "exists_on_openalex": false,
-            "matched_title": "Trustworthiness in Retrieval-Augmented Generation Systems: A Survey"
-          },
-          {
-            "llm_title": "Chain-of-Note: Enhancing Robustness in Retrieval-Augmented Language Models",
+            "llm_title": "Corrective Retrieval Augmented Generation",
             "exists_on_openalex": true,
-            "matched_title": "Chain-of-Note: Enhancing Robustness in Retrieval-Augmented Language Models"
+            "matched_title": "Corrective Retrieval Augmented Generation"
           },
           {
-            "llm_title": "Fact-Checking Augmented Generation for Large Language Models",
+            "llm_title": "Hallucination-Free? Evaluating Factuality and Hallucination in Large Language Models",
             "exists_on_openalex": false,
-            "matched_title": "Real-Time Fact-Checking using Retrieval-Augmented Generation and Large Language Models"
+            "matched_title": null
           },
           {
-            "llm_title": "Lost in the Middle: How Language Models Use Long Contexts",
+            "llm_title": "Retrieval-Augmented Generation for Large Language Models: A Survey",
             "exists_on_openalex": true,
-            "matched_title": "Lost in the Middle: How Language Models Use Long Contexts"
+            "matched_title": "Retrieval-Augmented Generation for Large Language Models: A Survey"
           },
           {
-            "llm_title": "Hallucination-Free Retrieval-Augmented Language Modeling via Consistency Checks",
+            "llm_title": "Mitigating Hallucinations in Retrieval-Augmented Generation with Knowledge Graphs",
             "exists_on_openalex": false,
-            "matched_title": "Query Rewriting in Retrieval-Augmented Large Language Models"
+            "matched_title": null
           },
           {
-            "llm_title": "Active Retrieval Augmented Generation",
-            "exists_on_openalex": true,
-            "matched_title": "Active Retrieval Augmented Generation"
-          },
-          {
-            "llm_title": "Reducing Parametric Memory Errors in RAG Systems via Selective Augmentation",
+            "llm_title": "Factuality-Enhanced Retrieval-Augmented Generation",
             "exists_on_openalex": false,
-            "matched_title": "A survey on retrieval-augmentation generation (RAG) models for healthcare applications"
+            "matched_title": null
           }
         ]
       }
     ]
   },
-  "citation_faithfulness": {
+  "faithfulness": {
     "automated_results": [
       {
         "provider": "ollama",
@@ -337,8 +583,8 @@
             "P2"
           ],
           "automated_verdict": "supported",
-          "manual_verdict": "correct",
-          "manual_notes": "Claim verbatim matches P2 abstract discussing energy market spot price forecasting."
+          "manual_verdict": "TODO",
+          "manual_notes": ""
         },
         {
           "provider": "ollama",
@@ -347,8 +593,8 @@
             "P3"
           ],
           "automated_verdict": "supported",
-          "manual_verdict": "correct",
-          "manual_notes": "Claim verbatim matches P3 opening text on application domains."
+          "manual_verdict": "TODO",
+          "manual_notes": ""
         },
         {
           "provider": "ollama",
@@ -357,8 +603,8 @@
             "P1"
           ],
           "automated_verdict": "supported",
-          "manual_verdict": "correct",
-          "manual_notes": "Matches P1 method introduction directly."
+          "manual_verdict": "TODO",
+          "manual_notes": ""
         },
         {
           "provider": "ollama",
@@ -367,8 +613,8 @@
             "P4"
           ],
           "automated_verdict": "supported",
-          "manual_verdict": "correct",
-          "manual_notes": "Supported by P4 abstract. Note: contains leading 'Abstract' heading token."
+          "manual_verdict": "TODO",
+          "manual_notes": ""
         },
         {
           "provider": "ollama",
@@ -377,8 +623,8 @@
             "P5"
           ],
           "automated_verdict": "supported",
-          "manual_verdict": "correct",
-          "manual_notes": "Directly supported by P5 problem statement."
+          "manual_verdict": "TODO",
+          "manual_notes": ""
         },
         {
           "provider": "ollama",
@@ -387,8 +633,8 @@
             "P1"
           ],
           "automated_verdict": "supported",
-          "manual_verdict": "correct",
-          "manual_notes": "Faithful to P1 methodology."
+          "manual_verdict": "TODO",
+          "manual_notes": ""
         },
         {
           "provider": "ollama",
@@ -397,8 +643,8 @@
             "P2"
           ],
           "automated_verdict": "supported",
-          "manual_verdict": "correct",
-          "manual_notes": "Faithful to P2 energy market domain."
+          "manual_verdict": "TODO",
+          "manual_notes": ""
         },
         {
           "provider": "ollama",
@@ -407,8 +653,8 @@
             "P3"
           ],
           "automated_verdict": "supported",
-          "manual_verdict": "correct",
-          "manual_notes": "Faithful to P3 review scope."
+          "manual_verdict": "TODO",
+          "manual_notes": ""
         },
         {
           "provider": "ollama",
@@ -417,8 +663,8 @@
             "P4"
           ],
           "automated_verdict": "supported",
-          "manual_verdict": "correct",
-          "manual_notes": "Faithful to P4 critical assessment scope."
+          "manual_verdict": "TODO",
+          "manual_notes": ""
         },
         {
           "provider": "ollama",
@@ -427,8 +673,8 @@
             "P5"
           ],
           "automated_verdict": "supported",
-          "manual_verdict": "correct",
-          "manual_notes": "Faithful to P5 adversarial convolutional formulation."
+          "manual_verdict": "TODO",
+          "manual_notes": ""
         },
         {
           "provider": "groq",
@@ -437,8 +683,8 @@
             "P1"
           ],
           "automated_verdict": "supported",
-          "manual_verdict": "correct",
-          "manual_notes": "Faithful to P1 method description."
+          "manual_verdict": "TODO",
+          "manual_notes": ""
         },
         {
           "provider": "groq",
@@ -447,8 +693,8 @@
             "P3"
           ],
           "automated_verdict": "supported",
-          "manual_verdict": "correct",
-          "manual_notes": "Faithful to P3 application list."
+          "manual_verdict": "TODO",
+          "manual_notes": ""
         },
         {
           "provider": "groq",
@@ -457,8 +703,8 @@
             "P2"
           ],
           "automated_verdict": "supported",
-          "manual_verdict": "correct",
-          "manual_notes": "Faithful to P2 domain application."
+          "manual_verdict": "TODO",
+          "manual_notes": ""
         },
         {
           "provider": "groq",
@@ -467,8 +713,8 @@
             "P4"
           ],
           "automated_verdict": "supported",
-          "manual_verdict": "wrong",
-          "manual_notes": "Borderline: Checker marked supported due to high text overlap, but leading token 'Abstract' is a parser artifact rather than a clean syntactic sentence."
+          "manual_verdict": "TODO",
+          "manual_notes": ""
         },
         {
           "provider": "groq",
@@ -477,8 +723,8 @@
             "P5"
           ],
           "automated_verdict": "supported",
-          "manual_verdict": "correct",
-          "manual_notes": "Faithful to P5."
+          "manual_verdict": "TODO",
+          "manual_notes": ""
         },
         {
           "provider": "groq",
@@ -487,8 +733,8 @@
             "P1"
           ],
           "automated_verdict": "supported",
-          "manual_verdict": "correct",
-          "manual_notes": "Faithful to P1."
+          "manual_verdict": "TODO",
+          "manual_notes": ""
         },
         {
           "provider": "groq",
@@ -497,8 +743,8 @@
             "P2"
           ],
           "automated_verdict": "supported",
-          "manual_verdict": "correct",
-          "manual_notes": "Faithful to P2."
+          "manual_verdict": "TODO",
+          "manual_notes": ""
         },
         {
           "provider": "groq",
@@ -507,8 +753,8 @@
             "P3"
           ],
           "automated_verdict": "supported",
-          "manual_verdict": "correct",
-          "manual_notes": "Faithful to P3."
+          "manual_verdict": "TODO",
+          "manual_notes": ""
         },
         {
           "provider": "groq",
@@ -517,8 +763,8 @@
             "P4"
           ],
           "automated_verdict": "supported",
-          "manual_verdict": "correct",
-          "manual_notes": "Faithful to P4 core claim."
+          "manual_verdict": "TODO",
+          "manual_notes": ""
         },
         {
           "provider": "groq",
@@ -527,78 +773,66 @@
             "P5"
           ],
           "automated_verdict": "supported",
-          "manual_verdict": "correct",
-          "manual_notes": "Faithful to P5."
+          "manual_verdict": "TODO",
+          "manual_notes": ""
         }
       ]
     },
-    "checker_accuracy": 0.95,
-    "accuracy_fraction": "19/20",
-    "note": "Automated verify_review checker agreed with human manual inspection on 19 of 20 sentences (95.0% accuracy)."
+    "checker_accuracy": null,
+    "note": "checker_accuracy is computed from manual_audit sentences where manual_verdict != TODO"
   },
   "human_eval": {
-    "evaluators": 3,
-    "papertrail_scores": {
-      "review_coverage": 4.0,
-      "review_accuracy": 5.0,
-      "review_coherence": 4.0,
-      "gap_quality": 4.0,
-      "gap_actionability": 4.33,
-      "overall": 4.27
-    },
-    "plain_llm_scores": {
-      "review_coverage": 3.67,
-      "review_accuracy": 3.0,
-      "review_coherence": 4.33,
-      "gap_quality": 3.0,
-      "gap_actionability": 3.0,
-      "overall": 3.4
-    },
+    "evaluators": 0,
+    "note": "No human evaluations completed yet. Distribute eval_form_evaluator_*.json to 2-3 classmates.",
+    "papertrail_scores": {},
+    "plain_llm_scores": {},
     "answer_key": {
       "System A": "plain_llm",
       "System B": "papertrail"
     }
   },
-  "cost_timing": {
-    "models": [
-      {
-        "provider": "ollama",
-        "model": "qwen2.5:3b (local)",
-        "time_per_review_5_papers_s": 52.4,
-        "time_per_paper_s": 7.8,
-        "api_token_cost": "$0.00 (Local Hardware)",
-        "hosting_cost": "Local GPU / CPU required; cannot run on free Streamlit Cloud tiers",
-        "verification_score": 1.0,
-        "gaps_found": 4,
-        "cloud_deployable": false
-      },
-      {
-        "provider": "groq",
-        "model": "llama-3.3-70b-versatile (cloud)",
-        "time_per_review_5_papers_s": 18.2,
-        "time_per_paper_s": 2.6,
-        "api_token_cost": "$0.00 (Groq Free Tier: 30 RPM / 14,400 RPD)",
-        "hosting_cost": "$0.00 (Streamlit Cloud Community Tier)",
-        "verification_score": 1.0,
-        "gaps_found": 4,
-        "cloud_deployable": true
-      },
-      {
-        "provider": "gemini",
-        "model": "gemini-2.5-flash (cloud)",
-        "time_per_review_5_papers_s": 24.1,
-        "time_per_paper_s": 3.4,
-        "api_token_cost": "$0.00 (Google AI Studio Free Tier: 15 RPM)",
-        "hosting_cost": "$0.00 (Streamlit Cloud Community Tier)",
-        "verification_score": 1.0,
-        "gaps_found": 4,
-        "cloud_deployable": true
-      }
-    ],
-    "summary_comparison": {
-      "speedup_groq_vs_ollama": "2.88x faster",
-      "lowest_latency": "Groq (18.2s full 5-paper pipeline)",
-      "recommendation": "Groq for cloud production deployment; Ollama for 100% offline air-gapped environments."
+  "cost": [
+    {
+      "provider": "groq",
+      "papers_analyzed": 5,
+      "verification_score": 1.0,
+      "gaps_found": 4
+    },
+    {
+      "provider": "ollama",
+      "papers_analyzed": 5,
+      "verification_score": 1.0,
+      "gaps_found": 4
     }
+  ],
+  "timing": {
+    "provider": "groq",
+    "model": "qwen/qwen3.8-27b",
+    "vector_backend": "memory",
+    "topic": "transformer models for time-series forecasting",
+    "phases": {
+      "search": {
+        "time_s": 58.5,
+        "papers_found": 10
+      },
+      "extract": {
+        "time_s": 0.1
+      },
+      "compare": {
+        "time_s": 15.5
+      },
+      "gaps": {
+        "time_s": 43.8
+      },
+      "write": {
+        "time_s": 73.8
+      },
+      "verify": {
+        "time_s": 0.0
+      }
+    },
+    "total_time_s": 191.7,
+    "papers_analyzed": 5,
+    "time_per_paper_s": 38.3
   }
 }

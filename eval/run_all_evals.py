@@ -31,6 +31,9 @@ def main():
         except Exception as e:
             print(f"  SKIPPED (error: {e})")
             all_results["extraction"] = {"status": "skipped", "error": str(e)}
+    elif (results_dir / "extraction_results.json").exists():
+        with open(results_dir / "extraction_results.json", "r", encoding="utf-8") as f:
+            all_results["extraction"] = json.load(f)
     else:
         all_results["extraction"] = {"status": "skipped"}
 
@@ -45,6 +48,9 @@ def main():
         except Exception as e:
             print(f"  SKIPPED (error: {e})")
             all_results["search_recall"] = {"status": "skipped", "error": str(e)}
+    elif (results_dir / "search_recall.json").exists():
+        with open(results_dir / "search_recall.json", "r", encoding="utf-8") as f:
+            all_results["search_recall"] = json.load(f)
     else:
         all_results["search_recall"] = {"status": "skipped"}
 
@@ -59,6 +65,9 @@ def main():
         except Exception as e:
             print(f"  SKIPPED (error: {e})")
             all_results["hallucination"] = {"status": "skipped", "error": str(e)}
+    elif (results_dir / "hallucination_baseline.json").exists():
+        with open(results_dir / "hallucination_baseline.json", "r", encoding="utf-8") as f:
+            all_results["hallucination"] = json.load(f)
     else:
         all_results["hallucination"] = {"status": "skipped"}
 
@@ -95,6 +104,9 @@ def main():
     try:
         from eval_cost import collect_timing_from_runs
         all_results["cost"] = collect_timing_from_runs()
+        if (results_dir / "cost_timing.json").exists():
+            with open(results_dir / "cost_timing.json", "r", encoding="utf-8") as f:
+                all_results["timing"] = json.load(f)
     except Exception as e:
         print(f"  SKIPPED (error: {e})")
         all_results["cost"] = {"status": "skipped", "error": str(e)}

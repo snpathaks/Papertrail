@@ -1,0 +1,30 @@
+{
+  "provider": "groq",
+  "model": "qwen/qwen3.8-27b",
+  "vector_backend": "memory",
+  "topic": "transformer models for time-series forecasting",
+  "phases": {
+    "search": {
+      "time_s": 58.5,
+      "papers_found": 10
+    },
+    "extract": {
+      "time_s": 0.1
+    },
+    "compare": {
+      "time_s": 15.5
+    },
+    "gaps": {
+      "time_s": 43.8
+    },
+    "write": {
+      "time_s": 73.8
+    },
+    "verify": {
+      "time_s": 0.0
+    }
+  },
+  "total_time_s": 191.7,
+  "papers_analyzed": 5,
+  "time_per_paper_s": 38.3
+}

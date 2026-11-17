@@ -9,7 +9,7 @@ from rapidfuzz import fuzz
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from tools.search_tools import search_openalex, search_arxiv
+from tools.search_tools import search_openalex, search_arxiv, search_crossref
 from agents.search_agent import expand_queries
 import config
 
@@ -21,12 +21,12 @@ def title_match(candidate, gold_titles, threshold=80):
     c_norm = normalize(candidate)
     for gt in gold_titles:
         g_norm = normalize(gt)
-        if fuzz.token_set_ratio(c_norm, g_norm) >= threshold or fuzz.partial_ratio(c_norm, g_norm) >= 85:
+        if fuzz.token_set_ratio(c_norm, g_norm) >= threshold or fuzz.partial_ratio(c_norm, g_norm) >= 85 or g_norm in c_norm or c_norm in g_norm:
             return gt
     return None
 
 def get_expanded_queries(topic):
-    """Expand queries using LLM or structured domain decomposition."""
+    """Expand queries purely using live LLM reasoning (NO hardcoded hints)."""
     try:
         state = {"query": topic}
         expansion = expand_queries(state)
@@ -34,42 +34,29 @@ def get_expanded_queries(topic):
     except Exception:
         queries = []
 
-    # If LLM expansion produced fewer than 3 queries, add keyword variants
-    if len(queries) < 3:
-        words = topic.split()
-        variants = [
-            topic,
-            " ".join(words[:4]),
-            f"{topic} review benchmark",
-            f"recent advances in {topic}"
-        ]
-        if "time-series" in topic.lower():
-            variants.extend(["informer autoformer time series", "long term time series forecasting transformer", "multivariate time series attention"])
-        elif "drug" in topic.lower() or "graph" in topic.lower():
-            variants.extend(["molecular property prediction graph neural network", "message passing neural networks chemistry", "graph representation learning molecules"])
-        elif "retrieval" in topic.lower() or "rag" in topic.lower():
-            variants.extend(["retrieval augmented generation hallucination", "mitigating hallucinations in RAG", "factual accuracy retrieval augmented language models"])
-        queries = list(dict.fromkeys(queries + variants))
-    return queries[:5]
+    # Fallback only to the original user query if LLM returned nothing
+    if not queries:
+        queries = [topic]
+    return list(dict.fromkeys(queries))
 
-def search_recall_for_topic(topic, gold_titles, max_results=12):
-    """Run PaperTrail search pipeline for a topic and compute recall."""
+def search_recall_for_topic(topic, gold_titles, max_results=20):
+    """Run PaperTrail multi-source search pipeline for a topic and compute recall."""
     queries = get_expanded_queries(topic)
+    print(f"  Live queries ({len(queries)}): {queries}")
 
-    # Step 2: search both APIs with all expanded queries
+    # Search all academic sources with all expanded queries
     all_papers = []
     seen_titles = set()
     for q in queries:
-        for paper in search_openalex(q, max_results=max_results):
-            norm = normalize(paper["title"])
-            if norm not in seen_titles:
+        papers_q = search_openalex(q, max_results=max_results)
+        papers_q += search_crossref(q, max_results=12)
+        papers_q += search_arxiv(q, max_results=min(max_results, 8))
+        for paper in papers_q:
+            norm = normalize(paper.get("title", ""))
+            if norm and norm not in seen_titles:
                 seen_titles.add(norm)
                 all_papers.append(paper)
-        for paper in search_arxiv(q, max_results=max_results):
-            norm = normalize(paper["title"])
-            if norm not in seen_titles:
-                seen_titles.add(norm)
-                all_papers.append(paper)
+        time.sleep(0.4)
 
     # Step 3: check recall against gold titles
     found = []
@@ -78,7 +65,7 @@ def search_recall_for_topic(topic, gold_titles, max_results=12):
         g_norm = normalize(gt)
         matched = False
         for p in all_papers:
-            p_norm = normalize(p["title"])
+            p_norm = normalize(p.get("title", ""))
             if fuzz.token_set_ratio(p_norm, g_norm) >= 80 or fuzz.partial_ratio(p_norm, g_norm) >= 85 or g_norm in p_norm or p_norm in g_norm:
                 found.append(gt)
                 matched = True

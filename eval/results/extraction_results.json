@@ -1,34 +1,297 @@
 {
-  "comparison": [
+  "provider": "groq",
+  "model": "qwen/qwen3.8-27b",
+  "papers_evaluated": 18,
+  "avg_dataset_f1": 0.038,
+  "quote_verification_rate": 1.0,
+  "total_time_s": 0.0,
+  "per_paper_s": 0.0,
+  "details": [
     {
-      "model_type": "Local 3B Model",
-      "provider": "ollama",
-      "model": "qwen2.5:3b",
-      "gold_papers_evaluated": 18,
-      "dataset_extraction_f1": 0.71,
-      "metric_extraction_accuracy": 0.778,
-      "metric_accuracy_ratio": "14/18",
-      "quote_verification_rate": 0.914,
-      "avg_latency_per_paper_s": 7.8,
-      "notes": "Solid baseline performance on standard benchmarks; occasionally misses obscure evaluation datasets."
+      "title": "Informer: Beyond Efficient Transformer for Long Sequence Time-Series Forecasting",
+      "gold_datasets": [
+        "ETTh1",
+        "ETTh2",
+        "ETTm1",
+        "ECL",
+        "Weather"
+      ],
+      "pred_datasets": [],
+      "dataset_f1": 0.0,
+      "evidence_verified": 0,
+      "evidence_total": 0
     },
     {
-      "model_type": "Hosted Cloud Model",
-      "provider": "groq",
-      "model": "llama-3.3-70b-versatile",
-      "gold_papers_evaluated": 18,
-      "dataset_extraction_f1": 0.86,
-      "metric_extraction_accuracy": 0.944,
-      "metric_accuracy_ratio": "17/18",
-      "quote_verification_rate": 0.968,
-      "avg_latency_per_paper_s": 2.6,
-      "notes": "Higher reasoning capacity reliably extracts nuanced multi-dataset configurations and exact numerical metrics."
+      "title": "Autoformer: Decomposition Transformers with Auto-Correlation for Long-Term Serie",
+      "gold_datasets": [
+        "ETTh1",
+        "ETTh2",
+        "ETTm1",
+        "ETTm2",
+        "ECL",
+        "Weather",
+        "Exchange"
+      ],
+      "pred_datasets": [],
+      "dataset_f1": 0.0,
+      "evidence_verified": 0,
+      "evidence_total": 0
+    },
+    {
+      "title": "FEDformer: Frequency Enhanced Decomposed Transformer for Long-term Series Foreca",
+      "gold_datasets": [
+        "ETTh1",
+        "ETTh2",
+        "ETTm1",
+        "ETTm2",
+        "ECL",
+        "Weather"
+      ],
+      "pred_datasets": [],
+      "dataset_f1": 0.0,
+      "evidence_verified": 0,
+      "evidence_total": 0
+    },
+    {
+      "title": "Are Transformers Effective for Time Series Forecasting?",
+      "gold_datasets": [
+        "ETTh1",
+        "ETTh2",
+        "ETTm1",
+        "ETTm2",
+        "ECL",
+        "Weather",
+        "Exchange",
+        "Traffic",
+        "ILI"
+      ],
+      "pred_datasets": [],
+      "dataset_f1": 0.0,
+      "evidence_verified": 0,
+      "evidence_total": 0
+    },
+    {
+      "title": "PatchTST: A Time Series is Worth 64 Words: Long-term Forecasting with Transforme",
+      "gold_datasets": [
+        "ETTh1",
+        "ETTh2",
+        "ETTm1",
+        "ETTm2",
+        "ECL",
+        "Weather",
+        "Traffic",
+        "ILI"
+      ],
+      "pred_datasets": [],
+      "dataset_f1": 0.0,
+      "evidence_verified": 0,
+      "evidence_total": 0
+    },
+    {
+      "title": "iTransformer: Inverted Transformers Are Effective for Time Series Forecasting",
+      "gold_datasets": [
+        "ETTh1",
+        "ETTh2",
+        "ETTm1",
+        "ETTm2",
+        "ECL",
+        "Weather",
+        "Traffic"
+      ],
+      "pred_datasets": [],
+      "dataset_f1": 0.0,
+      "evidence_verified": 0,
+      "evidence_total": 0
+    },
+    {
+      "title": "Temporal Fusion Transformers for Interpretable Multi-horizon Time Series Forecas",
+      "gold_datasets": [
+        "Electricity",
+        "Traffic",
+        "Retail",
+        "Volatility"
+      ],
+      "pred_datasets": [],
+      "dataset_f1": 0.0,
+      "evidence_verified": 0,
+      "evidence_total": 0
+    },
+    {
+      "title": "TimeGPT-1",
+      "gold_datasets": [
+        "M1",
+        "M3",
+        "M4",
+        "Tourism",
+        "Electricity",
+        "Traffic",
+        "Weather"
+      ],
+      "pred_datasets": [],
+      "dataset_f1": 0.0,
+      "evidence_verified": 0,
+      "evidence_total": 0
+    },
+    {
+      "title": "Crossformer: Transformer Utilizing Cross-Dimension Dependency for Multivariate T",
+      "gold_datasets": [
+        "ETTh1",
+        "ETTh2",
+        "ETTm1",
+        "ETTm2",
+        "ECL",
+        "Weather",
+        "Traffic"
+      ],
+      "pred_datasets": [],
+      "dataset_f1": 0.0,
+      "evidence_verified": 0,
+      "evidence_total": 0
+    },
+    {
+      "title": "TimesNet: Temporal 2D-Variation Modeling for General Time Series Analysis",
+      "gold_datasets": [
+        "ETTh1",
+        "ETTh2",
+        "ETTm1",
+        "ETTm2",
+        "ECL",
+        "Weather"
+      ],
+      "pred_datasets": [
+        "Weather"
+      ],
+      "dataset_f1": 0.286,
+      "evidence_verified": 1,
+      "evidence_total": 1
+    },
+    {
+      "title": "Non-stationary Transformers: Exploring the Stationarity in Time Series Forecasti",
+      "gold_datasets": [
+        "ETTh1",
+        "ETTh2",
+        "ETTm1",
+        "ETTm2",
+        "ECL",
+        "Weather",
+        "Exchange"
+      ],
+      "pred_datasets": [],
+      "dataset_f1": 0.0,
+      "evidence_verified": 0,
+      "evidence_total": 0
+    },
+    {
+      "title": "SimMTM: A Simple Pre-Training Framework for Masked Time-Series Modeling",
+      "gold_datasets": [
+        "ETTh1",
+        "ETTh2",
+        "ETTm1",
+        "ETTm2",
+        "ECL",
+        "Weather"
+      ],
+      "pred_datasets": [],
+      "dataset_f1": 0.0,
+      "evidence_verified": 0,
+      "evidence_total": 0
+    },
+    {
+      "title": "One Fits All: Power General Time Series Analysis by Pretrained LM",
+      "gold_datasets": [
+        "ETTh1",
+        "ETTh2",
+        "ETTm1",
+        "ETTm2",
+        "ECL",
+        "Weather"
+      ],
+      "pred_datasets": [],
+      "dataset_f1": 0.0,
+      "evidence_verified": 0,
+      "evidence_total": 0
+    },
+    {
+      "title": "Time-LLM: Time Series Forecasting by Reprogramming Large Language Models",
+      "gold_datasets": [
+        "ETTh1",
+        "ETTh2",
+        "ETTm1",
+        "ETTm2",
+        "ECL",
+        "Weather"
+      ],
+      "pred_datasets": [],
+      "dataset_f1": 0.0,
+      "evidence_verified": 0,
+      "evidence_total": 0
+    },
+    {
+      "title": "Scaleformer: Iterative Multi-scale Refining Transformers for Time Series Forecas",
+      "gold_datasets": [
+        "ETTh1",
+        "ETTh2",
+        "ETTm1",
+        "ETTm2",
+        "ECL",
+        "Weather",
+        "Traffic",
+        "ILI"
+      ],
+      "pred_datasets": [],
+      "dataset_f1": 0.0,
+      "evidence_verified": 0,
+      "evidence_total": 0
+    },
+    {
+      "title": "TEMPO: Prompt-based Generative Pre-trained Transformer for Time Series Forecasti",
+      "gold_datasets": [
+        "ETTh1",
+        "ETTh2",
+        "ETTm1",
+        "ETTm2",
+        "ECL",
+        "Weather"
+      ],
+      "pred_datasets": [],
+      "dataset_f1": 0.0,
+      "evidence_verified": 0,
+      "evidence_total": 0
+    },
+    {
+      "title": "Client: Cross-variable Linear Integrated Enhanced Transformer for Multivariate L",
+      "gold_datasets": [
+        "ETTh1",
+        "ETTh2",
+        "ETTm1",
+        "ETTm2",
+        "ECL",
+        "Weather",
+        "Exchange",
+        "Traffic"
+      ],
+      "pred_datasets": [
+        "Weather",
+        "Traffic"
+      ],
+      "dataset_f1": 0.4,
+      "evidence_verified": 1,
+      "evidence_total": 1
+    },
+    {
+      "title": "Lag-Llama: Towards Foundation Models for Probabilistic Time Series Forecasting",
+      "gold_datasets": [
+        "M3",
+        "M4",
+        "Tourism",
+        "Electricity",
+        "Traffic",
+        "Hospital"
+      ],
+      "pred_datasets": [],
+      "dataset_f1": 0.0,
+      "evidence_verified": 0,
+      "evidence_total": 0
     }
-  ],
-  "gold_dataset_summary": {
-    "total_gold_papers": 18,
-    "domain": "Time-Series Forecasting & Deep Learning",
-    "primary_metrics_evaluated": ["MSE", "MAE", "CRPS", "MASE", "P50 QL"],
-    "common_datasets": ["ETTh1", "ETTh2", "ETTm1", "ETTm2", "ECL", "Weather", "Traffic", "Exchange", "ILI", "M4"]
-  }
+  ]
 }

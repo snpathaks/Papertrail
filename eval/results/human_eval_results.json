@@ -1,21 +1,8 @@
 {
-  "evaluators": 3,
-  "papertrail_scores": {
-    "review_coverage": 4.0,
-    "review_accuracy": 5.0,
-    "review_coherence": 4.0,
-    "gap_quality": 4.0,
-    "gap_actionability": 4.33,
-    "overall": 4.27
-  },
-  "plain_llm_scores": {
-    "review_coverage": 3.67,
-    "review_accuracy": 3.0,
-    "review_coherence": 4.33,
-    "gap_quality": 3.0,
-    "gap_actionability": 3.0,
-    "overall": 3.4
-  },
+  "evaluators": 0,
+  "note": "No human evaluations completed yet. Distribute eval_form_evaluator_*.json to 2-3 classmates.",
+  "papertrail_scores": {},
+  "plain_llm_scores": {},
   "answer_key": {
     "System A": "plain_llm",
     "System B": "papertrail"

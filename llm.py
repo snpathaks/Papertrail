@@ -85,14 +85,14 @@ def ask_structured(schema, prompt, retries=3, base_delay=2.0):
             if out is not None:
                 return out
         except Exception as e:
-            if is_rate_limit(e) and attempt < retries:
+            if attempt < retries:
                 time.sleep(base_delay * (attempt + 1))
                 continue
             break
     return None
 
 def ask_text(prompt, retries=3, base_delay=2.0):
-    """Call the LLM for plain text output; retries on 429 rate limits."""
+    """Call the LLM for plain text output; retries on 429 rate limits or transient errors."""
     if provider == "ollama" and not is_ollama_available():
         return ""
 
@@ -103,7 +103,7 @@ def ask_text(prompt, retries=3, base_delay=2.0):
                 return res.content.strip()
             return str(res).strip()
         except Exception as e:
-            if is_rate_limit(e) and attempt < retries:
+            if attempt < retries:
                 time.sleep(base_delay * (attempt + 1))
                 continue
             break

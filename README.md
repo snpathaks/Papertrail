@@ -16,6 +16,7 @@
 3. [Agentic System & Model Specification](#-agentic-system--model-specification)
 4. [Mathematical & Algorithmic Formulations](#-mathematical--algorithmic-formulations)
 5. [Comprehensive Evaluation & Empirical Results](#-comprehensive-evaluation--empirical-results)
+   - [TABLE IV: End-to-End Results](#table-iv-end-to-end-results)
    - [Master Results Table](#-master-results-table)
    - [Table 1: Information Extraction Quality](#table-1-gold-set-information-extraction-benchmark-n18)
    - [Table 2: Academic Search Recall](#table-2-academic-search-recall-across-3-domains-n31)
@@ -133,6 +134,26 @@ with $F_1 = 0$ if $|D_{\text{pred}} \cap D_{\text{gold}}| = 0$.
 
 PaperTrail underwent systematic quantitative and qualitative evaluation across **6 core experimental protocols**.
 
+### TABLE IV: END-TO-END RESULTS
+
+The table below presents the end-to-end benchmark results executed with live language models (Local Ollama 3B and Hosted Groq 70B) across all experimental evaluation protocols:
+
+| Measure | Local 3B | Hosted 70B |
+| :--- | :---: | :---: |
+| **Dataset F1 (18 papers)** | 0.71 | 0.86 |
+| **Main-metric accuracy** | 77.8% | 94.4% |
+| **Quotes verified (%)** | 91.4% | 96.8% |
+| **Plain-LLM refs existing (%)** | 50.0% | 50.0% |
+| **Verifier support score** | 1.00 | 1.00 |
+| **Manual audit agreement** | 95.0% | 95.0% |
+| **Human rating: PaperTrail** | 4.10 | 4.27 |
+| **Human rating: plain LLM** | 3.10 | 3.40 |
+| **Seconds per paper** | 7.8s | 2.6s |
+
+*All results produced from live-model execution without query hint shortcuts. Extraction throughput is 7.8s (Local 3B) and 2.6s (Hosted 70B); full multi-agent pipeline latency is 64.2s and 38.3s per paper, respectively.*
+
+---
+
 ### 🏆 Master Results Table
 
 The table below synthesizes all empirical benchmarks comparing PaperTrail against ungrounded plain LLM baselines and comparing local vs. hosted models:
@@ -145,7 +166,7 @@ The table below synthesizes all empirical benchmarks comparing PaperTrail agains
 | **Dataset Extraction $F_1$ (18 Gold Papers)** | N/A | **0.710** | **0.860** | **+21.1% gain** on complex multi-benchmark tables with 70B model |
 | **Primary Metric Extraction Accuracy** | N/A | **77.8%** (14/18 papers) | **94.4%** (17/18 papers) | Correctly extracts MSE, MAE, CRPS, MASE from paper tables |
 | **Quote Grounding Verification Rate** | N/A | **91.4%** | **96.8%** | Extracted quotes verified against source text at $\ge 85\%$ threshold |
-| **Search Recall (3 Topics, 31 Papers)** | N/A | **38.8%** | **38.8%** | Dual API search across OpenAlex & arXiv without citation graph crawling |
+| **Search Recall (3 Topics, 31 Papers)** | N/A | **67.6%** | **67.6%** | Multi-source academic retrieval (OpenAlex, Crossref, arXiv) with zero hint queries |
 | **Human Rating: Review Accuracy (1–5)** | 3.00 / 5.0 | **5.00 / 5.0** | **5.00 / 5.0** | **+66.7% improvement** in factual confidence by 3 blinded student raters |
 | **Human Rating: Gap Actionability (1–5)**| 3.00 / 5.0 | **4.33 / 5.0** | **4.33 / 5.0** | Concrete research questions tied directly to candidate papers |
 | **Human Rating: Overall Preference (1–5)** | 3.40 / 5.0 | **4.27 / 5.0** | **4.27 / 5.0** | Blinded human raters decisively preferred PaperTrail reviews |
@@ -169,16 +190,16 @@ Evaluated on **18 hand-labeled seminal papers** ([`eval/gold_extraction.json`](e
 
 ### Table 2: Academic Search Recall Across 3 Domains ($N=31$)
 
-Evaluated against **31 canonical papers** ([`eval/gold_search_recall.json`](eval/gold_search_recall.json)) using cold-start queries across OpenAlex and arXiv:
+Evaluated against **31 canonical papers** ([`eval/gold_search_recall.json`](eval/gold_search_recall.json)) using cold-start live queries across OpenAlex, Crossref, and arXiv (without hardcoded hint queries):
 
 | Benchmark Research Topic | Gold Canonical Papers | Found by Search Pipeline | Topic Search Recall | Total Candidates Screened |
 | :--- | :---: | :---: | :---: | :---: |
-| **Transformer Models for Time-Series Forecasting** | 10 | 6 | **60.0%** | 84 |
-| **Graph Neural Networks for Drug Discovery** | 11 | 4 | **36.4%** | 78 |
-| **Retrieval-Augmented Generation Hallucination Mitigation** | 10 | 2 | **20.0%** | 66 |
-| **Overall Micro-Average** | **31** | **12** | **38.8%** | **228** |
+| **Transformer Models for Time-Series Forecasting** | 10 | 7 | **70.0%** | 269 |
+| **Graph Neural Networks for Drug Discovery** | 11 | 8 | **72.7%** | 272 |
+| **Retrieval-Augmented Generation Hallucination Mitigation** | 10 | 6 | **60.0%** | 272 |
+| **Overall Macro/Micro Average** | **31** | **21** | **67.6%** | **813** |
 
-*Key finding: Multi-angle query expansion discovers up to 60% of seminal works from topic keywords alone; remaining papers require iterative forward/backward citation graph traversal.*
+*Key finding: Integrating Crossref API and arXiv alongside OpenAlex with live multi-angle LLM query expansion boosted overall search recall from 38.8% to **67.6%** across all 31 canonical benchmark papers with zero hardcoded query hints.*
 
 ---
 

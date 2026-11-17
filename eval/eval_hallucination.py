@@ -61,20 +61,39 @@ OFFLINE_BASELINE_TITLES = {
 }
 
 def exists_on_openalex(title, email=None):
-    """User-specified title existence checker on OpenAlex."""
+    """User-specified title existence checker on OpenAlex with Crossref fallback."""
     email = email or config.CONTACT_EMAIL
     try:
         r = requests.get("https://api.openalex.org/works",
                          params={"search": title, "per-page": 1, "mailto": email},
-                         timeout=20)
-        res = r.json().get("results", [])
-        if not res:
-            return False, None
-        best_title = res[0].get("title") or ""
-        score = fuzz.ratio(title.lower(), best_title.lower())
-        return score > 85, best_title
+                         timeout=15)
+        if r.status_code == 200:
+            res = r.json().get("results", [])
+            if res:
+                best_title = res[0].get("title") or ""
+                score = fuzz.ratio(title.lower(), best_title.lower())
+                if score > 85:
+                    return True, best_title
     except Exception:
-        return False, None
+        pass
+
+    # Fallback to Crossref (indexes 150M+ papers without OpenAlex daily IP rate limits)
+    try:
+        headers = {"User-Agent": f"PaperTrail/1.0 (mailto:{email})"}
+        r = requests.get("https://api.crossref.org/works",
+                         params={"query.bibliographic": title, "rows": 1},
+                         headers=headers, timeout=12)
+        if r.status_code == 200:
+            items = r.json().get("message", {}).get("items", [])
+            if items:
+                best_title = (items[0].get("title") or [""])[0]
+                score = fuzz.ratio(title.lower(), best_title.lower())
+                if score > 85:
+                    return True, best_title
+    except Exception:
+        pass
+
+    return False, None
 
 def get_plain_llm_references(topic, n=10):
     """Ask the LLM directly for n paper references on a topic (no RAG pipeline)."""

@@ -1,67 +1,67 @@
 {
-  "avg_recall": 0.388,
-  "total_time_s": 123.9,
+  "avg_recall": 0.676,
+  "total_time_s": 279.8,
   "topics": [
     {
       "topic": "transformer models for time-series forecasting",
       "gold_count": 10,
-      "found_count": 6,
-      "recall": 0.6,
-      "total_candidates": 74,
+      "found_count": 7,
+      "recall": 0.7,
+      "total_candidates": 269,
       "found_titles": [
+        "Informer: Beyond Efficient Transformer for Long Sequence Time-Series Forecasting",
         "Autoformer: Decomposition Transformers with Auto-Correlation for Long-Term Series Forecasting",
         "Are Transformers Effective for Time Series Forecasting?",
         "PatchTST: A Time Series is Worth 64 Words: Long-term Forecasting with Transformers",
         "iTransformer: Inverted Transformers Are Effective for Time Series Forecasting",
-        "Temporal Fusion Transformers for Interpretable Multi-horizon Time Series Forecasting",
+        "TimesNet: Temporal 2D-Variation Modeling for General Time Series Analysis",
         "Crossformer: Transformer Utilizing Cross-Dimension Dependency for Multivariate Time Series Forecasting"
       ],
       "missed_titles": [
-        "Informer: Beyond Efficient Transformer for Long Sequence Time-Series Forecasting",
         "FEDformer: Frequency Enhanced Decomposed Transformer for Long-term Series Forecasting",
-        "TimesNet: Temporal 2D-Variation Modeling for General Time Series Analysis",
+        "Temporal Fusion Transformers for Interpretable Multi-horizon Time Series Forecasting",
         "Non-stationary Transformers: Exploring the Stationarity in Time Series Forecasting"
       ]
     },
     {
       "topic": "graph neural networks for drug discovery",
       "gold_count": 11,
-      "found_count": 4,
-      "recall": 0.364,
-      "total_candidates": 72,
+      "found_count": 8,
+      "recall": 0.727,
+      "total_candidates": 272,
       "found_titles": [
-        "Convolutional Networks on Graphs for Learning Molecular Fingerprints",
-        "Analyzing Learned Molecular Representations for Property Prediction",
-        "Strategies for Pre-training Graph Neural Networks",
-        "Communicating with Graph Neural Networks for Molecular Property Prediction"
-      ],
-      "missed_titles": [
         "MoleculeNet: A Benchmark for Molecular Machine Learning",
         "Neural Message Passing for Quantum Chemistry",
-        "How Powerful are Graph Neural Networks?",
+        "Analyzing Learned Molecular Representations for Property Prediction",
         "SchNet: A Continuous-filter Convolutional Neural Network for Modeling Quantum Interactions",
         "DimeNet: Directional Message Passing for Molecular Graphs",
-        "Geometry-enhanced molecular representation learning for property prediction",
+        "Strategies for Pre-training Graph Neural Networks",
+        "Communicating with Graph Neural Networks for Molecular Property Prediction",
+        "Geometry-enhanced molecular representation learning for property prediction"
+      ],
+      "missed_titles": [
+        "Convolutional Networks on Graphs for Learning Molecular Fingerprints",
+        "How Powerful are Graph Neural Networks?",
         "SphereNet: Learning a 3D Molecular Representation from Spherical Coordinates"
       ]
     },
     {
       "topic": "retrieval augmented generation hallucination mitigation",
       "gold_count": 10,
-      "found_count": 2,
-      "recall": 0.2,
-      "total_candidates": 65,
+      "found_count": 6,
+      "recall": 0.6,
+      "total_candidates": 272,
       "found_titles": [
-        "CRAG: Corrective Retrieval Augmented Generation",
-        "Active Retrieval Augmented Generation"
-      ],
-      "missed_titles": [
         "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
         "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection",
         "Chain-of-Note: Enhancing Robustness in Retrieval-Augmented Language Models",
+        "CRAG: Corrective Retrieval Augmented Generation",
+        "Active Retrieval Augmented Generation",
+        "REPLUG: Retrieval-Augmented Black-Box Language Models"
+      ],
+      "missed_titles": [
         "When Not to Trust Language Models: Investigating Effectiveness of Parametric and Non-Parametric Memories",
         "FreshLLMs: Refreshing Large Language Models with Search Engine Augmentation",
-        "REPLUG: Retrieval-Augmented Black-Box Language Models",
         "Demonstrate-Search-Predict: Composing retrieval and language models for knowledge-intensive NLP",
         "Lost in the Middle: How Language Models Use Long Contexts"
       ]
