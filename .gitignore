@@ -54,7 +54,7 @@ data/*
 *.db-shm
 data/pdfs/*
 data/chroma/*
-runs/*.json
+runs/*
 !runs/.gitkeep
 
 # Model & Embedding caches
@@ -76,6 +76,8 @@ eval/scratch/
 *.bak
 
 # Streamlit
+.streamlit/*
+!.streamlit/config.toml
 .streamlit/secrets.toml
 
 # Testing, typing & linting

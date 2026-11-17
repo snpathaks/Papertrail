@@ -379,21 +379,35 @@ pip install -r requirements.txt
 ```
 
 ### 2. Configure Environment
-Copy `.env.example` to `.env` and select your provider:
+Copy `.env.example` to `.env` and configure your preferred provider and keys:
 ```bash
 cp .env.example .env
 ```
 
-**Option A: Cloud Serverless Mode (Recommended for Free Hosting)**
+**Option A: Cloud Serverless Mode with Groq (Recommended for Free Hosting)**
 ```bash
 export LLM_PROVIDER=groq
 export GROQ_API_KEY=your_groq_api_key
-export VECTOR_BACKEND=memory
+export GROQ_MODEL=qwen/qwen3.8-27b        # or llama-3.3-70b-versatile
+export VECTOR_BACKEND=memory              # Fast pure NumPy in-memory vectorstore
+export CONTACT_EMAIL=you@example.com      # OpenAlex polite pool
 ```
 
-**Option B: Local Offline Mode (Ollama)**
+**Option B: Cloud Serverless Mode with Google Gemini**
+```bash
+export LLM_PROVIDER=gemini
+export GEMINI_API_KEY=your_gemini_api_key # or GOOGLE_API_KEY
+export GEMINI_MODEL=gemini-2.5-flash
+export VECTOR_BACKEND=memory
+export CONTACT_EMAIL=you@example.com
+```
+
+**Option C: Local Offline Mode (Ollama)**
 ```bash
 export LLM_PROVIDER=ollama
+export LLM_MODEL=qwen2.5:3b
+export EMBED_MODEL=nomic-embed-text
+export VECTOR_BACKEND=chroma              # or memory
 ollama run qwen2.5:3b
 ollama pull nomic-embed-text
 ```
