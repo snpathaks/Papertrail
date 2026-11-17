@@ -1,4 +1,4 @@
 {
-  "System A": "plain_llm",
-  "System B": "papertrail"
+  "System A": "papertrail",
+  "System B": "plain_llm"
 }

@@ -6,7 +6,7 @@
 [![FastEmbed](https://img.shields.io/badge/embeddings-FastEmbed-green.svg)](https://github.com/qdrant/fastembed)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-> **Abstract**: Large Language Models (LLMs) used for scientific synthesis suffer from critical vulnerabilities: citation hallucination, unverified empirical claims, and inability to systematically detect unexplored research gaps. We present **PaperTrail**, an interactive, human-in-the-loop multi-agent architecture built on **LangGraph** that decouples academic literature discovery from deep extraction and verification. PaperTrail executes structured retrieval across **OpenAlex** and **arXiv**, enables human researchers to curate candidate pools, enforces verbatim evidence extraction via fuzzy string matching ($\ge 85\%$ threshold), identifies empirical contradictions and benchmark gaps algorithmically, and generates fully verified literature reviews with inline citation auditing. Evaluated across 18 hand-labeled gold-standard papers, 3 research topics (31 canonical works), and 30 plain-LLM reference queries, PaperTrail eliminates citation hallucinations ($0.0\%$ vs. $50.0\%$ for ungrounded LLMs), achieves an extraction $F_1$ of **0.86** on complex benchmark configurations, demonstrates **95.0%** citation verification accuracy against human manual audit, and scores **4.27 / 5.0** in blinded multi-criteria human evaluations.
+> **Abstract**: Large Language Models (LLMs) used for scientific synthesis suffer from critical vulnerabilities: citation hallucination, unverified empirical claims, and inability to systematically detect unexplored research gaps. We present **PaperTrail**, an interactive, human-in-the-loop multi-agent architecture built on **LangGraph** that decouples academic literature discovery from deep extraction and verification. PaperTrail executes structured retrieval across **OpenAlex** and **arXiv**, enables human researchers to curate candidate pools, enforces verbatim evidence extraction via fuzzy string matching ($\ge 85\%$ threshold), identifies empirical contradictions and benchmark gaps algorithmically, and generates fully verified literature reviews with inline citation auditing. Evaluated across 18 hand-labeled gold-standard papers, 3 research topics (31 canonical works), and 30 plain-LLM reference queries, PaperTrail eliminates citation hallucinations ($0.0\%$ fake titles guaranteed by retrieval-grounded construction vs. $50.0\%$ for ungrounded LLMs), achieves an empirical dataset extraction $F_1$ of **0.287** (reaching up to **0.88** on *PatchTST* and **0.78** on *DLinear*) with **97.1%** verbatim quote fidelity on full raw academic PDFs, achieves an automated citation verifier score of **0.71** on live end-to-end reviews, and demonstrates **75.0%** concordance between automated citation checks and rigorous manual human audits.
 
 ---
 
@@ -49,7 +49,7 @@
 
 ## 🏛️ System Architecture
 
-PaperTrail organizes autonomous specialized agents into two interconnected LangGraph state machines:
+PaperTrail organizes specialized agents into two interconnected LangGraph state machines centered around a human-in-the-loop curation boundary:
 
 ```mermaid
 flowchart TD
@@ -94,12 +94,12 @@ PaperTrail delegates distinct research tasks to specialized agents governed by s
 
 | Agent Name | Primary Model(s) | Pydantic Schema / Contract | Task Objective & Prompt Constraint |
 | :--- | :--- | :--- | :--- |
-| **Query Expansion Agent** | `llama-3.3-70b-versatile` / `qwen2.5:3b` | `schemas.Queries` | Synthesizes 3-5 multi-angle query variants, acronyms, and related concepts without repeating prior search attempts. |
-| **Relevance Filter Agent** | `llama-3.3-70b-versatile` / `qwen2.5:3b` | `schemas.RelevanceDecision` | Classifies papers as `relevant: bool` against user topic and outputs a 1-sentence grounded rationale. |
-| **Information Extraction Agent** | `llama-3.3-70b-versatile` / `qwen2.5:3b` | `schemas.MethodInfo`, `ResultsInfo`, `Metric`, `LimitInfo` | Deconstructs paper into methodology, reported datasets, key quantitative metrics, and stated limitations. Enforces exact quote copying. |
-| **Comparison & Clustering Agent** | `llama-3.3-70b-versatile` + Scikit-Learn KMeans | `schemas.ClusterLabel` | Clusters methodology embeddings into approach families ($K=1..3$), labels groups, identifies directly comparable datasets, and summarizes differences. |
-| **Gap & Contradiction Agent** | `llama-3.3-70b-versatile` + Deterministic Heuristics | `schemas.GapExplanation` | Flags metric contradictions ($\Delta \ge 10$), computes dataset coverage holes, aspect sparsity, and limitation clusters. Formulates grounded research questions. |
-| **Review Writer Agent** | `llama-3.3-70b-versatile` / `qwen2.5:3b` | Text (Markdown) | Synthesizes a 5-section academic review (Intro, Thematic Analysis, Methodology Comparison, Gaps, Conclusion) with strict `[P#]` citation anchors. |
+| **Query Expansion Agent** | Groq / Gemini / Ollama (`qwen2.5:3b`) | `schemas.Queries` | Synthesizes 3-5 multi-angle query variants, acronyms, and related concepts without repeating prior search attempts. |
+| **Relevance Filter Agent** | Groq / Gemini / Ollama (`qwen2.5:3b`) | `schemas.RelevanceDecision` | Classifies papers as `relevant: bool` against user topic and outputs a 1-sentence grounded rationale. |
+| **Information Extraction Agent** | Groq (`openai/gpt-oss-120b`) / Gemini / Ollama | `schemas.MethodInfo`, `ResultsInfo`, `Metric`, `LimitInfo` | Deconstructs paper into methodology, reported datasets, key quantitative metrics, and stated limitations. Enforces exact quote copying. |
+| **Comparison & Clustering Agent** | Groq / Gemini + Scikit-Learn KMeans | `schemas.ClusterLabel` | Clusters methodology embeddings into approach families ($K=1..3$), labels groups, identifies directly comparable datasets, and summarizes differences. |
+| **Gap & Contradiction Agent** | Groq / Gemini + Deterministic Heuristics | `schemas.GapExplanation` | Flags metric contradictions ($\Delta \ge 10$), computes dataset coverage holes, aspect sparsity, and limitation clusters. Formulates grounded research questions. |
+| **Review Writer Agent** | Groq (`openai/gpt-oss-20b`) / Gemini / Ollama | Text (Markdown) | Synthesizes a 5-section academic review (Intro, Thematic Analysis, Methodology Comparison, Gaps, Conclusion) with strict `[P#]` citation anchors. |
 | **Citation Verifier** | Pure Python + RapidFuzz | Dict (`checked`, `supported`, `score`, `issues`) | Audits generated text: verifies cited `[P#]` exist in candidate pool, checks all decimals/percentages against source chunks, and verifies semantic grounding. |
 
 ---
@@ -136,42 +136,40 @@ PaperTrail underwent systematic quantitative and qualitative evaluation across *
 
 ### TABLE IV: END-TO-END RESULTS
 
-The table below presents the end-to-end benchmark results executed with live language models (Local Ollama 3B and Hosted Groq 70B) across all experimental evaluation protocols:
+The table below presents the end-to-end benchmark results executed with live language models against empirical ground truth:
 
-| Measure | Local 3B | Hosted 70B |
+| Measure | Local 3B | Hosted Cloud (Groq) |
 | :--- | :---: | :---: |
-| **Dataset F1 (18 papers)** | 0.71 | 0.86 |
-| **Main-metric accuracy** | 77.8% | 94.4% |
-| **Quotes verified (%)** | 91.4% | 96.8% |
-| **Plain-LLM refs existing (%)** | 50.0% | 50.0% |
-| **Verifier support score** | 1.00 | 1.00 |
-| **Manual audit agreement** | 95.0% | 95.0% |
-| **Human rating: PaperTrail** | 4.10 | 4.27 |
-| **Human rating: plain LLM** | 3.10 | 3.40 |
-| **Seconds per paper** | 7.8s | 2.6s |
+| **Dataset F1 (18 papers)** | *Pending / Local Only* | **0.287** |
+| **Main-metric accuracy** | *Pending / Local Only* | **94.4%** (17/18) |
+| **Quotes verified (%)** | *Pending / Local Only* | **97.1%** (34/35) |
+| **Plain-LLM refs existing (%)** | *Pending / Local Only* | **50.0%** (15/30 real) |
+| **Verifier support score** | *Pending / Local Only* | **0.71** (12/17 supported) |
+| **Manual audit agreement** | *Pending / Local Only* | **75.0%** (15/20 sentences) |
+| **Human rating: PaperTrail** | *Pending Distribution* | *Pending Distribution* |
+| **Human rating: plain LLM** | *Pending Distribution* | *Pending Distribution* |
+| **Seconds per paper** | *Pending / Local Only* | **38.3s** (191.7s for 5 papers) |
 
-*All results produced from live-model execution without query hint shortcuts. Extraction throughput is 7.8s (Local 3B) and 2.6s (Hosted 70B); full multi-agent pipeline latency is 64.2s and 38.3s per paper, respectively.*
+*All results produced from live-model execution without query hint shortcuts. Local 3B column is marked pending as evaluations were executed on cloud provider infrastructure. Extraction runtime including full PDF download, PyMuPDF4LLM chunking, and ONNX FastEmbed embedding averaged 136.1s per paper.*
 
 ---
 
 ### 🏆 Master Results Table
 
-The table below synthesizes all empirical benchmarks comparing PaperTrail against ungrounded plain LLM baselines and comparing local vs. hosted models:
+The table below synthesizes all empirical benchmarks comparing PaperTrail against ungrounded plain LLM baselines:
 
-| Evaluation Dimension | Plain LLM Baseline | PaperTrail (Local Ollama 3B) | PaperTrail (Hosted Groq 70B) | Statistical / Practical Significance |
-| :--- | :---: | :---: | :---: | :--- |
-| **Citation Hallucination Rate** | **50.0%** (15 / 30 fake) | **0.0%** (0 / 10 fake) | **0.0%** (0 / 10 fake) | **$100\%$ precision by design**; completely prevents hallucinated DOIs/titles |
-| **Citation Support Score (`verify_review`)** | N/A (no evidence mapping) | **1.00** (10/10 verified) | **1.00** (10/10 verified) | Verifies decimals, percentages, and semantic support against raw text |
-| **Verifier Accuracy vs. Human Audit** | N/A | **95.0%** (19/20 sentences) | **95.0%** (19/20 sentences) | Manual human check confirms high automated verifier fidelity |
-| **Dataset Extraction $F_1$ (18 Gold Papers)** | N/A | **0.710** | **0.860** | **+21.1% gain** on complex multi-benchmark tables with 70B model |
-| **Primary Metric Extraction Accuracy** | N/A | **77.8%** (14/18 papers) | **94.4%** (17/18 papers) | Correctly extracts MSE, MAE, CRPS, MASE from paper tables |
-| **Quote Grounding Verification Rate** | N/A | **91.4%** | **96.8%** | Extracted quotes verified against source text at $\ge 85\%$ threshold |
-| **Search Recall (3 Topics, 31 Papers)** | N/A | **67.6%** | **67.6%** | Multi-source academic retrieval (OpenAlex, Crossref, arXiv) with zero hint queries |
-| **Human Rating: Review Accuracy (1–5)** | 3.00 / 5.0 | **5.00 / 5.0** | **5.00 / 5.0** | **+66.7% improvement** in factual confidence by 3 blinded student raters |
-| **Human Rating: Gap Actionability (1–5)**| 3.00 / 5.0 | **4.33 / 5.0** | **4.33 / 5.0** | Concrete research questions tied directly to candidate papers |
-| **Human Rating: Overall Preference (1–5)** | 3.40 / 5.0 | **4.27 / 5.0** | **4.27 / 5.0** | Blinded human raters decisively preferred PaperTrail reviews |
-| **Pipeline Latency (5 Papers Analyzed)** | ~12.0s (hallucinates text) | **52.4s** (7.8s / paper) | **18.2s** (2.6s / paper) | Groq delivers **2.88x end-to-end acceleration** over local inference |
-| **API Token Cost** | Varies | **$0.00** (Local Hardware) | **$0.00** (Free Tier: 30 RPM) | 100% free-tier cloud deployable |
+| Evaluation Dimension | Plain LLM Baseline | PaperTrail (Hosted Cloud) | Statistical / Practical Significance |
+| :--- | :---: | :---: | :--- |
+| **Citation Hallucination Rate** | **50.0%** (15 / 30 fake) | **0.0%** (0 / 10 fake) | **$100\%$ precision by construction**; retrieval-grounding guarantees real DOIs/titles |
+| **Citation Support Score (`verify_review`)** | N/A (no evidence mapping) | **0.71** (12/17 supported) | Verifies decimals, percentages, and semantic support against raw text |
+| **Verifier Accuracy vs. Human Audit** | N/A | **75.0%** (15/20 sentences) | Manual human audit identifies 2 false flags on complex lists and 3 subtle missed errors |
+| **Dataset Extraction $F_1$ (18 Gold Papers)** | N/A | **0.287** (up to **0.88**) | Top models reach 0.88 (*PatchTST*), 0.78 (*DLinear*), 0.77 (*SimMTM*) |
+| **Primary Metric Extraction Accuracy** | N/A | **94.4%** (17/18 papers) | Correctly extracts MSE, MAE, CRPS, and MASE from parsed document text |
+| **Quote Grounding Verification Rate** | N/A | **97.1%** (34/35 quotes) | Extracted verbatim quotes verified against source text at $\ge 85\%$ threshold |
+| **Search Recall (3 Topics, 31 Papers)** | N/A | **67.6%** (21/31 papers) | Measured over candidate pool of ~270 papers/topic with zero hint queries |
+| **Human Evaluation Protocol** | Baseline System B | System A (PaperTrail) | Blinded evaluation forms generated; scoring pending rater distribution |
+| **Pipeline Latency (5 Papers Analyzed)** | ~12.0s (hallucinates text) | **191.7s** (38.3s / paper) | Full 5-paper pipeline execution recorded in `cost_timing.json` |
+| **API Token Cost** | Varies | **$0.00** (Free Tier: 30 RPM) | 100% free-tier cloud deployable |
 
 ---
 
@@ -179,18 +177,18 @@ The table below synthesizes all empirical benchmarks comparing PaperTrail agains
 
 Evaluated on **18 hand-labeled seminal papers** ([`eval/gold_extraction.json`](eval/gold_extraction.json)) spanning multivariate time-series forecasting, foundation models, and deep learning architectures:
 
-| Model Architecture | Provider | Model Name | Dataset Extraction $F_1$ | Metric Accuracy (Ratio) | Quote Verification Rate | Latency / Paper |
+| Model Architecture | Provider | Model Name | Dataset Extraction $F_1$ | Metric Accuracy (Ratio) | Quote Verification Rate | Total Benchmark Latency |
 | :--- | :--- | :--- | :---: | :---: | :---: | :---: |
-| **Small Local Model** | Ollama | `qwen2.5:3b` | 0.710 | 77.8% (14 / 18) | 91.4% | 7.8s |
-| **Large Cloud Model** | Groq | `llama-3.3-70b-versatile` | **0.860** | **94.4% (17 / 18)** | **96.8%** | **2.6s** |
+| **Small Local Model** | Ollama | `qwen2.5:3b` | *Pending* | *Pending* | *Pending* | *Pending* |
+| **Large Cloud Model** | Groq | `openai/gpt-oss-120b` | **0.287** | **94.4% (17 / 18)** | **97.1% (34 / 35)** | **2449.8s** (136.1s / paper) |
 
-*Note: Benchmark papers include Informer, Autoformer, FEDformer, DLinear, PatchTST, iTransformer, Temporal Fusion Transformers (TFT), TimesNet, TimeGPT-1, Crossformer, Non-stationary Transformers, SimMTM, One Fits All, Time-LLM, Scaleformer, TEMPO, Client, and Lag-Llama.*
+*Breakdown of individual paper Dataset $F_1$: PatchTST (0.88), DLinear (0.78), SimMTM (0.77), Crossformer (0.59), Non-stationary Transformers (0.46), TimeGPT-1 (0.44), iTransformer (0.43), Informer (0.33), FEDformer (0.29), Autoformer (0.20). Benchmark includes full PDF downloading, PyMuPDF4LLM extraction, and FastEmbed ONNX embeddings.*
 
 ---
 
 ### Table 2: Academic Search Recall Across 3 Domains ($N=31$)
 
-Evaluated against **31 canonical papers** ([`eval/gold_search_recall.json`](eval/gold_search_recall.json)) using cold-start live queries across OpenAlex, Crossref, and arXiv (without hardcoded hint queries):
+Evaluated against **31 canonical papers** ([`eval/gold_search_recall.json`](eval/gold_search_recall.json)) using cold-start live queries across OpenAlex and arXiv (without hardcoded hint queries):
 
 | Benchmark Research Topic | Gold Canonical Papers | Found by Search Pipeline | Topic Search Recall | Total Candidates Screened |
 | :--- | :---: | :---: | :---: | :---: |
@@ -199,63 +197,62 @@ Evaluated against **31 canonical papers** ([`eval/gold_search_recall.json`](eval
 | **Retrieval-Augmented Generation Hallucination Mitigation** | 10 | 6 | **60.0%** | 272 |
 | **Overall Macro/Micro Average** | **31** | **21** | **67.6%** | **813** |
 
-*Key finding: Integrating Crossref API and arXiv alongside OpenAlex with live multi-angle LLM query expansion boosted overall search recall from 38.8% to **67.6%** across all 31 canonical benchmark papers with zero hardcoded query hints.*
+*Important Scope Note: Search recall is evaluated on the complete candidate pool of ~270 papers per topic returned by the search and expansion pipeline prior to human-in-the-loop curation, not on the final 10 papers selected by the user.*
 
 ---
 
 ### Table 3: Hallucination Baseline vs. OpenAlex Ground Truth ($N=30$)
 
-Ungrounded LLM references evaluated via fuzzy title matching (`fuzz.ratio > 85`) against the complete OpenAlex catalog ([`eval/results/hallucination_baseline.json`](eval/results/hallucination_baseline.json)):
+Ungrounded LLM references evaluated via fuzzy title matching (`fuzz.ratio > 85`) against the complete OpenAlex and arXiv catalog ([`eval/results/hallucination_baseline.json`](eval/results/hallucination_baseline.json)):
 
 | Research Domain Prompted | Plain LLM Generated Titles | Verified on OpenAlex (Real) | Hallucinated Titles (Fake) | Plain LLM Accuracy | PaperTrail Accuracy |
 | :--- | :---: | :---: | :---: | :---: | :---: |
-| **Time-Series Forecasting** | 10 | 5 | 5 | 50.0% | **100.0%** |
-| **GNNs for Drug Discovery** | 10 | 5 | 5 | 50.0% | **100.0%** |
-| **RAG Hallucination Mitigation** | 10 | 5 | 5 | 50.0% | **100.0%** |
+| **Time-Series Forecasting** | 10 | 8 | 2 | 80.0% | **100.0%** |
+| **GNNs for Drug Discovery** | 10 | 1 | 9 | 10.0% | **100.0%** |
+| **RAG Hallucination Mitigation** | 10 | 6 | 4 | 60.0% | **100.0%** |
 | **Total / Overall Accuracy** | **30** | **15** | **15** | **50.0%** | **100.0% (0 / 10 fake)** |
 
-*Typical plain-LLM hallucination example: Fabricated title "A Novel Transformer-Based Framework for Multi-Horizon Time Series Forecasting" was generated by the plain LLM and does not exist in scientific indices.*
+*Note: PaperTrail's 0.0% hallucination rate is guaranteed by construction (retrieval-grounded document identifiers), not a probabilistic empirical measurement. Plain LLM generated 15 fake titles out of 30.*
 
 ---
 
 ### Table 4: Citation Faithfulness & Human Auditor Agreement ($N=20$)
 
-Manual inspection of 20 randomly sampled sentences from generated reviews ([`eval/results/citation_faithfulness.json`](eval/results/citation_faithfulness.json)) to validate the reliability of the automated `verify_review` engine:
+Manual inspection of 20 sentences from live generated reviews ([`eval/results/citation_faithfulness.json`](eval/results/citation_faithfulness.json)) to validate the reliability of the automated `verify_review` engine:
 
 | Tested Review Output | Total Sentences Checked | Automated Verifier Score | Human Manual Agreement | Checker Accuracy | Nature of Discrepancies |
 | :--- | :---: | :---: | :---: | :---: | :--- |
-| **Local Model Review (Ollama)** | 10 | 1.00 (10 / 10) | 10 / 10 verified | 100.0% | None; all sentences verbatim matched source text |
-| **Cloud Model Review (Groq)** | 10 | 1.00 (10 / 10) | 9 / 10 verified | 90.0% | 1 borderline case: parser included a leading `"Abstract"` heading token |
-| **Combined Human Audit** | **20** | **1.00** | **19 / 20** | **95.0%** | **High concordance between automated checker and human audit** |
+| **Live Cloud Review (Groq)** | 20 | 0.71 (12 / 17 supported) | 15 / 20 correct | **75.0%** | 2 false flags on complex multi-dataset lists; 3 missed subtle hallucinations (e.g. NAS attribute on FEDformer) |
 
 ---
 
-### Table 5: Blinded Multi-Criteria Human Evaluation ($N=3$ Raters)
+### Table 5: Blinded Multi-Criteria Human Evaluation Protocol
 
-Three independent graduate/senior researchers in machine learning scored blinded reviews (System A = Plain LLM, System B = PaperTrail) on a 1–5 Likert scale ([`eval/results/human_eval_results.json`](eval/results/human_eval_results.json)):
+The human evaluation harness ([`eval/eval_human.py`](eval/eval_human.py)) generates blinded evaluation packages (`eval/results/human_eval/`) mapping System A (PaperTrail) and System B (plain ungrounded LLM) across 5 core research criteria:
 
-| Evaluation Dimension (1–5 Scale) | System A (Plain LLM) | System B (PaperTrail) | Absolute Gain | Relative Improvement |
-| :--- | :---: | :---: | :---: | :---: |
-| **Review Factual Accuracy** | 3.00 ± 0.00 | **5.00 ± 0.00** | **+2.00** | **+66.7%** |
-| **Research Gap Actionability** | 3.00 ± 0.00 | **4.33 ± 0.58** | **+1.33** | **+44.3%** |
-| **Research Gap Quality & Novelty** | 3.00 ± 0.00 | **4.00 ± 0.00** | **+1.00** | **+33.3%** |
-| **Literature Review Coverage** | 3.67 ± 0.58 | **4.00 ± 0.00** | **+0.33** | **+9.0%** |
-| **Overall Scientific Usefulness** | 3.40 ± 0.20 | **4.27 ± 0.12** | **+0.87** | **+25.6%** |
-| **Writing Fluency & Coherence** | **4.33 ± 0.58** | 4.00 ± 0.00 | -0.33 | -7.6% (Plain LLM generates smoother prose) |
+| Evaluation Dimension (1–5 Likert Scale) | Evaluation Protocol & Rubric Focus | Status |
+| :--- | :--- | :---: |
+| **Review Factual Accuracy** | Degree to which numerical values, dataset names, and methods reflect ground truth. | *Forms generated, scoring pending rater distribution* |
+| **Research Gap Actionability** | Concrete research questions and testable hypotheses proposed from identified gaps. | *Forms generated, scoring pending rater distribution* |
+| **Research Gap Quality & Novelty** | Distinguishes genuine methodology-benchmark gaps from trivial restatements. | *Forms generated, scoring pending rater distribution* |
+| **Literature Review Coverage** | Comprehensiveness and balance of reviewed architectural paradigms. | *Forms generated, scoring pending rater distribution* |
+| **Overall Scientific Usefulness** | Practical utility for a graduate student or researcher drafting a literature survey. | *Forms generated, scoring pending rater distribution* |
 
-*Key qualitative feedback from evaluators: "System B wins easily on factual accuracy and gap actionability. The citations point to real papers with real numbers and verifiable methods. System A is well-written prose but essentially an unverified hallucination hazard for academic research."*
+*Blinded evaluator forms (`eval_form_evaluator_1.json`, `eval_form_evaluator_2.json`, `eval_form_evaluator_3.json`) and answer key are persisted in `eval/results/human_eval/`.*
 
 ---
 
 ### Table 6: Computational Latency, Throughput & Cost Profiling
 
-Execution benchmarks measured for a complete 5-paper end-to-end pipeline run ([`eval/results/cost_summary.json`](eval/results/cost_summary.json)):
+Execution benchmarks measured for a complete 5-paper end-to-end pipeline run ([`eval/results/cost_timing.json`](eval/results/cost_timing.json)):
 
-| Execution Backend | Total Pipeline Time (5 Papers) | Extraction Latency / Paper | API Token Cost | Cloud Hosting Viability |
-| :--- | :---: | :---: | :---: | :--- |
-| **Groq (`llama-3.3-70b-versatile`)** | **18.2s** | **2.6s** | **$0.00** (Free Tier: 30 RPM) | **100% Serverless** (Streamlit Cloud & Hugging Face Spaces) |
-| **Gemini (`gemini-2.5-flash`)** | **24.1s** | **3.4s** | **$0.00** (Free Tier: 15 RPM) | **100% Serverless** (Google AI Studio) |
-| **Ollama (`qwen2.5:3b` Local GPU/CPU)** | **52.4s** | **7.8s** | **$0.00** (Local Compute) | Requires local daemon; unsupported on free cloud containers |
+| Pipeline Execution Phase | Total Elapsed Time | Per-Paper Latency | Hardware / Quota Profile |
+| :--- | :---: | :---: | :--- |
+| **Search & Relevance Filtering** | 12.3s | 2.5s | OpenAlex Polite Pool + arXiv API |
+| **PDF Download & Chunk Parsing** | 136.1s / paper | 136.1s | PyMuPDF4LLM + FastEmbed ONNX |
+| **Cached Extraction Execution** | 0.1s | 0.02s | SQLite SHA-256 Key-Value Cache |
+| **Synthesis, Comparison & Gaps** | ~35.0s | 7.0s | Hosted LLM API |
+| **Complete 5-Paper Pipeline Run** | **191.7s** | **38.3s** | **$0.00** (Free Tier: Groq 30 RPM) |
 
 ---
 
@@ -321,7 +318,7 @@ Papertrail/
 ├── requirements.txt            # Pinned production dependencies
 ├── .env.example                # Environment configuration template
 ├── .gitignore                  # Git ignore rules for caches, DBs, and runtime snapshots
-├── agents/                     # Autonomous pipeline agents
+├── agents/                     # Specialized pipeline agents
 │   ├── search_agent.py         # Query expansion, search execution & relevance filtering
 │   ├── extraction_agent.py     # Structured extraction, quote fuzzy-matching & fallback
 │   ├── comparison_agent.py     # Methodology clustering, approach naming & matrix tables
@@ -373,7 +370,7 @@ Papertrail/
 ### 1. Installation
 Clone the repository and install dependencies in a clean virtual environment:
 ```bash
-git clone https://github.com/your-username/Papertrail.git
+git clone https://github.com/snpathaks/Papertrail.git
 cd Papertrail
 pip install -r requirements.txt
 ```
@@ -388,7 +385,7 @@ cp .env.example .env
 ```bash
 export LLM_PROVIDER=groq
 export GROQ_API_KEY=your_groq_api_key
-export GROQ_MODEL=qwen/qwen3.8-27b        # or llama-3.3-70b-versatile
+export GROQ_MODEL=openai/gpt-oss-20b        # or openai/gpt-oss-120b
 export VECTOR_BACKEND=memory              # Fast pure NumPy in-memory vectorstore
 export CONTACT_EMAIL=you@example.com      # OpenAlex polite pool
 ```
@@ -448,9 +445,9 @@ If you use PaperTrail or its evaluation benchmarks in your research, please cite
 ```bibtex
 @article{papertrail2026,
   title   = {PaperTrail: A Verifiable, Human-in-the-Loop Multi-Agent System for Grounded Academic Literature Review and Gap Analysis},
-  author  = {Pathak, Shalini and Contributors},
+  author  = {Pathak, Shalini},
   journal = {arXiv preprint},
   year    = {2026},
-  url     = {https://github.com/your-username/Papertrail}
+  url     = {https://github.com/snpathaks/Papertrail}
 }
 ```

@@ -1,129 +1,819 @@
 {
   "provider": "groq",
-  "vector_backend": "memory",
-  "embedder": "FastEmbedWrapper",
+  "model": "openai/gpt-oss-20b",
   "topic": "transformer models for time-series forecasting",
-  "selected_papers": [
+  "review": "## Introduction\nTransformer architectures, originally devised for natural language processing, have recently been adapted to multivariate time\u2011series forecasting. Their self\u2011attention mechanism captures long\u2011range temporal dependencies, yet the quadratic complexity of standard attention has motivated specialized designs. This review surveys five representative contributions that illustrate the current trajectory of transformer\u2011based forecasting: Informer [P1] introduces a timestamp\u2011only decoder to mitigate error accumulation; Autoformer [P2] replaces dot\u2011product attention with an auto\u2011correlation module for series\u2011level aggregation; FEDformer [P3] uses neural architecture search to discover memory\u2011efficient variants; PatchTST [P5] reduces token count via patching and channel\u2011independence; and a recent empirical study [P4] compares full transformers with linear replacements to assess the necessity of attention layers. Together, these works delineate trade\u2011offs among model expressiveness, computational efficiency, and forecasting accuracy in long\u2011term prediction.\n\n## Thematic Analysis\n### Lightweight Temporal Attention\nThese studies investigate the suitability of Transformer architectures for long\u2011term time\u2011series forecasting. P2 introduces Autoformer, which replaces self\u2011attention with an auto\u2011correlation mechanism to capture series\u2011level dependencies, reporting MSE\u202f0.065 and MAE\u202f0.189 on the ETT benchmark [P2]. P3 proposes FEDformer, employing neural architecture search to discover memory\u2011efficient Transformers for ETTm2, achieving MSE\u202f0.557 and 0.239 on the same dataset, yet noting rapid performance degradation in extended horizons [P3]. P4 evaluates whether Transformers truly preserve temporal order by simplifying them to linear layers, finding that standard Transformers fail to model scale, bias, and trend on Electricity, ETTh2, and Exchange\u2011Rate data [P4].\n\n### Token-Efficient Forecasting\nThe two studies, Informer (P1) and PatchTST (P5), both investigate transformer\u2011based architectures for long\u2011sequence time\u2011series forecasting. Each proposes a strategy to mitigate the computational burden of standard self\u2011attention: Informer introduces a decoder that predicts solely from the time stamp, thereby reducing error accumulation and avoiding full\u2011attention masking, yet still suffers from O(L\u00b2) memory usage [P1]; PatchTST applies patching to shrink the input token set and adopts channel\u2011independent processing to enhance efficiency, though its limitations are not reported [P5]. Both works benchmark on the ETTh1 dataset (P1) and, in the case of PatchTST, on a broader suite of datasets including Weather, Traffic, Electricity, ILI, ETTh2, ETTm1, and ETTm2 [P5]. Thus, the papers share a focus on transformer\u2011based long\u2011term forecasting, efficiency\u2011enhancing modifications, and evaluation on the ETTh1 benchmark.\n\n## Comparison of Methodologies\nToken\u2011efficiency and lightweight attention design represent two distinct strategies for scaling Transformer\u2011based time\u2011series models.  Token\u2011efficient methods, such as PatchTST, reduce the input length through patching and exploit channel\u2011independence to cut computation, thereby trading model size for fewer tokens [P5].  In contrast, lightweight attention approaches refine the attention mechanism itself: Autoformer introduces an auto\u2011correlation module that aggregates information at the series level [P2]; FEDformer employs Neural Architecture Search to discover memory\u2011 and compute\u2011efficient Transformer variants [P3]; and the study on Transformers\u2019 effectiveness replaces attention layers with linear layers or even an \u201cEmbed\u202f+\u202fLinear\u201d baseline to isolate temporal order effects [P4].  Performance figures cannot be directly compared because each work evaluates on different benchmarks\u2014P1 reports MSE/MAE on ETTh1 only, P2 on ETT, P3 on ETTm2, and P4 lists a broad set of datasets but omits numerical results [P1][P2][P3][P4].  Architecturally, P2\u2019s auto\u2011correlation discovers dependencies at the series level, P3\u2019s NAS yields compact Transformers, P4 isolates temporal order, while P1\u2019s decoder predicts solely from timestamps to avoid error accumulation, and P5\u2019s patching strategy enhances efficiency [P1][P2][P3][P4][P5].\n\n## Research Gaps\n**Research Gaps**\n\nThe current literature exhibits several notable gaps. First, dataset coverage is limited; high\u2011confidence evidence shows that only three of the five examined studies employ the *etth1* benchmark, with few other datasets represented [P1][P4][P5]. This raises the question of how model performance generalizes across diverse time\u2011series domains. Second, medium\u2011confidence findings indicate that Transformer\u2011based approaches suffer rapid performance degradation over long horizons, failing to capture scale, bias, and trend dynamics in Electricity, ETTh2, and Exchange\u2011Rate data [P3][P4]. Third, the quadratic complexity of canonical self\u2011attention remains a bottleneck; medium\u2011confidence evidence suggests that existing efficiency\u2011driven designs still rely on short, fixed\u2011length inputs, limiting practical applicability [P1][P3]. Finally, low\u2011confidence observations reveal an absence of discussion on robustness, fairness, interpretability, and generalization, with only a single study addressing fairness [P4]. These gaps underscore the need for systematic investigations into dataset diversity, long\u2011horizon stability, linear\u2011complexity attention mechanisms, and broader evaluation criteria.\n\n## Conclusion\nAcross the surveyed literature, only three of five studies employ the ETTh1 benchmark, with limited exploration of alternative datasets [P1][P4][P5]. Transformer\u2011based models consistently underperform on long\u2011horizon tasks, failing to capture scale and bias in Electricity and ETTh2 and struggling with aperiodic series such as Exchange\u2011Rate [P3][P4]. Moreover, the canonical self\u2011attention mechanism incurs quadratic time and memory costs, prompting many works to restrict input length [P1][P3]. Finally, robustness, fairness, interpretability, and generalization remain largely unaddressed, underscoring critical avenues for future research.",
+  "extracted": [
     {
-      "title": "Deep Transformer Models for Time Series Forecasting: The Influenza Prevalence Case",
-      "year": 2020
-    },
-    {
-      "title": "Integration of Transformer Models for Time-Series Forecasting",
-      "year": 2025
-    },
-    {
-      "title": "A Review of Transformer Models for Time Series Forecasting",
-      "year": 2026
-    },
-    {
-      "title": "Unveiling the limitations of transformer models in time series forecasting",
-      "year": 2026
-    },
-    {
-      "title": "An Improved Adversarial Convolutional Transformer Model for Time Series Forecasting",
-      "year": 2024
-    }
-  ],
-  "approach_names": {
-    "0": "Group 1",
-    "1": "Group 2"
-  },
-  "comparison_table": [
-    {
+      "id": "https://arxiv.org/abs/2012.07436",
+      "uid": "d0e4e0568187",
+      "title": "Informer: Beyond Efficient Transformer for Long Sequence Time-Series Forecasting",
+      "authors": [
+        "Haoyi Zhou",
+        "Shanghang Zhang",
+        "Jieqi Peng",
+        "Shuai Zhang",
+        "Jianxin Li",
+        "Hui Xiong",
+        "Wancai Zhang"
+      ],
+      "year": 2021,
+      "abstract": "Many real-world applications require the prediction of long sequence time-series, such as electricity consumption planning. Long sequence time-series forecasting demands a high prediction capacity of the model, which is the ability to capture precise long-range dependency coupling between output and input efficiently. Recent studies have shown the potential of Transformer to increase the prediction capacity. However, there are several severe issues with Transformer that prevent it from being directly applicable to LSTF, including quadratic time complexity, high memory usage, and inherent limitation of the encoder-decoder architecture. To address these issues, we design an efficient transformer-based model for LSTF, named Informer, with three distinctive characteristics: (i) a ProbSparse self-attention mechanism, which achieves O(L log L) in time complexity and memory usage, (ii) the self-attention distilling highlights dominating attention by halving cascading layer input, and (iii) the generative style decoder, while conceptually simple, predicts the long time-series sequences at one forward operation rather than a step-by-step way, which drastically improves the inference speed of long-sequence predictions. Extensive experiments on four large-scale datasets demonstrate that Informer significantly outperforms existing methods and provides a new solution to the LSTF problem.",
+      "pdf_fallback": false,
+      "fallback_reason": null,
+      "problem": "Existing methods force labels and outputs to be aligned during training and inference, leading to error accumulation.",
+      "method": "Our proposed decoder predicts solely based on the time stamp, enabling predictions with offsets and avoiding error accumulation.",
+      "datasets": [
+        "ETTh1"
+      ],
+      "metrics": [
+        {
+          "name": "MSE",
+          "value": "",
+          "dataset": "ETTh1"
+        },
+        {
+          "name": "MAE",
+          "value": "",
+          "dataset": "ETTh1"
+        }
+      ],
+      "limitations": [
+        "The quadratic computation of self-attention. The atom operation of self-attention mechanism, namely canonical dot-product, causes the time complexity and memory usage per layer to be O(L^2).",
+        "in extreme cases because its public implementation is the mask of the full-attention, which still has O(L^2) memory usage.",
+        "The \u2018-\u2019 indicates failure for the out-of-memory.",
+        "The \u2018-\u2019 indicates failure for the unacceptable metric results.",
+        "we limited the problem setting to make the memory usage feasible for the canonical self-attention."
+      ],
+      "future_work": [],
+      "evidence": [
+        {
+          "field": "method",
+          "quote": "Unlike the existing methods, the labels and outputs are forced to be aligned in the training and inference, our proposed decoder\u2019s predicting relies solely on the time stamp, which can predict with offsets.",
+          "page": 8,
+          "verified": true
+        },
+        {
+          "field": "results",
+          "quote": "However, the MSE gets lower with longer inputs in predicting long sequences (like 168).",
+          "page": 7,
+          "verified": true
+        },
+        {
+          "field": "limits",
+          "quote": "The quadratic computation of self-attention. The atom operation of self-attention mechanism, namely canonical dot-product, causes the time complexity and memory usage per layer to be O(L^2).",
+          "page": 1,
+          "verified": true
+        }
+      ],
       "ref": "P1",
-      "title": "Deep Transformer Models for Time Series Forecasting: The Influenza Prevalence Case",
-      "year": 2020,
-      "approach": "Group 1",
-      "method": "In this paper, we present a new approach to time series forecasting. Time series data are prevalent in many scientific and engineering disciplines. Time series forecasting is a crucial task in modeling time series data, and is an important area of ma",
-      "datasets": "",
-      "key results": "n/a",
-      "limitations": ""
+      "cluster": 1
     },
     {
+      "id": "https://arxiv.org/abs/2106.13008",
+      "uid": "ff2940f98b95",
+      "title": "Autoformer: Decomposition Transformers with Auto-Correlation for Long-Term Series Forecasting",
+      "authors": [
+        "Haixu Wu",
+        "Jiehui Xu",
+        "Jianmin Wang",
+        "Mingsheng Long"
+      ],
+      "year": 2021,
+      "abstract": "Forecasting long-term future series is a grand challenge in time-series analysis. Existing Transformer-based models adopt various self-attention mechanisms to discover the long-range dependencies. However, intricate temporal patterns of the long-term future prohibit the model from finding reliable dependencies. Also, Transformers have to handle the growing length of input series by adopting a sparse version of point-wise self-attention, which causes information utilization bottleneck. Going beyond Transformers, we design Autoformer as a novel decomposition architecture with an Auto-Correlation mechanism. We break with the pre-processing convention of series decomposition and renovate it as a basic inner block of deep models. This design empowers Autoformer with progressive decomposition capacity for complex time series. Further, inspired by the stochastic process theory, we design the Auto-Correlation mechanism based on the series periodicity, which conducts the dependencies discovery and representation aggregation at the sub-series level. Auto-Correlation inherently has the O(LlogL) complexity and can be seamlessly integrated with the decomposition architecture.",
+      "pdf_fallback": false,
+      "fallback_reason": null,
+      "problem": "Intricate temporal patterns of the long-term future.",
+      "method": "Auto-Correlation mechanism that discovers dependencies and aggregates information at the series level.",
+      "datasets": [
+        "ETT",
+        "Electricity",
+        "Exchange"
+      ],
+      "metrics": [
+        {
+          "name": "MSE",
+          "value": "0.065",
+          "dataset": "ETT"
+        },
+        {
+          "name": "MAE",
+          "value": "0.189",
+          "dataset": "ETT"
+        },
+        {
+          "name": "MSE",
+          "value": "0.201",
+          "dataset": "Electricity"
+        },
+        {
+          "name": "MAE",
+          "value": "0.317",
+          "dataset": "Electricity"
+        },
+        {
+          "name": "MSE",
+          "value": "0.197",
+          "dataset": "Exchange"
+        },
+        {
+          "name": "MAE",
+          "value": "0.323",
+          "dataset": "Exchange"
+        }
+      ],
+      "limitations": [],
+      "future_work": [],
+      "evidence": [
+        {
+          "field": "method",
+          "quote": "We propose an Auto-Correlation mechanism with dependencies discovery and information aggregation at the series level.",
+          "page": 2,
+          "verified": true
+        },
+        {
+          "field": "results",
+          "quote": "ETT |96|**0.065 0.189** 0.082|0.219|0.088|0.225 0.082|0.217|0.131 0.288 0.099 0.237 0.287 0.456 0.211 0.362",
+          "page": 7,
+          "verified": true
+        }
+      ],
       "ref": "P2",
-      "title": "Integration of Transformer Models for Time-Series Forecasting",
-      "year": 2025,
-      "approach": "Group 2",
-      "method": "This paper investigates the use of transformer models for time-series forecasting in the energy market, particularly focusing on inter-provincial spot prices. By leveraging the transformer\u2019s self-attention mechanism, the proposed model captures long-",
-      "datasets": "",
-      "key results": "n/a",
-      "limitations": ""
+      "cluster": 0
     },
     {
+      "id": "https://arxiv.org/abs/2202.07125",
+      "uid": "8e6d84ce22e7",
+      "title": "FEDformer: Frequency Enhanced Decomposed Transformer for Long-term Series Forecasting",
+      "authors": [
+        "Tian Zhou",
+        "Ziqing Ma",
+        "Qingsong Wen",
+        "Xue Wang",
+        "Liang Sun",
+        "Rong Jin"
+      ],
+      "year": 2022,
+      "abstract": "Transformer-based models have shown great power in long-term time series forecasting. However, most Transformer-based models lack decomposition capability, which leads to sub-optimal results. Moreover, the self-attention mechanism in Transformers has quadratic complexity. To address these issues, we propose FEDformer, which integrates seasonal-trend decomposition into the overall Transformer architecture, and employs a novel frequency enhanced attention mechanism. Specifically, FEDformer uses a set of learnable frequencies for attention computation in the frequency domain, achieving O(L) complexity. Extensive experiments on six benchmarks demonstrate that FEDformer outperforms the state-of-the-art methods.",
+      "pdf_fallback": false,
+      "fallback_reason": null,
+      "problem": "Manual configuring hyper-parameters is time-consuming and often results in suboptimal performance; need efficient architectures for industry-scale high-dimensional, long-length time series",
+      "method": "Neural Architecture Search (NAS) to automatically discover memory- and computational-efficient Transformer architectures for time series",
+      "datasets": [
+        "ETTm2"
+      ],
+      "metrics": [
+        {
+          "name": "MSE",
+          "value": "0.557",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.239",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.428",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.615",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.667",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.710",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.265",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.385",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.686",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.697",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "1.078",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.375",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "1.359",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.937",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "1.691",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.315",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "1.057",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "1.443",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "2.153",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.936",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.552",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "1.898",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.815",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.867",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.557",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.234",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.597",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.667",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.439",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.282",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.489",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.353",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.387",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.556",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.238",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.779",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.481",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.562",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.580",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.266",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.815",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "1.109",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.690",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.461",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "NaN",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "1.623",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "OOM",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "2.992",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.457",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.203",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.581",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.255",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.365",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.354",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.768",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.231",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.658",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.218",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.604",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.204",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.841",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.269",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "1.403",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.281",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.533",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.432",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.989",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.378",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "1.078",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.336",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "1.060",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.266",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "1.451",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.325",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "2.632",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.339",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "1.363",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.481",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "1.334",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.362",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "1.549",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.366",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "1.413",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.375",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "3.282",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.421",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "3.058",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.422",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "3.379",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.822",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "3.048",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.539",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "2.631",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.502",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "2.672",
+          "dataset": "ETTm2"
+        },
+        {
+          "name": "MSE",
+          "value": "0.537",
+          "dataset": "ETTm2"
+        }
+      ],
+      "limitations": [
+        "deteriorates quickly. This phenomenon makes a lot of carefully designed Transformers impractical in long-term forecasting tasks since they cannot effectively utilize long input information.",
+        "A lot of works we describe above carefully design attention modules to lower the quadratic calculation and memory complexity, though they practically use a short fixed-size input to achieve the best result in their reported experiments. It makes us question the actual usage of such an efficient design."
+      ],
+      "future_work": [
+        "More works and designs need to be investigated to fully utilize long sequence input for better performance."
+      ],
+      "evidence": [
+        {
+          "field": "method",
+          "quote": "AutoML technique like Neural architecture search (NAS) [Elsken _et al._ , 2019; Wang _et al._ , 2020] has been a popular technique for discovering effective deep neural architectures, and automating Transformer design using NAS in NLP and CV can be found in recent studies [So _et al._ , 2019; Chen _et al._ , 2021b]. For industry-scale time series data which can be of both high dimension and long length, automatically discovering both memory- and computational-efficient Transformer architectures is of practical importance, making it an important future direction for time series Transformers.",
+          "page": 7,
+          "verified": true
+        },
+        {
+          "field": "results",
+          "quote": "Table 2: The MSE comparisons in robustness experiment of forecasting 96 steps for ETTm2 dataset with prolonging input length.",
+          "page": 6,
+          "verified": true
+        },
+        {
+          "field": "limits",
+          "quote": "More works and designs need to be investigated to fully utilize long sequence input for better performance.",
+          "page": 6,
+          "verified": true
+        }
+      ],
       "ref": "P3",
-      "title": "A Review of Transformer Models for Time Series Forecasting",
-      "year": 2026,
-      "approach": "Group 1",
-      "method": "Long-term time series forecasting is important in energy scheduling, traffic management, meteorological monitoring, and industrial operations. However, conventional statistical models and recurrent neural networks have limitations in modeling long-ra",
-      "datasets": "",
-      "key results": "n/a",
-      "limitations": ""
+      "cluster": 0
     },
     {
+      "id": "https://arxiv.org/abs/2205.13504",
+      "uid": "55cc46bf3957",
+      "title": "Are Transformers Effective for Time Series Forecasting?",
+      "authors": [
+        "Ailing Zeng",
+        "Muxi Chen",
+        "Lei Zhang",
+        "Qiang Xu"
+      ],
+      "year": 2023,
+      "abstract": "Recently, there has been a surge of Transformer-based solutions for the long-term time series forecasting (LTSF) task. Despite the growing popularity of these solutions, there is a lack of a comprehensive study on how well Transformers really perform for LTSF. In this paper, we present a surprising finding that a simple one-layer linear model outperforms all existing Transformer-based LTSF solutions. We propose DLinear, a simple yet effective decomposition linear model, which achieves significant improvement over the state-of-the-art. Experiments on nine benchmarks consistently demonstrate the effectiveness of DLinear.",
+      "pdf_fallback": false,
+      "fallback_reason": null,
+      "problem": "Can existing LTSF-Transformers preserve temporal order well?",
+      "method": "Replace each attention layer with a linear layer (Att.-Linear) and drop other designs keeping only embedding layers and a linear layer (Embed + Linear) to assess temporal order preservation.",
+      "datasets": [
+        "ETTh1",
+        "ETTh2",
+        "ETTm1",
+        "ETTm2",
+        "Traffic",
+        "Electricity",
+        "Weather",
+        "ILI",
+        "ExchangeRate"
+      ],
+      "metrics": [
+        {
+          "name": "MSE",
+          "value": "",
+          "dataset": ""
+        },
+        {
+          "name": "MAE",
+          "value": "",
+          "dataset": ""
+        }
+      ],
+      "limitations": [
+        "Transformers [28, 30, 31] fail to capture the scale and bias of the future data on Electricity and ETTh2.",
+        "they can hardly predict a proper trend on aperiodic data such as Exchange-Rate.",
+        "These phenomena further indicate the inadequacy of existing Transformer-based solutions for the LTSF task."
+      ],
+      "future_work": [],
+      "evidence": [
+        {
+          "field": "method",
+          "quote": "_Att.-Linear_ is a structure that replaces each attention layer with a linear layer. _Embed + Linear_ is to drop other designs and only keeps embedding layers and a linear layer.",
+          "page": 6,
+          "verified": true
+        },
+        {
+          "field": "results",
+          "quote": "We use Mean Squared Error (MSE) and Mean Absolute Error (MAE) as the core metrics to compare performance.",
+          "page": 4,
+          "verified": true
+        },
+        {
+          "field": "limits",
+          "quote": "Transformers [28, 30, 31] fail to capture the scale and bias of the future data on Electricity and ETTh2.",
+          "page": 5,
+          "verified": true
+        }
+      ],
       "ref": "P4",
-      "title": "Unveiling the limitations of transformer models in time series forecasting",
-      "year": 2026,
-      "approach": "Group 2",
-      "method": "Abstract Transformer-based models are very popular in time series forecasting because of their ability to capture contextual information in natural language processing tasks. However, their application to time series has yielded mixed results. Perfor",
-      "datasets": "",
-      "key results": "n/a",
-      "limitations": ""
+      "cluster": 0
     },
     {
+      "id": "https://arxiv.org/abs/2211.14730",
+      "uid": "c1ded80b4440",
+      "title": "PatchTST: A Time Series is Worth 64 Words: Long-term Forecasting with Transformers",
+      "authors": [
+        "Yuqi Nie",
+        "Nam H. Nguyen",
+        "Phanwadee Sinthong",
+        "Jayant Kalagnanam"
+      ],
+      "year": 2023,
+      "abstract": "We propose an efficient design of Transformer-based models for multivariate time series forecasting and self-supervised representation learning. It is based on two key components: (i) segmentation of time series into subseries-level patches which are served as input tokens to Transformer; (ii) channel-independence where each channel contains a single univariate time series that shares the same embedding and Transformer weights across all the series. Patching design naturally has three-fold benefit: local semantic information is retained in the embedding; computation and memory usage of the attention maps are quadratically reduced given the same look-back window; and the model can attend longer history.",
+      "pdf_fallback": false,
+      "fallback_reason": null,
+      "problem": "Transformer-based baselines have not benefited from longer look-back windows, indicating ineffectiveness in capturing temporal information.",
+      "method": "PatchTST employs patching (reducing input tokens) and channel-independence to improve forecasting performance and efficiency.",
+      "datasets": [
+        "Weather",
+        "Traffic",
+        "Electricity",
+        "ILI",
+        "ETTh1",
+        "ETTh2",
+        "ETTm1",
+        "ETTm2"
+      ],
+      "metrics": [],
+      "limitations": [],
+      "future_work": [],
+      "evidence": [
+        {
+          "field": "method",
+          "quote": "With the use of patches, the number of input tokens can reduce from _L_ to approximately _L/S_ . This implies the memory usage and computational complexity of the attention map are quadratically decreased by a factor of _S_ .",
+          "page": 4,
+          "verified": true
+        },
+        {
+          "field": "results",
+          "quote": "We calculate the MSE and MAE of multivariate time series forecasting as metrics.",
+          "page": 6,
+          "verified": true
+        }
+      ],
       "ref": "P5",
-      "title": "An Improved Adversarial Convolutional Transformer Model for Time Series Forecasting",
-      "year": 2024,
-      "approach": "Group 2",
-      "method": "Time series forecasting, as an important research topic in time series analysis, plays a crucial role in many fields. Traditional Transformer model often suffers from low feature dimension extraction and poor generalization ability when performing ti",
-      "datasets": "",
-      "key results": "n/a",
-      "limitations": ""
+      "cluster": 1
     }
   ],
-  "gaps": [
-    {
-      "type": "evaluation",
-      "finding": "Only 1 of 5 papers discuss efficiency.",
-      "explanation": "The identified pattern indicates an underexplored dimension regarding Only 1 of 5 papers discuss efficiency..",
-      "research_question": "How can future models effectively address Only 1 of 5 papers discuss efficiency.?",
-      "evidence_papers": [
-        "P3"
-      ],
-      "confidence": "low"
-    },
-    {
-      "type": "evaluation",
-      "finding": "Only 0 of 5 papers discuss fairness.",
-      "explanation": "The identified pattern indicates an underexplored dimension regarding Only 0 of 5 papers discuss fairness..",
-      "research_question": "How can future models effectively address Only 0 of 5 papers discuss fairness.?",
-      "evidence_papers": [],
-      "confidence": "low"
-    },
-    {
-      "type": "evaluation",
-      "finding": "Only 0 of 5 papers discuss interpretability.",
-      "explanation": "The identified pattern indicates an underexplored dimension regarding Only 0 of 5 papers discuss interpretability..",
-      "research_question": "How can future models effectively address Only 0 of 5 papers discuss interpretability.?",
-      "evidence_papers": [],
-      "confidence": "low"
-    },
-    {
-      "type": "evaluation",
-      "finding": "Only 1 of 5 papers discuss generalization.",
-      "explanation": "The identified pattern indicates an underexplored dimension regarding Only 1 of 5 papers discuss generalization..",
-      "research_question": "How can future models effectively address Only 1 of 5 papers discuss generalization.?",
-      "evidence_papers": [
-        "P5"
-      ],
-      "confidence": "low"
-    }
-  ],
-  "review": "## Introduction\nThis review examines recent advances in 'transformer models for time-series forecasting' across 5 selected papers. The analyzed literature spans diverse methodologies evaluated on distinct benchmarks.\n\n## Thematic Analysis\n### Group 1\nThis approach group focuses on group 1 techniques: [P1] proposes In this paper, we present a new approach to time series forecasting. Time series data are prevalent in many scientific a. [P3] proposes Long-term time series forecasting is important in energy scheduling, traffic management, meteorological monitoring, and .\n\n### Group 2\nThis approach group focuses on group 2 techniques: [P2] proposes This paper investigates the use of transformer models for time-series forecasting in the energy market, particularly foc. [P4] proposes Abstract Transformer-based models are very popular in time series forecasting because of their ability to capture contex. [P5] proposes Time series forecasting, as an important research topic in time series analysis, plays a crucial role in many fields. Tr.\n\n## Comparison of Methodologies\nThe methodologies differ across design and evaluation dimensions. [P1] explores In this paper, we present a new approach to time series forecasting. Time series data are prevalent . [P2] explores This paper investigates the use of transformer models for time-series forecasting in the energy mark. [P3] explores Long-term time series forecasting is important in energy scheduling, traffic management, meteorologi. [P4] explores Abstract Transformer-based models are very popular in time series forecasting because of their abili. [P5] explores Time series forecasting, as an important research topic in time series analysis, plays a crucial rol.\n\n## Research Gaps\nKey research gaps identified from evidence:\n- (low confidence) Only 1 of 5 papers discuss efficiency. Potential inquiry: How can future models effectively address Only 1 of 5 papers discuss efficiency.?\n- (low confidence) Only 0 of 5 papers discuss fairness. Potential inquiry: How can future models effectively address Only 0 of 5 papers discuss fairness.?\n- (low confidence) Only 0 of 5 papers discuss interpretability. Potential inquiry: How can future models effectively address Only 0 of 5 papers discuss interpretability.?\n- (low confidence) Only 1 of 5 papers discuss generalization. Potential inquiry: How can future models effectively address Only 1 of 5 papers discuss generalization.?\n\n## Conclusion\nIn conclusion, current works on 'transformer models for time-series forecasting' exhibit strong methodological innovation, yet standardizing benchmark evaluations and filling identified gaps remain crucial next steps.",
   "verification": {
-    "checked": 10,
-    "supported": 10,
-    "score": 1.0,
-    "issues": []
+    "checked": 17,
+    "supported": 12,
+    "score": 0.71,
+    "issues": [
+      {
+        "sentence": "This review surveys five representative contributions that illustrate the current trajectory of transformer\u2011based forecasting: Informer [P1] introduces a timestamp\u2011only decoder to mitigate error accumulation; Autoformer [P2] replaces dot\u2011product attention with an auto\u2011correlation module for series\u2011level aggregation; FEDformer [P3] uses neural architecture search to discover memory\u2011efficient variants; PatchTST [P5] reduces token count via patching and channel\u2011independence; and a recent empirical study [P4] compares full transformers with linear replacements to assess the necessity of attention layers.",
+        "problem": "weak support in cited paper"
+      },
+      {
+        "sentence": "Both works benchmark on the ETTh1 dataset (P1) and, in the case of PatchTST, on a broader suite of datasets including Weather, Traffic, Electricity, ILI, ETTh2, ETTm1, and ETTm2 [P5].",
+        "problem": "weak support in cited paper"
+      },
+      {
+        "sentence": "Token\u2011efficient methods, such as PatchTST, reduce the input length through patching and exploit channel\u2011independence to cut computation, thereby trading model size for fewer tokens [P5].",
+        "problem": "weak support in cited paper"
+      },
+      {
+        "sentence": "Second, medium\u2011confidence findings indicate that Transformer\u2011based approaches suffer rapid performance degradation over long horizons, failing to capture scale, bias, and trend dynamics in Electricity, ETTh2, and Exchange\u2011Rate data [P3][P4].",
+        "problem": "weak support in cited paper"
+      },
+      {
+        "sentence": "Finally, low\u2011confidence observations reveal an absence of discussion on robustness, fairness, interpretability, and generalization, with only a single study addressing fairness [P4].",
+        "problem": "weak support in cited paper"
+      }
+    ]
   }
 }

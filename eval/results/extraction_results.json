@@ -1,11 +1,11 @@
 {
   "provider": "groq",
-  "model": "qwen/qwen3.8-27b",
+  "model": "openai/gpt-oss-120b",
   "papers_evaluated": 18,
-  "avg_dataset_f1": 0.038,
-  "quote_verification_rate": 1.0,
-  "total_time_s": 0.0,
-  "per_paper_s": 0.0,
+  "avg_dataset_f1": 0.287,
+  "quote_verification_rate": 0.971,
+  "total_time_s": 2449.8,
+  "per_paper_s": 136.1,
   "details": [
     {
       "title": "Informer: Beyond Efficient Transformer for Long Sequence Time-Series Forecasting",
@@ -16,10 +16,12 @@
         "ECL",
         "Weather"
       ],
-      "pred_datasets": [],
-      "dataset_f1": 0.0,
-      "evidence_verified": 0,
-      "evidence_total": 0
+      "pred_datasets": [
+        "ETTh1"
+      ],
+      "dataset_f1": 0.333,
+      "evidence_verified": 3,
+      "evidence_total": 3
     },
     {
       "title": "Autoformer: Decomposition Transformers with Auto-Correlation for Long-Term Serie",
@@ -32,10 +34,14 @@
         "Weather",
         "Exchange"
       ],
-      "pred_datasets": [],
-      "dataset_f1": 0.0,
-      "evidence_verified": 0,
-      "evidence_total": 0
+      "pred_datasets": [
+        "ETT",
+        "Electricity",
+        "Exchange"
+      ],
+      "dataset_f1": 0.2,
+      "evidence_verified": 2,
+      "evidence_total": 2
     },
     {
       "title": "FEDformer: Frequency Enhanced Decomposed Transformer for Long-term Series Foreca",
@@ -47,10 +53,12 @@
         "ECL",
         "Weather"
       ],
-      "pred_datasets": [],
-      "dataset_f1": 0.0,
-      "evidence_verified": 0,
-      "evidence_total": 0
+      "pred_datasets": [
+        "ETTm2"
+      ],
+      "dataset_f1": 0.286,
+      "evidence_verified": 3,
+      "evidence_total": 3
     },
     {
       "title": "Are Transformers Effective for Time Series Forecasting?",
@@ -65,10 +73,20 @@
         "Traffic",
         "ILI"
       ],
-      "pred_datasets": [],
-      "dataset_f1": 0.0,
-      "evidence_verified": 0,
-      "evidence_total": 0
+      "pred_datasets": [
+        "ETTh1",
+        "ETTh2",
+        "ETTm1",
+        "ETTm2",
+        "Traffic",
+        "Electricity",
+        "Weather",
+        "ILI",
+        "ExchangeRate"
+      ],
+      "dataset_f1": 0.778,
+      "evidence_verified": 3,
+      "evidence_total": 3
     },
     {
       "title": "PatchTST: A Time Series is Worth 64 Words: Long-term Forecasting with Transforme",
@@ -82,10 +100,19 @@
         "Traffic",
         "ILI"
       ],
-      "pred_datasets": [],
-      "dataset_f1": 0.0,
-      "evidence_verified": 0,
-      "evidence_total": 0
+      "pred_datasets": [
+        "Weather",
+        "Traffic",
+        "Electricity",
+        "ILI",
+        "ETTh1",
+        "ETTh2",
+        "ETTm1",
+        "ETTm2"
+      ],
+      "dataset_f1": 0.875,
+      "evidence_verified": 2,
+      "evidence_total": 2
     },
     {
       "title": "iTransformer: Inverted Transformers Are Effective for Time Series Forecasting",
@@ -98,10 +125,18 @@
         "Weather",
         "Traffic"
       ],
-      "pred_datasets": [],
-      "dataset_f1": 0.0,
-      "evidence_verified": 0,
-      "evidence_total": 0
+      "pred_datasets": [
+        "ETT",
+        "Weather",
+        "ECL",
+        "Solar-Energy",
+        "PEMS",
+        "Traffic",
+        "Market"
+      ],
+      "dataset_f1": 0.429,
+      "evidence_verified": 2,
+      "evidence_total": 3
     },
     {
       "title": "Temporal Fusion Transformers for Interpretable Multi-horizon Time Series Forecas",
@@ -111,10 +146,13 @@
         "Retail",
         "Volatility"
       ],
-      "pred_datasets": [],
+      "pred_datasets": [
+        "CDC ILI data (country- and state-level, 2010-2018)",
+        "ARGONet ILI forecasting data"
+      ],
       "dataset_f1": 0.0,
-      "evidence_verified": 0,
-      "evidence_total": 0
+      "evidence_verified": 2,
+      "evidence_total": 2
     },
     {
       "title": "TimeGPT-1",
@@ -127,10 +165,22 @@
         "Traffic",
         "Weather"
       ],
-      "pred_datasets": [],
-      "dataset_f1": 0.0,
-      "evidence_verified": 0,
-      "evidence_total": 0
+      "pred_datasets": [
+        "ETTh1",
+        "ETTh2",
+        "ETTm1",
+        "ETTm2",
+        "Weather",
+        "Electricity",
+        "Traffic",
+        "ILI",
+        "M3-Quarterly",
+        "M4-Yearly",
+        "M4"
+      ],
+      "dataset_f1": 0.444,
+      "evidence_verified": 2,
+      "evidence_total": 2
     },
     {
       "title": "Crossformer: Transformer Utilizing Cross-Dimension Dependency for Multivariate T",
@@ -143,10 +193,21 @@
         "Weather",
         "Traffic"
       ],
-      "pred_datasets": [],
-      "dataset_f1": 0.0,
-      "evidence_verified": 0,
-      "evidence_total": 0
+      "pred_datasets": [
+        "M4",
+        "M3",
+        "TOURISM",
+        "ELECTR",
+        "ETTh1",
+        "ETTh2",
+        "ETTm1",
+        "ETTm2",
+        "Electricity",
+        "Weather"
+      ],
+      "dataset_f1": 0.588,
+      "evidence_verified": 2,
+      "evidence_total": 2
     },
     {
       "title": "TimesNet: Temporal 2D-Variation Modeling for General Time Series Analysis",
@@ -159,11 +220,13 @@
         "Weather"
       ],
       "pred_datasets": [
-        "Weather"
+        "office",
+        "forest",
+        "random"
       ],
-      "dataset_f1": 0.286,
-      "evidence_verified": 1,
-      "evidence_total": 1
+      "dataset_f1": 0.0,
+      "evidence_verified": 2,
+      "evidence_total": 2
     },
     {
       "title": "Non-stationary Transformers: Exploring the Stationarity in Time Series Forecasti",
@@ -176,10 +239,17 @@
         "Weather",
         "Exchange"
       ],
-      "pred_datasets": [],
-      "dataset_f1": 0.0,
-      "evidence_verified": 0,
-      "evidence_total": 0
+      "pred_datasets": [
+        "Exchange",
+        "ILI",
+        "ETTm2",
+        "Electricity",
+        "Traffic",
+        "Weather"
+      ],
+      "dataset_f1": 0.462,
+      "evidence_verified": 2,
+      "evidence_total": 2
     },
     {
       "title": "SimMTM: A Simple Pre-Training Framework for Masked Time-Series Modeling",
@@ -191,10 +261,18 @@
         "ECL",
         "Weather"
       ],
-      "pred_datasets": [],
-      "dataset_f1": 0.0,
-      "evidence_verified": 0,
-      "evidence_total": 0
+      "pred_datasets": [
+        "ETTh1",
+        "ETTh2",
+        "ETTm1",
+        "ETTm2",
+        "Traffic",
+        "Electricity",
+        "Weather"
+      ],
+      "dataset_f1": 0.769,
+      "evidence_verified": 2,
+      "evidence_total": 2
     },
     {
       "title": "One Fits All: Power General Time Series Analysis by Pretrained LM",
@@ -206,10 +284,12 @@
         "ECL",
         "Weather"
       ],
-      "pred_datasets": [],
+      "pred_datasets": [
+        "CNN/DM"
+      ],
       "dataset_f1": 0.0,
-      "evidence_verified": 0,
-      "evidence_total": 0
+      "evidence_verified": 2,
+      "evidence_total": 2
     },
     {
       "title": "Time-LLM: Time Series Forecasting by Reprogramming Large Language Models",
@@ -223,8 +303,8 @@
       ],
       "pred_datasets": [],
       "dataset_f1": 0.0,
-      "evidence_verified": 0,
-      "evidence_total": 0
+      "evidence_verified": 2,
+      "evidence_total": 2
     },
     {
       "title": "Scaleformer: Iterative Multi-scale Refining Transformers for Time Series Forecas",
@@ -240,8 +320,8 @@
       ],
       "pred_datasets": [],
       "dataset_f1": 0.0,
-      "evidence_verified": 0,
-      "evidence_total": 0
+      "evidence_verified": 1,
+      "evidence_total": 1
     },
     {
       "title": "TEMPO: Prompt-based Generative Pre-trained Transformer for Time Series Forecasti",
@@ -270,11 +350,8 @@
         "Exchange",
         "Traffic"
       ],
-      "pred_datasets": [
-        "Weather",
-        "Traffic"
-      ],
-      "dataset_f1": 0.4,
+      "pred_datasets": [],
+      "dataset_f1": 0.0,
       "evidence_verified": 1,
       "evidence_total": 1
     },

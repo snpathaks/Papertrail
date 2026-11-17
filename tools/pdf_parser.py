@@ -77,6 +77,14 @@ def get_chunks(paper, uid):
     """
     pdf_url = paper.get("pdf_url")
     if not pdf_url:
+        paper_id = paper.get("id", "")
+        if "arxiv.org/abs/" in paper_id:
+            arxiv_id = paper_id.split("arxiv.org/abs/")[-1].strip("/")
+            pdf_url = f"https://arxiv.org/pdf/{arxiv_id}.pdf"
+        elif "arxiv.org/pdf/" in paper_id:
+            pdf_url = paper_id
+
+    if not pdf_url:
         return [{"section": "abstract", "page": 1, "text": paper.get("abstract", "")}], {
             "fallback": True, "reason": "No PDF URL available for paper"
         }

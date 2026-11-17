@@ -1,9 +1,9 @@
 [
   {
     "provider": "groq",
-    "papers_analyzed": 5,
-    "verification_score": 1.0,
-    "gaps_found": 4
+    "papers_analyzed": 0,
+    "verification_score": 0.71,
+    "gaps_found": 0
   },
   {
     "provider": "ollama",

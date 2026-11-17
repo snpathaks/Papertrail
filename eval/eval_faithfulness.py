@@ -46,18 +46,21 @@ def run_faithfulness_eval(run_paths=None, out_path="eval/results/citation_faithf
 
         # Re-run verification if we have the extraction data
         papers = []
-        for i, ct in enumerate(run.get("comparison_table", [])):
-            papers.append({
-                "ref": ct.get("ref", f"P{i+1}"),
-                "title": ct.get("title", ""),
-                "abstract": ct.get("method", ""),
-                "problem": "",
-                "method": ct.get("method", ""),
-                "datasets": [d.strip() for d in ct.get("datasets", "").split(",") if d.strip()],
-                "metrics": [],
-                "limitations": [l.strip() for l in ct.get("limitations", "").split(";") if l.strip()],
-                "future_work": []
-            })
+        if "extracted" in run and run["extracted"]:
+            papers = run["extracted"]
+        else:
+            for i, ct in enumerate(run.get("comparison_table", [])):
+                papers.append({
+                    "ref": ct.get("ref", f"P{i+1}"),
+                    "title": ct.get("title", ""),
+                    "abstract": ct.get("method", ""),
+                    "problem": "",
+                    "method": ct.get("method", ""),
+                    "datasets": [d.strip() for d in ct.get("datasets", "").split(",") if d.strip()],
+                    "metrics": [],
+                    "limitations": [l.strip() for l in ct.get("limitations", "").split(";") if l.strip()],
+                    "future_work": []
+                })
 
         if review_text and papers:
             fresh_verification = verify_review(review_text, papers)
@@ -88,6 +91,32 @@ def run_faithfulness_eval(run_paths=None, out_path="eval/results/citation_faithf
 
     # Manual verification template (20 sentences)
     # Pre-fill with automated results so user just marks agree/disagree
+    # Preserve existing manual audit if already completed in out_path
+    existing_audit_map = {}
+    if Path(out_path).exists():
+        try:
+            with open(out_path, "r", encoding="utf-8") as f_ex:
+                old_data = json.load(f_ex)
+                for s in old_data.get("manual_audit", {}).get("sentences", []):
+                    if s.get("manual_verdict") != "TODO":
+                        existing_audit_map[s.get("sentence", "").strip()] = s
+        except Exception:
+            pass
+
+    # Merge preserved audits
+    final_sentences = []
+    for s in manual_check_sentences[:20]:
+        st = s["sentence"].strip()
+        if st in existing_audit_map:
+            final_sentences.append(existing_audit_map[st])
+        else:
+            final_sentences.append(s)
+
+    # If existing had audits not present in top cited, include them
+    for st, s in existing_audit_map.items():
+        if not any(x["sentence"].strip() == st for x in final_sentences):
+            final_sentences.append(s)
+
     manual_audit = {
         "instructions": (
             "For each sentence below, manually verify whether the citation "
@@ -95,7 +124,7 @@ def run_faithfulness_eval(run_paths=None, out_path="eval/results/citation_faithf
             "automated checker got it right, 'wrong' if the checker missed "
             "an error or flagged a correct sentence. Add notes."
         ),
-        "sentences": manual_check_sentences[:20]
+        "sentences": final_sentences[:20]
     }
 
     # Compute checker accuracy from any completed manual audits

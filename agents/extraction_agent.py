@@ -28,7 +28,8 @@ def _verify_quote(quote, chunks):
 
 def extract_one(paper):
     uid = make_key(paper["id"])[:12]
-    key = make_key("extract", uid, config.LLM_MODEL)
+    model_name = getattr(config, f"{config.LLM_PROVIDER.upper()}_MODEL", config.LLM_MODEL)
+    key = make_key("extract", uid, config.LLM_PROVIDER, model_name)
     hit = cache_get(key)
     if hit:
         hit.setdefault("pdf_fallback", False)
@@ -46,28 +47,12 @@ def extract_one(paper):
               "limitations": [], "future_work": [], "evidence": []}
 
     for field, schema, query, instruction in TASKS:
-        ctx = vs.retrieve(uid, query, k=3)
+        ctx = vs.retrieve(uid, query, k=4)
         text = "\n---\n".join(f"[page {c['page']}, {c['section']}] {c['text']}" for c in ctx)
         out = ask_structured(schema,
             f"{instruction}\nUse ONLY the text below. If something is not stated, leave it empty. "
             f"The quote must be copied exactly from the text.\n\nTEXT:\n{text[:5000]}")
         if out is None:
-            # Resilient heuristic fallback when LLM provider is offline
-            if field == "results" and not record["datasets"]:
-                import re
-                common_benchmarks = ["ETTh1", "ETTh2", "ETTm1", "ETTm2", "ETT", "ECL", "Weather", "Traffic", "Exchange", "ILI", "M1", "M3", "M4", "Tourism", "Electricity", "MoleculeNet", "QM9", "ZINC", "Hospital"]
-                found_ds = []
-                for b in common_benchmarks:
-                    if re.search(r"\b" + re.escape(b) + r"\b", text, re.IGNORECASE):
-                        found_ds.append(b)
-                if found_ds:
-                    record["datasets"] = list(dict.fromkeys(found_ds))
-                    for c in ctx:
-                        if any(b.lower() in c["text"].lower() for b in found_ds):
-                            quote = c["text"][:120].strip()
-                            ok, page = _verify_quote(quote, ctx)
-                            record["evidence"].append({"field": field, "quote": quote, "page": page, "verified": ok})
-                            break
             continue
         data = out.model_dump()
         quote = data.pop("quote", "")

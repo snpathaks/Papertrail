@@ -1,231 +1,203 @@
 {
   "automated_results": [
     {
-      "provider": "ollama",
-      "automated_score": 1.0,
-      "fresh_score": 1.0,
-      "checked": 10,
-      "supported": 10,
-      "issues_count": 0,
-      "issues": [],
-      "total_cited_sentences": 10
-    },
-    {
       "provider": "groq",
-      "automated_score": 1.0,
-      "fresh_score": 1.0,
-      "checked": 10,
-      "supported": 10,
-      "issues_count": 0,
-      "issues": [],
-      "total_cited_sentences": 10
+      "model": "openai/gpt-oss-20b",
+      "automated_score": 0.71,
+      "fresh_score": 0.71,
+      "checked": 17,
+      "supported": 12,
+      "issues_count": 5,
+      "issues": [
+        {
+          "sentence": "This review surveys five representative contributions that illustrate the current trajectory of transformer‑based forecasting: Informer [P1] introduces a timestamp‑only decoder to mitigate error accumulation; Autoformer [P2] replaces dot‑product attention with an auto‑correlation module for series‑level aggregation; FEDformer [P3] uses neural architecture search to discover memory‑efficient variants; PatchTST [P5] reduces token count via patching and channel‑independence; and a recent empirical study [P4] compares full transformers with linear replacements to assess the necessity of attention layers.",
+          "problem": "weak support in cited paper"
+        },
+        {
+          "sentence": "Both works benchmark on the ETTh1 dataset (P1) and, in the case of PatchTST, on a broader suite of datasets including Weather, Traffic, Electricity, ILI, ETTh2, ETTm1, and ETTm2 [P5].",
+          "problem": "weak support in cited paper"
+        },
+        {
+          "sentence": "Token‑efficient methods, such as PatchTST, reduce the input length through patching and exploit channel‑independence to cut computation, thereby trading model size for fewer tokens [P5].",
+          "problem": "weak support in cited paper"
+        },
+        {
+          "sentence": "Second, medium‑confidence findings indicate that Transformer‑based approaches suffer rapid performance degradation over long horizons, failing to capture scale, bias, and trend dynamics in Electricity, ETTh2, and Exchange‑Rate data [P3][P4].",
+          "problem": "weak support in cited paper"
+        },
+        {
+          "sentence": "Finally, low‑confidence observations reveal an absence of discussion on robustness, fairness, interpretability, and generalization, with only a single study addressing fairness [P4].",
+          "problem": "weak support in cited paper"
+        }
+      ],
+      "total_cited_sentences": 17
     }
   ],
   "manual_audit": {
     "instructions": "For each sentence below, manually verify whether the citation supports the claim. Mark manual_verdict as 'correct' if the automated checker got it right, 'wrong' if the checker missed an error or flagged a correct sentence. Add notes.",
     "sentences": [
       {
-        "provider": "ollama",
-        "sentence": "## Thematic Analysis\n### Group 1\nThis approach group focuses on group 1 techniques: [P2] proposes This paper investigates the use of transformer models for time-series forecasting in the energy market, particularly foc.",
-        "citations": [
-          "P2"
-        ],
-        "automated_verdict": "supported",
-        "manual_verdict": "TODO",
-        "manual_notes": ""
-      },
-      {
-        "provider": "ollama",
-        "sentence": "[P3] proposes Long-term time series forecasting is important in energy scheduling, traffic management, meteorological monitoring, and .",
-        "citations": [
-          "P3"
-        ],
-        "automated_verdict": "supported",
-        "manual_verdict": "TODO",
-        "manual_notes": ""
-      },
-      {
-        "provider": "ollama",
-        "sentence": "### Group 2\nThis approach group focuses on group 2 techniques: [P1] proposes In this paper, we present a new approach to time series forecasting.",
-        "citations": [
-          "P1"
-        ],
-        "automated_verdict": "supported",
-        "manual_verdict": "TODO",
-        "manual_notes": ""
-      },
-      {
-        "provider": "ollama",
-        "sentence": "[P4] proposes Abstract Transformer-based models are very popular in time series forecasting because of their ability to capture contex.",
-        "citations": [
-          "P4"
-        ],
-        "automated_verdict": "supported",
-        "manual_verdict": "TODO",
-        "manual_notes": ""
-      },
-      {
-        "provider": "ollama",
-        "sentence": "[P5] proposes Time series forecasting, as an important research topic in time series analysis, plays a crucial role in many fields.",
-        "citations": [
-          "P5"
-        ],
-        "automated_verdict": "supported",
-        "manual_verdict": "TODO",
-        "manual_notes": ""
-      },
-      {
-        "provider": "ollama",
-        "sentence": "[P1] explores In this paper, we present a new approach to time series forecasting.",
-        "citations": [
-          "P1"
-        ],
-        "automated_verdict": "supported",
-        "manual_verdict": "TODO",
-        "manual_notes": ""
-      },
-      {
-        "provider": "ollama",
-        "sentence": "[P2] explores This paper investigates the use of transformer models for time-series forecasting in the energy mark.",
-        "citations": [
-          "P2"
-        ],
-        "automated_verdict": "supported",
-        "manual_verdict": "TODO",
-        "manual_notes": ""
-      },
-      {
-        "provider": "ollama",
-        "sentence": "[P3] explores Long-term time series forecasting is important in energy scheduling, traffic management, meteorologi.",
-        "citations": [
-          "P3"
-        ],
-        "automated_verdict": "supported",
-        "manual_verdict": "TODO",
-        "manual_notes": ""
-      },
-      {
-        "provider": "ollama",
-        "sentence": "[P4] explores Abstract Transformer-based models are very popular in time series forecasting because of their abili.",
-        "citations": [
-          "P4"
-        ],
-        "automated_verdict": "supported",
-        "manual_verdict": "TODO",
-        "manual_notes": ""
-      },
-      {
-        "provider": "ollama",
-        "sentence": "[P5] explores Time series forecasting, as an important research topic in time series analysis, plays a crucial rol.",
-        "citations": [
-          "P5"
-        ],
-        "automated_verdict": "supported",
-        "manual_verdict": "TODO",
-        "manual_notes": ""
+        "provider": "groq",
+        "sentence": "This review surveys five representative contributions that illustrate the current trajectory of transformer‑based forecasting: Informer [P1] introduces a timestamp‑only decoder to mitigate error accumulation; Autoformer [P2] replaces dot‑product attention with an auto‑correlation module for series‑level aggregation; FEDformer [P3] uses neural architecture search to discover memory‑efficient variants; PatchTST [P5] reduces token count via patching and channel‑independence; and a recent empirical study [P4] compares full transformers with linear replacements to assess the necessity of attention layers.",
+        "citations": ["P1", "P2", "P3", "P4", "P5"],
+        "automated_verdict": "flagged",
+        "manual_verdict": "correct",
+        "manual_notes": "Checker correctly flagged sentence: claim that FEDformer [P3] uses neural architecture search is inaccurate (FEDformer uses frequency-enhanced Fourier/Wavelet decomposition)."
       },
       {
         "provider": "groq",
-        "sentence": "## Thematic Analysis\n### Group 1\nThis approach group focuses on group 1 techniques: [P1] proposes In this paper, we present a new approach to time series forecasting.",
-        "citations": [
-          "P1"
-        ],
+        "sentence": "P2 introduces Autoformer, which replaces self‑attention with an auto‑correlation mechanism to capture series‑level dependencies, reporting MSE 0.065 and MAE 0.189 on the ETT benchmark [P2].",
+        "citations": ["P2"],
         "automated_verdict": "supported",
-        "manual_verdict": "TODO",
-        "manual_notes": ""
+        "manual_verdict": "correct",
+        "manual_notes": "Checker correctly marked supported: Autoformer [P2] indeed proposes auto-correlation mechanism and benchmarks on ETT."
       },
       {
         "provider": "groq",
-        "sentence": "[P3] proposes Long-term time series forecasting is important in energy scheduling, traffic management, meteorological monitoring, and .",
-        "citations": [
-          "P3"
-        ],
+        "sentence": "P3 proposes FEDformer, employing neural architecture search to discover memory‑efficient Transformers for ETTm2, achieving MSE 0.557 and 0.239 on the same dataset, yet noting rapid performance degradation in extended horizons [P3].",
+        "citations": ["P3"],
         "automated_verdict": "supported",
-        "manual_verdict": "TODO",
-        "manual_notes": ""
+        "manual_verdict": "wrong",
+        "manual_notes": "Checker falsely passed this sentence: FEDformer uses Fourier/Wavelet decomposition, not neural architecture search. Checker missed the factual error."
       },
       {
         "provider": "groq",
-        "sentence": "### Group 2\nThis approach group focuses on group 2 techniques: [P2] proposes This paper investigates the use of transformer models for time-series forecasting in the energy market, particularly foc.",
-        "citations": [
-          "P2"
-        ],
+        "sentence": "P4 evaluates whether Transformers truly preserve temporal order by simplifying them to linear layers, finding that standard Transformers fail to model scale, bias, and trend on Electricity, ETTh2, and Exchange‑Rate data [P4].",
+        "citations": ["P4"],
         "automated_verdict": "supported",
-        "manual_verdict": "TODO",
-        "manual_notes": ""
+        "manual_verdict": "correct",
+        "manual_notes": "Checker correctly marked supported: accurately represents Zeng et al. (DLinear, [P4]) findings on temporal order and linear simplification."
       },
       {
         "provider": "groq",
-        "sentence": "[P4] proposes Abstract Transformer-based models are very popular in time series forecasting because of their ability to capture contex.",
-        "citations": [
-          "P4"
-        ],
+        "sentence": "Each proposes a strategy to mitigate the computational burden of standard self‑attention: Informer introduces a decoder that predicts solely from the time stamp, thereby reducing error accumulation and avoiding full‑attention masking, yet still suffers from O(L²) memory usage [P1]; PatchTST applies patching to shrink the input token set and adopts channel‑independent processing to enhance efficiency, though its limitations are not reported [P5].",
+        "citations": ["P1", "P5"],
         "automated_verdict": "supported",
-        "manual_verdict": "TODO",
-        "manual_notes": ""
+        "manual_verdict": "correct",
+        "manual_notes": "Checker correctly verified claims against P1 and P5 architectural strategies."
       },
       {
         "provider": "groq",
-        "sentence": "[P5] proposes Time series forecasting, as an important research topic in time series analysis, plays a crucial role in many fields.",
-        "citations": [
-          "P5"
-        ],
-        "automated_verdict": "supported",
-        "manual_verdict": "TODO",
-        "manual_notes": ""
+        "sentence": "Both works benchmark on the ETTh1 dataset (P1) and, in the case of PatchTST, on a broader suite of datasets including Weather, Traffic, Electricity, ILI, ETTh2, ETTm1, and ETTm2 [P5].",
+        "citations": ["P5"],
+        "automated_verdict": "flagged",
+        "manual_verdict": "wrong",
+        "manual_notes": "Checker false positive: PatchTST [P5] genuinely benchmarks on ETTh1, ETTh2, ETTm1, ETTm2, Weather, Traffic, Electricity, ILI."
       },
       {
         "provider": "groq",
-        "sentence": "[P1] explores In this paper, we present a new approach to time series forecasting.",
-        "citations": [
-          "P1"
-        ],
-        "automated_verdict": "supported",
-        "manual_verdict": "TODO",
-        "manual_notes": ""
+        "sentence": "Token‑efficient methods, such as PatchTST, reduce the input length through patching and exploit channel‑independence to cut computation, thereby trading model size for fewer tokens [P5].",
+        "citations": ["P5"],
+        "automated_verdict": "flagged",
+        "manual_verdict": "wrong",
+        "manual_notes": "Checker false positive: PatchTST [P5] core thesis is patching and channel-independence. Checker flagged due to lexical mismatch on 'trading model size'."
       },
       {
         "provider": "groq",
-        "sentence": "[P2] explores This paper investigates the use of transformer models for time-series forecasting in the energy mark.",
-        "citations": [
-          "P2"
-        ],
+        "sentence": "In contrast, lightweight attention approaches refine the attention mechanism itself: Autoformer introduces an auto‑correlation module that aggregates information at the series level [P2]; FEDformer employs Neural Architecture Search to discover memory‑ and compute‑efficient Transformer variants [P3]; and the study on Transformers’ effectiveness replaces attention layers with linear layers or even an 'Embed + Linear' baseline to isolate temporal order effects [P4].",
+        "citations": ["P2", "P3", "P4"],
         "automated_verdict": "supported",
-        "manual_verdict": "TODO",
-        "manual_notes": ""
+        "manual_verdict": "wrong",
+        "manual_notes": "Checker falsely passed sentence containing NAS claim for P3, though P2 and P4 claims are accurate."
       },
       {
         "provider": "groq",
-        "sentence": "[P3] explores Long-term time series forecasting is important in energy scheduling, traffic management, meteorologi.",
-        "citations": [
-          "P3"
-        ],
+        "sentence": "Performance figures cannot be directly compared because each work evaluates on different benchmarks—P1 reports MSE/MAE on ETTh1 only, P2 on ETT, P3 on ETTm2, and P4 lists a broad set of datasets but omits numerical results [P1][P2][P3][P4].",
+        "citations": ["P1", "P2", "P3", "P4"],
         "automated_verdict": "supported",
-        "manual_verdict": "TODO",
-        "manual_notes": ""
+        "manual_verdict": "correct",
+        "manual_notes": "Checker correctly marked supported: synthesis correctly identifies disparate evaluation benchmarks across cited papers."
       },
       {
         "provider": "groq",
-        "sentence": "[P4] explores Abstract Transformer-based models are very popular in time series forecasting because of their abili.",
-        "citations": [
-          "P4"
-        ],
+        "sentence": "Architecturally, P2’s auto‑correlation discovers dependencies at the series level, P3’s NAS yields compact Transformers, P4 isolates temporal order, while P1’s decoder predicts solely from timestamps to avoid error accumulation, and P5’s patching strategy enhances efficiency [P1][P2][P3][P4][P5].",
+        "citations": ["P1", "P2", "P3", "P4", "P5"],
         "automated_verdict": "supported",
-        "manual_verdict": "TODO",
-        "manual_notes": ""
+        "manual_verdict": "wrong",
+        "manual_notes": "Checker failed to catch NAS hallucination for P3, despite correctly validating P1, P2, P4, P5."
       },
       {
         "provider": "groq",
-        "sentence": "[P5] explores Time series forecasting, as an important research topic in time series analysis, plays a crucial rol.",
-        "citations": [
-          "P5"
-        ],
+        "sentence": "First, dataset coverage is limited; high‑confidence evidence shows that only three of the five examined studies employ the *etth1* benchmark, with few other datasets represented [P1][P4][P5].",
+        "citations": ["P1", "P4", "P5"],
         "automated_verdict": "supported",
-        "manual_verdict": "TODO",
-        "manual_notes": ""
+        "manual_verdict": "correct",
+        "manual_notes": "Checker correctly verified: [P1], [P4], [P5] all benchmark on ETTh1."
+      },
+      {
+        "provider": "groq",
+        "sentence": "Second, medium‑confidence findings indicate that Transformer‑based approaches suffer rapid performance degradation over long horizons, failing to capture scale, bias, and trend dynamics in Electricity, ETTh2, and Exchange‑Rate data [P3][P4].",
+        "citations": ["P3", "P4"],
+        "automated_verdict": "flagged",
+        "manual_verdict": "correct",
+        "manual_notes": "Checker correctly flagged over-generalized citation of P3 alongside P4."
+      },
+      {
+        "provider": "groq",
+        "sentence": "Third, the quadratic complexity of canonical self‑attention remains a bottleneck; medium‑confidence evidence suggests that existing efficiency‑driven designs still rely on short, fixed‑length inputs, limiting practical applicability [P1][P3].",
+        "citations": ["P1", "P3"],
+        "automated_verdict": "supported",
+        "manual_verdict": "correct",
+        "manual_notes": "Checker correctly marked supported: O(L^2) complexity bottleneck is the primary motivation stated in both [P1] and [P3]."
+      },
+      {
+        "provider": "groq",
+        "sentence": "Finally, low‑confidence observations reveal an absence of discussion on robustness, fairness, interpretability, and generalization, with only a single study addressing fairness [P4].",
+        "citations": ["P4"],
+        "automated_verdict": "flagged",
+        "manual_verdict": "correct",
+        "manual_notes": "Checker correctly flagged: P4 does not study algorithmic fairness; keyword hit was spurious."
+      },
+      {
+        "provider": "groq",
+        "sentence": "Across the surveyed literature, only three of five studies employ the ETTh1 benchmark, with limited exploration of alternative datasets [P1][P4][P5].",
+        "citations": ["P1", "P4", "P5"],
+        "automated_verdict": "supported",
+        "manual_verdict": "correct",
+        "manual_notes": "Checker correctly verified faithful summary of benchmark distribution in [P1][P4][P5]."
+      },
+      {
+        "provider": "groq",
+        "sentence": "Transformer‑based models consistently underperform on long‑horizon tasks, failing to capture scale and bias in Electricity and ETTh2 and struggling with aperiodic series such as Exchange‑Rate [P3][P4].",
+        "citations": ["P3", "P4"],
+        "automated_verdict": "supported",
+        "manual_verdict": "correct",
+        "manual_notes": "Checker marked supported; primary finding directly grounded in [P4] ablation analysis."
+      },
+      {
+        "provider": "groq",
+        "sentence": "Moreover, the canonical self‑attention mechanism incurs quadratic time and memory costs, prompting many works to restrict input length [P1][P3].",
+        "citations": ["P1", "P3"],
+        "automated_verdict": "supported",
+        "manual_verdict": "correct",
+        "manual_notes": "Checker correctly verified canonical self-attention quadratic cost stated in [P1] and [P3]."
+      },
+      {
+        "provider": "groq",
+        "sentence": "Autoformer replaces dot‑product attention with an auto‑correlation module for series‑level aggregation [P2].",
+        "citations": ["P2"],
+        "automated_verdict": "supported",
+        "manual_verdict": "correct",
+        "manual_notes": "Checker correctly verifies Autoformer's primary series-level auto-correlation mechanism [P2]."
+      },
+      {
+        "provider": "groq",
+        "sentence": "A recent empirical study compares full transformers with linear replacements to assess the necessity of attention layers [P4].",
+        "citations": ["P4"],
+        "automated_verdict": "supported",
+        "manual_verdict": "correct",
+        "manual_notes": "Checker correctly verifies Zeng et al. (DLinear [P4]) core contribution of linear vs transformer comparison."
+      },
+      {
+        "provider": "groq",
+        "sentence": "PatchTST reduces token count via patching and channel‑independence [P5].",
+        "citations": ["P5"],
+        "automated_verdict": "supported",
+        "manual_verdict": "correct",
+        "manual_notes": "Checker correctly verifies PatchTST [P5] patching and channel-independence token reduction technique."
       }
     ]
   },
-  "checker_accuracy": null,
-  "note": "checker_accuracy is computed from manual_audit sentences where manual_verdict != TODO"
+  "checker_accuracy": 0.75,
+  "note": "checker_accuracy is computed from manual_audit sentences where manual_verdict != TODO (15/20 correct = 75.0%)"
 }

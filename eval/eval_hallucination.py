@@ -20,46 +20,6 @@ TOPICS = [
     "retrieval augmented generation hallucination mitigation"
 ]
 
-# Standard plain-LLM generated reference candidates (used when LLM provider is offline)
-OFFLINE_BASELINE_TITLES = {
-    "transformer models for time-series forecasting": [
-        "Informer: Beyond Efficient Transformer for Long Sequence Time-Series Forecasting",
-        "Autoformer: Decomposition Transformers with Auto-Correlation for Long-Term Series Forecasting",
-        "Deep Transformer Models for Time Series Forecasting: The Influenza Prevalence Case",
-        "A Novel Transformer-Based Framework for Multi-Horizon Time Series Forecasting",
-        "Time-Series Transformer: Temporal Attention Mechanisms for Stock Market Prediction",
-        "Temporal Fusion Transformers for Interpretable Multi-horizon Time Series Forecasting",
-        "Self-Attention Networks for Long-Term Time Series Forecasting",
-        "Spatiotemporal Transformer Networks for Multivariate Time Series Analysis",
-        "PatchTST: A Time Series is Worth 64 Words: Long-term Forecasting with Transformers",
-        "Recurrent Transformer Networks for High-Dimensional Time Series Prediction"
-    ],
-    "graph neural networks for drug discovery": [
-        "Convolutional Networks on Graphs for Learning Molecular Fingerprints",
-        "Neural Message Passing for Quantum Chemistry",
-        "Deep Graph Learning for Molecular Property Prediction and Drug Design",
-        "MoleculeNet: A Benchmark for Molecular Machine Learning",
-        "Graph Neural Networks for Quantitative Structure-Activity Relationship Modeling",
-        "Attention-Based Graph Neural Networks for De Novo Molecular Design",
-        "How Powerful are Graph Neural Networks?",
-        "Hierarchical Graph Representation Learning for Bioactive Molecule Screening",
-        "Pre-training Graph Neural Networks for Drug Target Interaction Prediction",
-        "Strategies for Pre-training Graph Neural Networks"
-    ],
-    "retrieval augmented generation hallucination mitigation": [
-        "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
-        "Mitigating Hallucinations in Large Language Models via Dynamic Retrieval",
-        "Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection",
-        "Trustworthy Retrieval-Augmented Generation through Source Fact Verification",
-        "Chain-of-Note: Enhancing Robustness in Retrieval-Augmented Language Models",
-        "Fact-Checking Augmented Generation for Large Language Models",
-        "Lost in the Middle: How Language Models Use Long Contexts",
-        "Hallucination-Free Retrieval-Augmented Language Modeling via Consistency Checks",
-        "Active Retrieval Augmented Generation",
-        "Reducing Parametric Memory Errors in RAG Systems via Selective Augmentation"
-    ]
-}
-
 def exists_on_openalex(title, email=None):
     """User-specified title existence checker on OpenAlex with Crossref fallback."""
     email = email or config.CONTACT_EMAIL
@@ -119,9 +79,8 @@ def get_plain_llm_references(topic, n=10):
             if len(cleaned) > 10:
                 titles.append(cleaned)
 
-    # If LLM is offline or returned insufficient titles, fall back to offline baseline
     if len(titles) < 5:
-        titles = OFFLINE_BASELINE_TITLES.get(topic, [])
+        raise RuntimeError(f"Live LLM provider returned insufficient titles ({len(titles)}) for topic '{topic}'. Check model connectivity or quota.")
 
     return titles[:n]
 

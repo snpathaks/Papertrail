@@ -74,17 +74,39 @@ def ask_structured(schema, prompt, retries=3, base_delay=2.0):
     if provider == "ollama" and not is_ollama_available():
         return None
 
-    try:
-        runnable = llm.with_structured_output(schema)
-    except Exception:
-        return None
+    # Use json_mode for Groq to prevent tool_use_failed errors
+    runnable = None
+    if provider == "groq":
+        try:
+            runnable = llm.with_structured_output(schema, method="json_mode")
+        except Exception:
+            pass
+    if runnable is None:
+        try:
+            runnable = llm.with_structured_output(schema)
+        except Exception:
+            return None
+
+    # Ensure prompt mentions JSON for json_mode
+    json_prompt = prompt if "json" in prompt.lower() else f"{prompt}\nReturn valid JSON adhering to the schema."
 
     for attempt in range(retries + 1):
         try:
-            out = runnable.invoke(prompt)
+            out = runnable.invoke(json_prompt)
             if out is not None:
                 return out
         except Exception as e:
+            print(f"[ask_structured error attempt {attempt+1}]: {e}")
+            # Check if groq attached failed_generation in error
+            err_dict = getattr(e, "body", {}) if hasattr(e, "body") else {}
+            if isinstance(err_dict, dict) and "error" in err_dict:
+                fg = err_dict["error"].get("failed_generation", "")
+                if fg and hasattr(schema, "name") and "name" in schema.model_fields:
+                    clean = fg.strip("*_ \n\"'")
+                    try:
+                        return schema(name=clean)
+                    except Exception:
+                        pass
             if attempt < retries:
                 time.sleep(base_delay * (attempt + 1))
                 continue
@@ -99,9 +121,13 @@ def ask_text(prompt, retries=3, base_delay=2.0):
     for attempt in range(retries + 1):
         try:
             res = llm.invoke(prompt)
-            if hasattr(res, "content"):
-                return res.content.strip()
-            return str(res).strip()
+            out = res.content.strip() if hasattr(res, "content") else str(res).strip()
+            if out:
+                return out
+            # If empty output, pause and retry
+            if attempt < retries:
+                time.sleep(base_delay * (attempt + 1))
+                continue
         except Exception as e:
             if attempt < retries:
                 time.sleep(base_delay * (attempt + 1))
