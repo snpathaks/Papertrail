@@ -1,6 +1,16 @@
+import os
+import streamlit as st
+
+try:
+    for k in ("LLM_PROVIDER", "LLM_MODEL", "GROQ_API_KEY", "GOOGLE_API_KEY", "GEMINI_API_KEY",
+              "CONTACT_EMAIL", "VECTOR_BACKEND"):
+        if k in st.secrets:
+            os.environ[k] = str(st.secrets[k])
+except Exception:
+    pass
+
 import json
 from datetime import datetime
-import streamlit as st
 import pandas as pd
 import config
 from graph import build_search_graph, build_analysis_graph

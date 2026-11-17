@@ -33,7 +33,7 @@ if provider == "groq":
     llm = ChatGroq(model=config.GROQ_MODEL, api_key=api_key, temperature=0)
 elif provider == "gemini":
     from langchain_google_genai import ChatGoogleGenerativeAI
-    api_key = config.GEMINI_API_KEY or os.getenv("GEMINI_API_KEY") or "placeholder"
+    api_key = config.GEMINI_API_KEY or os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY") or "placeholder"
     llm = ChatGoogleGenerativeAI(model=config.GEMINI_MODEL, google_api_key=api_key, temperature=0)
 else:  # default "ollama"
     from langchain_ollama import ChatOllama

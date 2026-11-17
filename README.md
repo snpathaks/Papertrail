@@ -1,6 +1,66 @@
-# PaperTrail: Research Discovery Agent
+# PaperTrail: Human-in-the-Loop Research Discovery Agent
 
-PaperTrail is an autonomous, agentic research discovery and literature review system. Built with **LangGraph**, **Streamlit**, and flexible LLM/vector backends (**Ollama**, **Groq**, **Gemini**, **FastEmbed**, **NumPy**, **ChromaDB**), PaperTrail discovers academic papers, extracts structured findings with verbatim evidence, clusters methodologies, highlights research gaps, and drafts evidence-backed literature reviews with automated citation checking.
+PaperTrail is an interactive, **human-in-the-loop** research discovery and literature review pipeline. Built with **LangGraph**, **Streamlit**, and flexible backends (**Ollama locally, Groq/Gemini free tier when deployed**, paired with **FastEmbed** and in-memory **NumPy** storage), PaperTrail discovers academic papers, empowers researchers to review and curate candidate works, extracts structured findings with verbatim evidence, clusters methodologies, highlights empirical research gaps and contradictions, and drafts evidence-grounded literature reviews with automated citation checking.
+
+---
+
+## 🏛️ System Architecture
+
+PaperTrail decouples discovery from deep extraction, keeping a human expert in the loop between search curation and synthesis:
+
+```mermaid
+flowchart TD
+    subgraph Phase1["Phase 1: Discovery & Human Curation"]
+        Query["User Research Topic"] --> Expand["Query Expansion Node"]
+        Expand --> Search["Search Node (OpenAlex + arXiv APIs)"]
+        Search --> Deduplicate["Deduplicate (Title & ID)"]
+        Deduplicate --> Filter["Relevance Filter"]
+        Filter --> HumanApproval{{"🧑‍🔬 Human Review & Approval (Select / Deselect Papers)"}}
+    end
+
+    subgraph Phase2["Phase 2: Deep Analysis & Synthesis"]
+        HumanApproval -->|"Approved Papers"| Download["PDF Downloader & pymupdf4llm Chunking"]
+        Download --> FallbackCheck{"Full PDF or Abstract Fallback?"}
+        FallbackCheck -->|"PDF Ok"| VStore["In-Memory NumPy Store (FastEmbed)"]
+        FallbackCheck -->|"Timeout / Cap / Fail"| IssuesPanel["Log to Issues Panel"]
+        IssuesPanel --> VStore
+        VStore --> Extract["Extraction Agent (Method, Results, Limitations)"]
+        Extract --> Compare["Comparison Agent (KMeans Clustering & Approach Matrix)"]
+        Compare --> Gaps["Gap Agent (Contradictions, Coverage & Aspect Gaps)"]
+        Gaps --> Writer["Writer Agent (5-Section Academic Review with [P#] Cites)"]
+        Writer --> Verifier["Citation Verifier (verify_review & Hallucination Audit)"]
+    end
+
+    subgraph Output["Interactive Deliverables"]
+        Verifier --> UI["Streamlit UI (Tabs, Runs Selector, Issues Panel)"]
+        UI --> ExportMD["Export Markdown (.md)"]
+        UI --> ExportBib["Export BibTeX (.bib)"]
+        UI --> SavedRuns["Save Snapshot to runs/<timestamp>.json"]
+    end
+```
+
+---
+
+## 🚀 Live Demo & Cloud Deployment
+
+### 🌐 Live Demo
+- **Streamlit Community Cloud**: [Launch PaperTrail](https://share.streamlit.io/) *(or deploy directly from your GitHub repository)*
+- **Hugging Face Spaces**: Compatible via Streamlit Space SDK.
+
+> [!NOTE]
+> Free cloud hosting disks reset on container restart, so runtime vector indices and session logs are ephemeral. PaperTrail automatically uses the in-memory NumPy store (`VECTOR_BACKEND=memory`) and FastEmbed (`BAAI/bge-small-en-v1.5`) so it requires **zero external daemons** or local GPUs when deployed.
+
+### ⚙️ Streamlit Community Cloud Setup
+1. Fork or push this repository to GitHub.
+2. Visit [share.streamlit.io](https://share.streamlit.io) and choose your repository, branch (`main`), and entry file (`app.py`).
+3. Under **Advanced settings -> Secrets**, add:
+   ```toml
+   LLM_PROVIDER = "groq"
+   GROQ_API_KEY = "your-groq-api-key"
+   VECTOR_BACKEND = "memory"
+   CONTACT_EMAIL = "you@example.com"
+   ```
+4. Click **Deploy**. Test with 5 papers initially; memory and timeout constraints are pre-configured.
 
 ---
 
@@ -228,14 +288,18 @@ Papertrail/
 │   ├── db.py                   # SQLite key-value hash cache
 │   └── vectorstore.py          # In-memory NumPy & ChromaDB vector stores
 ├── runs/                       # Persisted JSON analysis run snapshots
-├── eval/                       # Evaluation & verification benchmarks
-│   ├── eval_extraction.py      # Dataset extraction & quote verification benchmark
-│   ├── test_step3.py           # Unit tests for contradictions, timeouts & fallbacks
-│   └── provider_comparison/    # Ollama vs. Groq benchmark artifacts
 ├── eval/                       # Benchmark & evaluation suite
-│   ├── eval_extraction.py      # Extraction F1 & quote verification benchmark
-│   ├── gold_extraction.json    # Gold evaluation dataset
-│   └── provider_comparison/   # Ollama vs Groq comparative runs & report
+│   ├── eval_extraction_full.py # Extraction F1 & quote verification benchmark
+│   ├── eval_search_recall.py   # Search recall across 3 topics (31 papers)
+│   ├── eval_hallucination.py   # Plain LLM baseline vs OpenAlex ground truth
+│   ├── eval_faithfulness.py    # verify_review scores & 20-sentence manual audit
+│   ├── eval_human.py           # Blinded human rating form generator & aggregator
+│   ├── eval_cost.py            # Latency and token cost profiling
+│   ├── run_all_evals.py        # Master evaluation runner
+│   ├── gold_extraction.json    # 18 hand-labeled gold papers with metrics & datasets
+│   ├── gold_search_recall.json # 31 canonical papers across 3 benchmark topics
+│   ├── results/                # Complete JSON logs & blinded evaluation forms
+│   └── provider_comparison/    # Ollama vs Groq comparative runs & report
 └── demo/                       # Frozen smoke-test outputs & demo artifacts
     ├── demo_review.md          # Sample generated literature review
     ├── demo_comparison_table.json
@@ -244,6 +308,32 @@ Papertrail/
     ├── run_2_retrieval_augmented_generation/
     └── run_3_diffusion_models_for_medical_i/
 ```
+
+---
+
+## 🖼️ UI Walkthrough & User Experience
+
+PaperTrail provides a clean, reactive research dashboard built with Streamlit:
+
+| Stage | Visual UI Experience | User Control |
+| :--- | :--- | :--- |
+| **1. Curation** | Interactive data editor displaying titles, years, sources, and automated relevance rationales. | Check/uncheck papers to include or exclude before running heavy LLM extraction. |
+| **2. Extraction Tracker** | Real-time agent status tracker with live progress indicators (`Extracting 3/8: Paper Title...`). | Visual feedback on node completion (search, extract, cluster, gap detection, writing, verification). |
+| **3. Methodology Matrix** | Filterable comparison table with categorized approach families and shared benchmark datasets. | Directly compare models that were tested on identical empirical datasets. |
+| **4. Gap & Contradiction Board** | Priority-ranked cards displaying empirical contradictions, coverage holes, and confidence badges. | Inspect underlying mathematical findings and copy concrete proposed research questions. |
+| **5. Audit & Issues Panel** | Expandable notification alert and dedicated audit tab listing papers that fell back to abstracts. | Transparent reporting when PDF downloads time out, exceed size caps, or fail parsing. |
+| **6. Run History** | Sidebar dropdown selector listing all previously generated runs (`runs/<timestamp>.json`). | Instantly reload and inspect past research runs without re-executing API calls. |
+
+---
+
+## ⚠️ Limitations & Honesty Notes
+
+To maintain rigorous academic honesty, PaperTrail's current pipeline has several deliberate constraints and known failure modes:
+
+1. **PDF Tables Parse Imperfectly**: Academic PDFs often format experimental results in complex, multi-column or merged-cell tables. Lightweight PDF parsers (`pymupdf4llm`) flatten tables into markdown text, which can occasionally omit sub-headers or misalign numbers. When tables are ambiguous, PaperTrail falls back to verbatim abstract text.
+2. **Keyword-Based Gaps Are Weak Evidence**: Algorithmic gap detection scans paper text for the absence of specific terms (e.g., efficiency, fairness, robustness). The absence of a keyword in an abstract or methodology section indicates a lack of *reported evaluation*, not definitive proof that the underlying architecture cannot support that property.
+3. **Free-Tier Rate Limits**: Hosted free tiers (such as Groq's 30 RPM or Gemini's 15 RPM) can occasionally trigger HTTP 429 errors during concurrent batch analysis. While PaperTrail includes exponential backoff with jitter, large batches (> 10 papers) may experience rate-limiting pauses.
+4. **Small-Model Structured Output Errors**: Local 3B parameter models (e.g. `qwen2.5:3b`) occasionally struggle with strict nested Pydantic JSON schemas or produce truncated strings, whereas 70B+ cloud models (e.g. `llama-3.3-70b-versatile`) maintain near-perfect schema compliance.
 
 ---
 
@@ -269,7 +359,10 @@ pip install -r requirements.txt
 ```
 
 ### 2. Configure Execution Provider
-Choose your deployment mode via environment variables:
+Copy the provided `.env.example` to `.env` or set environment variables:
+```bash
+cp .env.example .env
+```
 
 **Option A: Deployable Serverless Mode (Groq + FastEmbed + Memory Store)**
 ```bash
