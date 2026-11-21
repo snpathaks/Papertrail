@@ -85,7 +85,7 @@ with st.sidebar:
 
 # --- Hero Header ---
 st.markdown('<div class="hero-title">Paper<span>Trail</span></div>', unsafe_allow_html=True)
-st.markdown('<div class="hero-subtitle">Autonomous Multi-Agent Literature Review & Research Discovery Engine</div>', unsafe_allow_html=True)
+st.markdown('<div class="hero-subtitle">Multi-Agent Literature Review & Research Discovery Engine</div>', unsafe_allow_html=True)
 
 if "loaded_run_name" in st.session_state:
     st.info(f"📂 Viewing loaded run: **{st.session_state['loaded_run_name']}**")
@@ -114,7 +114,7 @@ col_search, _ = st.columns([2, 5])
 if col_search.button("🔎 1. Find & Curate Papers", type="primary", use_container_width=True):
     st.session_state["query"] = query
     tracker_slot = st.empty()
-    tracker_slot.markdown(pipeline_tracker([]))
+    pipeline_tracker([], slot=tracker_slot)
     with st.spinner("Search Agent scanning OpenAlex & arXiv, filtering by relevance..."):
         from graph import build_search_graph
         result = build_search_graph().invoke({"query": query})
@@ -150,7 +150,7 @@ if "papers" in st.session_state and "result" not in st.session_state:
     if st.button("🚀 2. Analyze Selected Papers", type="primary", disabled=len(selected) == 0):
         done_stages = ["Search"]
         tracker_placeholder = st.empty()
-        tracker_placeholder.markdown(pipeline_tracker(done_stages))
+        pipeline_tracker(done_stages, slot=tracker_placeholder)
         
         status_box = st.status("Initializing research team...", expanded=True)
         
@@ -175,7 +175,7 @@ if "papers" in st.session_state and "result" not in st.session_state:
                 stage_name = node_to_stage.get(node)
                 if stage_name and stage_name not in done_stages:
                     done_stages.append(stage_name)
-                    tracker_placeholder.markdown(pipeline_tracker(done_stages))
+                    pipeline_tracker(done_stages, slot=tracker_placeholder)
                 status_box.write(f"✅ Finished stage: **{stage_name or node}**")
                 state.update(out)
         
@@ -213,7 +213,8 @@ if "result" in st.session_state:
     verified_quotes_count = sum(
         1 for p in extracted for e in p.get("evidence", []) if e.get("verified")
     )
-    score_display = str(verification.get("score", "N/A"))
+    score_val = verification.get("score")
+    score_display = "N/A" if score_val is None else str(score_val)
     if score_display != "N/A" and not str(score_display).endswith("%"):
         try:
             score_num = float(score_display)
@@ -325,7 +326,7 @@ if "result" in st.session_state:
                 for iss in flagged:
                     st.markdown(f"- ⚠️ **{iss.get('problem', 'Issue')}**: *\"{iss.get('sentence', '')}\"*")
             else:
-                st.success("All citations verified against paper text evidence. Zero ungrounded statements found.")
+                st.success("No sentences were flagged by the rule-based checker.")
 
         # Render formatted markdown
         raw_review = r.get("review", "")

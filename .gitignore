@@ -74,6 +74,11 @@ eval/scratch/
 *.log
 *.tmp
 *.bak
+test_prof_*/
+temp_chrome_profile/
+test_*.png
+test_*.html
+dom_*.html
 
 # Streamlit
 .streamlit/*
