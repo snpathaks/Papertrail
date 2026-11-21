@@ -67,6 +67,7 @@ huggingface/
 # UI export downloads
 review.md
 refs.bib
+secrets.toml
 
 # Local scratch & temporary files
 scratch/
@@ -81,9 +82,8 @@ test_*.html
 dom_*.html
 
 # Streamlit
-.streamlit/*
-!.streamlit/config.toml
 .streamlit/secrets.toml
+.streamlit/secrets.toml.local
 
 # Testing, typing & linting
 .pytest_cache/
