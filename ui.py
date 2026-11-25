@@ -130,6 +130,9 @@ SPLASH_CSS = f"""<style>
 # NOT an f-string: single braces only. (Doubled braces here made every rule
 # after .stApp invalid CSS, so stat/gap cards were silently unstyled.)
 CUSTOM_THEME_CSS = """<style>
+/* Let the 3D canvas show through: page background lives on <html>/<body> */
+html, body { background: #0F1B2D !important; }
+.stApp, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {
 /* ── Base layer: navy background on the HTML root so 3D canvas has a backdrop ── */
 html, body { background: #0F1B2D !important; margin: 0; padding: 0; }
 
@@ -139,6 +142,8 @@ html, body { background: #0F1B2D !important; margin: 0; padding: 0; }
 [data-testid="stHeader"] {
   background: transparent !important;
 }
+.stApp { position: relative; z-index: 1; color: #E6EDF5; }
+h1, h2, h3 { font-family: Georgia, serif; color: #E6EDF5 !important; }
 .stApp { position: relative; z-index: 1; }
 
 /* ── Main content column: semi-dark so text is ALWAYS visible ── */
@@ -171,11 +176,13 @@ h1, h2, h3, h4 { font-family: Georgia, serif; color: #E6EDF5 !important; }
 /* ── Hero header ── */
 .hero-title {
   font-family: Georgia, serif; font-size: 2.8rem; font-weight: 700;
+  margin-bottom: 0.2rem; letter-spacing: 0.5px;
   margin-bottom: 0.2rem; letter-spacing: 0.5px; color: #E6EDF5;
 }
 .hero-title span { color: #2A9D8F; }
 .hero-subtitle { font-size: 1.15rem; color: #8FA3BA; margin-bottom: 1.5rem; }
 
+/* Glass cards: st.container(border=True), sidebar, custom cards */
 /* ── Sidebar ── */
 [data-testid="stSidebar"] {
   background: rgba(10, 18, 30, 0.92) !important;
@@ -185,10 +192,16 @@ h1, h2, h3, h4 { font-family: Georgia, serif; color: #E6EDF5 !important; }
 
 /* ── Glass cards (st.container border=True) ── */
 [data-testid="stVerticalBlockBorderWrapper"] {
+  background: rgba(22, 37, 59, 0.62) !important;
   background: rgba(22, 37, 59, 0.75) !important;
   backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(42, 157, 143, 0.25) !important; border-radius: 12px;
   border: 1px solid rgba(42, 157, 143, 0.30) !important;
   border-radius: 12px;
+}
+[data-testid="stSidebar"] {
+  background: rgba(15, 27, 45, 0.82) !important;
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
 }
 
 /* ── Tabs ── */
@@ -198,20 +211,31 @@ h1, h2, h3, h4 { font-family: Georgia, serif; color: #E6EDF5 !important; }
 
 /* ── Stat cards ── */
 .stat-card {
+  background: rgba(22, 37, 59, 0.66); backdrop-filter: blur(8px);
   background: rgba(22, 37, 59, 0.85); backdrop-filter: blur(8px);
   border-top: 4px solid #2A9D8F; border-radius: 8px; padding: 16px;
+  text-align: center; box-shadow: 0 4px 14px rgba(0,0,0,0.3); margin-bottom: 1rem;
   text-align: center; box-shadow: 0 4px 14px rgba(0,0,0,0.4); margin-bottom: 1rem;
+}
+.stat-num { font-size: 2.2rem; font-weight: 700; font-family: Georgia, serif; color: #E6EDF5; }
+.stat-label {
+  opacity: 0.75; font-size: 0.9rem; text-transform: uppercase;
+  letter-spacing: 0.5px; margin-top: 4px;
 }
 .stat-num { font-size: 2.2rem; font-weight: 700; font-family: Georgia, serif; color: #E6EDF5 !important; }
 .stat-label { opacity: 0.75; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
 
 /* ── Gap cards ── */
 .gap-card {
+  background: rgba(22, 37, 59, 0.66); backdrop-filter: blur(8px);
   background: rgba(22, 37, 59, 0.85); backdrop-filter: blur(8px);
   border-left: 4px solid #2A9D8F; border-radius: 8px; padding: 16px;
+  margin-bottom: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   margin-bottom: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 .gap-question {
+  background: rgba(42, 157, 143, 0.12); border-radius: 6px; padding: 8px 12px;
+  font-size: 0.92rem; margin-top: 8px; border: 1px solid rgba(42, 157, 143, 0.3);
   background: rgba(42, 157, 143, 0.14); border-radius: 6px; padding: 8px 12px;
   font-size: 0.92rem; margin-top: 8px; border: 1px solid rgba(42, 157, 143, 0.35);
   color: #CAD5E2 !important;

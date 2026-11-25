@@ -4,6 +4,7 @@ Teal nodes = papers, ~10% amber nodes = research gaps, thin lines = links.
 Injects ONE fixed Three.js canvas into the parent page (guarded against
 Streamlit reruns). Respects prefers-reduced-motion.
 """
+import streamlit.components.v1 as components
 import streamlit as st
 
 NODES = 70  # lower (e.g. 50) if the laptop heats up while the LLM runs
@@ -83,4 +84,5 @@ if (!P.__ptBg) {
 
 def background_3d():
     """Call once per run, after st.set_page_config()."""
+    components.html(_JS.replace("__NODES__", str(NODES)), height=0)
     st.iframe(_JS.replace("__NODES__", str(NODES)), height=0, scrolling=False)
